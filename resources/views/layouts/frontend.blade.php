@@ -102,21 +102,128 @@
             }
         };
 
+        // Show toast notification
+        window.showToast = function(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg text-white transform transition-all duration-300 ${
+                type === 'success' ? 'bg-green-600' : 'bg-red-600'
+            }`;
+            toast.innerHTML = `
+                <div class="flex items-center gap-3">
+                    ${type === 'success' 
+                        ? '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>'
+                        : '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>'
+                    }
+                    <span class="font-medium">${message}</span>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        };
+
+        // Update cart badge count
+        window.updateCartBadge = function(count) {
+            const cartBadge = document.getElementById('cartBadge');
+            if (cartBadge) {
+                cartBadge.textContent = count;
+                if (count > 0) {
+                    cartBadge.classList.remove('hidden');
+                } else {
+                    cartBadge.classList.add('hidden');
+                }
+            }
+        };
+
+        // Update wishlist badge count
+        window.updateWishlistBadge = function(count) {
+            const wishlistBadge = document.getElementById('wishlistBadge');
+            if (wishlistBadge) {
+                wishlistBadge.textContent = count;
+                if (count > 0) {
+                    wishlistBadge.classList.remove('hidden');
+                } else {
+                    wishlistBadge.classList.add('hidden');
+                }
+            }
+        };
+
         // Quick add to cart function
-        window.quickAddToCart = function(productId) {
-            // TODO: Implement AJAX add to cart
-            console.log('Adding product to cart:', productId);
-            animateCartIcon();
-            // Placeholder alert
-            alert('Add to cart functionality coming soon!');
+        window.quickAddToCart = function(productId, quantity = 1, size = null, color = null) {
+            const formData = new FormData();
+            formData.append('product_id', productId);
+            formData.append('quantity', quantity);
+            if (size) formData.append('size', size);
+            if (color) formData.append('color', color);
+
+            fetch('{{ route("cart.add") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    updateCartBadge(data.cart_count);
+                    animateCartIcon();
+                } else {
+                    showToast(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('An error occurred. Please try again.', 'error');
+            });
         };
 
         // Toggle wishlist function
-        window.toggleWishlist = function(productId) {
-            // TODO: Implement AJAX wishlist toggle
-            console.log('Toggle wishlist for product:', productId);
-            // Placeholder alert
-            alert('Wishlist functionality coming soon!');
+        window.toggleWishlist = function(productId, button = null) {
+            const formData = new FormData();
+            formData.append('product_id', productId);
+
+            fetch('{{ route("wishlist.toggle") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    updateWishlistBadge(data.wishlist_count);
+                    
+                    // Update button visual state if button is provided
+                    if (button) {
+                        const heartIcon = button.querySelector('svg path, svg');
+                        if (heartIcon) {
+                            if (data.in_wishlist) {
+                                button.classList.add('text-red-600');
+                                button.classList.remove('text-gray-400');
+                            } else {
+                                button.classList.remove('text-red-600');
+                                button.classList.add('text-gray-400');
+                            }
+                        }
+                    }
+                } else {
+                    showToast(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('An error occurred. Please try again.', 'error');
+            });
         };
     </script>
 
