@@ -6,12 +6,12 @@
 
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">My Wishlist</h1>
+    <div class="container mx-auto px-4 py-4 sm:py-6">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">My Wishlist</h1>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-6 sm:py-8">
     @php
         // For now, using session-based wishlist. Replace with database query for logged-in users
         $wishlistItems = session('wishlist', []);
@@ -33,14 +33,14 @@
             </a>
         </div>
     @else
-        <div class="mb-6 flex items-center justify-between">
-            <p class="text-gray-600 dark:text-gray-400">{{ $products->count() }} {{ Str::plural('item', $products->count()) }} in your wishlist</p>
-            <button onclick="clearWishlist()" class="text-sm text-red-600 hover:text-red-700 font-medium">
+        <div class="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">{{ $products->count() }} {{ Str::plural('item', $products->count()) }} in your wishlist</p>
+            <button onclick="clearWishlist()" class="text-xs sm:text-sm text-red-600 hover:text-red-700 font-medium">
                 Clear All
             </button>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             @foreach($products as $product)
             <div class="relative group">
                 <!-- Product Card -->
@@ -73,44 +73,44 @@
                         </div>
 
                         <!-- Remove from Wishlist Button -->
-                        <button onclick="removeFromWishlist({{ $product->id }})" class="absolute top-3 right-3 w-9 h-9 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-red-500 dark:hover:bg-red-500 hover:text-white transition-all">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button onclick="removeFromWishlist({{ $product->id }})" class="absolute top-2 right-2 sm:top-3 sm:right-3 w-7 h-7 sm:w-9 sm:h-9 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-red-500 dark:hover:bg-red-500 hover:text-white transition-all">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     </a>
 
                     <!-- Product Info -->
-                    <div class="p-3">
+                    <div class="p-2 sm:p-3">
                         <!-- Category -->
                         @if($product->category)
-                        <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">{{ $product->category->name }}</p>
+                        <p class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-1">{{ $product->category->name }}</p>
                         @endif
 
                         <!-- Product Name -->
                         <a href="{{ route('product.show', $product->slug) }}" class="block">
-                            <h3 class="font-semibold text-sm text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
+                            <h3 class="font-semibold text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-1 sm:mb-2 line-clamp-2 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
                                 {{ $product->name }}
                             </h3>
                         </a>
 
                         <!-- Price -->
-                        <div class="flex items-center gap-2 mb-3">
+                        <div class="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
                             @if($product->discount_price)
-                                <span class="text-lg font-bold text-primary-900 dark:text-primary-400">৳{{ number_format($product->discount_price, 0) }}</span>
-                                <span class="text-sm text-gray-500 line-through">৳{{ number_format($product->price, 0) }}</span>
+                                <span class="text-sm sm:text-base md:text-lg font-bold text-primary-900 dark:text-primary-400">৳{{ number_format($product->discount_price, 0) }}</span>
+                                <span class="text-xs sm:text-sm text-gray-500 line-through">৳{{ number_format($product->price, 0) }}</span>
                             @else
-                                <span class="text-lg font-bold text-primary-900 dark:text-primary-400">৳{{ number_format($product->price, 0) }}</span>
+                                <span class="text-sm sm:text-base md:text-lg font-bold text-primary-900 dark:text-primary-400">৳{{ number_format($product->price, 0) }}</span>
                             @endif
                         </div>
 
                         <!-- Add to Cart Button -->
                         @if($product->stock_quantity > 0)
-                        <button onclick="quickAddToCart({{ $product->id }})" class="w-full px-4 py-2 bg-primary-900 hover:bg-primary-950 text-white text-sm font-semibold rounded-lg transition-colors">
+                        <button onclick="quickAddToCart({{ $product->id }})" class="w-full px-3 py-1.5 sm:px-4 sm:py-2 bg-primary-900 hover:bg-primary-950 text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors">
                             Add to Cart
                         </button>
                         @else
-                        <button disabled class="w-full px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm font-semibold rounded-lg cursor-not-allowed">
+                        <button disabled class="w-full px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-semibold rounded-lg cursor-not-allowed">
                             Out of Stock
                         </button>
                         @endif
@@ -121,8 +121,8 @@
         </div>
 
         <!-- Continue Shopping -->
-        <div class="mt-8 text-center">
-            <a href="{{ url('/shop') }}" class="inline-flex items-center gap-2 text-primary-900 dark:text-primary-400 hover:underline font-medium">
+        <div class="mt-6 sm:mt-8 text-center">
+            <a href="{{ url('/shop') }}" class="inline-flex items-center gap-2 text-sm sm:text-base text-primary-900 dark:text-primary-400 hover:underline font-medium">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>

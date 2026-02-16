@@ -6,24 +6,24 @@
 
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">My Account</h1>
+    <div class="container mx-auto px-4 py-4 sm:py-6">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">My Account</h1>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+<div class="container mx-auto px-4 py-6 sm:py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
         
         <!-- Sidebar -->
         <div class="lg:col-span-1">
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-                <div class="mb-6">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-1">{{ auth()->user()->name }}</h2>
+            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+                <div class="mb-4 sm:mb-6">
+                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-1">{{ auth()->user()->name }}</h2>
                     <p class="text-sm text-gray-600 dark:text-gray-400">{{ auth()->user()->email }}</p>
                 </div>
 
-                <nav class="space-y-2">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 bg-primary-50 dark:bg-primary-900/10 text-primary-900 dark:text-primary-400 rounded-lg font-medium">
+                <nav class="space-y-1.5 sm:space-y-2">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2 bg-primary-50 dark:bg-primary-900/10 text-primary-900 dark:text-primary-400 rounded-lg text-sm sm:text-base font-medium">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                         </svg>
@@ -68,8 +68,8 @@
         <div class="lg:col-span-3">
             
             <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Orders</h3>
                         <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">

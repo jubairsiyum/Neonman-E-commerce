@@ -7,18 +7,26 @@
 
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Shop All Products</h1>
+    <div class="container mx-auto px-4 py-4 sm:py-6">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Shop All Products</h1>
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ $products->total() }} products found</p>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-8">
-    <div class="flex flex-col lg:flex-row gap-8">
+<div class="container mx-auto px-4 py-6 sm:py-8">
+    <div class="flex flex-col lg:flex-row gap-6 sm:gap-8">
         
         <!-- Filters Sidebar -->
         <aside class="lg:w-64 flex-shrink-0">
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6 sticky top-4">
+            <!-- Mobile Filter Toggle -->
+            <button onclick="document.getElementById('filtersSidebar').classList.toggle('hidden')" class="lg:hidden w-full mb-4 px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center justify-between">
+                <span>Filters</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                </svg>
+            </button>
+            
+            <div id="filtersSidebar" class="hidden lg:block bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6 lg:sticky lg:top-4">
                 <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Filters</h2>
                 
                 <form method="GET" action="{{ url('/shop') }}" id="filterForm">

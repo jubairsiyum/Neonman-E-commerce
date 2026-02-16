@@ -18,8 +18,8 @@
                     <div class="w-full h-full flex items-center justify-center text-7xl">
                         👔
                     </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
-                        <h3 class="text-white font-bold text-lg group-hover:text-primary-400 transition-colors">Men</h3>
+                    <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20">
+                        <h3 class="text-white font-bold text-sm sm:text-lg group-hover:text-primary-400 transition-colors">Men</h3>
                         <p class="text-white/80 text-xs">Shop Now</p>
                     </div>
                 </div>
@@ -32,8 +32,8 @@
                     <div class="w-full h-full flex items-center justify-center text-7xl">
                         👗
                     </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
-                        <h3 class="text-white font-bold text-lg group-hover:text-primary-400 transition-colors">Women</h3>
+                    <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20">
+                        <h3 class="text-white font-bold text-sm sm:text-lg group-hover:text-primary-400 transition-colors">Women</h3>
                         <p class="text-white/80 text-xs">Shop Now</p>
                     </div>
                 </div>
@@ -46,8 +46,8 @@
                     <div class="w-full h-full flex items-center justify-center text-7xl">
                         👕
                     </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
-                        <h3 class="text-white font-bold text-lg group-hover:text-primary-400 transition-colors">Half Sleeves</h3>
+                    <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20">
+                        <h3 class="text-white font-bold text-sm sm:text-lg group-hover:text-primary-400 transition-colors">Half Sleeves</h3>
                         <p class="text-white/80 text-xs">Shop Now</p>
                     </div>
                 </div>
@@ -60,8 +60,8 @@
                     <div class="w-full h-full flex items-center justify-center text-7xl">
                         🧥
                     </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
-                        <h3 class="text-white font-bold text-lg group-hover:text-primary-400 transition-colors">Full Sleeves</h3>
+                    <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20">
+                        <h3 class="text-white font-bold text-sm sm:text-lg group-hover:text-primary-400 transition-colors">Full Sleeves</h3>
                         <p class="text-white/80 text-xs">Shop Now</p>
                     </div>
                 </div>
@@ -74,8 +74,8 @@
                     <div class="w-full h-full flex items-center justify-center text-7xl">
                         👔
                     </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
-                        <h3 class="text-white font-bold text-lg group-hover:text-primary-400 transition-colors">Polo</h3>
+                    <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20">
+                        <h3 class="text-white font-bold text-sm sm:text-lg group-hover:text-primary-400 transition-colors">Polo</h3>
                         <p class="text-white/80 text-xs">Shop Now</p>
                     </div>
                 </div>
@@ -88,8 +88,8 @@
                     <div class="w-full h-full flex items-center justify-center text-7xl">
                         👚
                     </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
-                        <h3 class="text-white font-bold text-lg group-hover:text-primary-400 transition-colors">Tops</h3>
+                    <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20">
+                        <h3 class="text-white font-bold text-sm sm:text-lg group-hover:text-primary-400 transition-colors">Tops</h3>
                         <p class="text-white/80 text-xs">Shop Now</p>
                     </div>
                 </div>
@@ -101,9 +101,9 @@
 <!-- Quick Stats Banner -->
 <section class="py-6 bg-gray-50 dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
     <div class="container mx-auto px-4">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-center">
             <div class="flex flex-col items-center">
-                <svg class="w-8 h-8 text-primary-900 dark:text-primary-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 sm:w-8 sm:h-8 text-primary-900 dark:text-primary-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
                 </svg>
                 <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">Free Shipping</div>

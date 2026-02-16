@@ -4,7 +4,7 @@
     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
     
     <!-- Menu Panel -->
-    <div class="absolute right-0 top-0 bottom-0 w-80 max-w-full bg-white dark:bg-gray-900 shadow-xl overflow-y-auto">
+    <div class="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white dark:bg-gray-900 shadow-xl overflow-y-auto">
         
         <!-- Header -->
         <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">

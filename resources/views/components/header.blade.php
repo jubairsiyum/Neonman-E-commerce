@@ -2,8 +2,8 @@
     <!-- Top Announcement Bar -->
     <div class="bg-primary-900 text-white py-2.5">
         <div class="container mx-auto px-4">
-            <p class="text-center text-sm">
-                Free Shipping on Orders Over ৳2000 | Use Code: <span class="font-semibold">WELCOME10</span> for 10% Off
+            <p class="text-center text-xs sm:text-sm">
+                Free Shipping Over ৳2000 <span class="hidden sm:inline">| Use Code: <span class="font-semibold">WELCOME10</span> for 10% Off</span>
             </p>
         </div>
     </div>
@@ -21,12 +21,12 @@
                 </button>
 
                 <!-- Logo -->
-                <div class="flex items-center">
+                <div class="flex items-center flex-1 lg:flex-initial justify-center lg:justify-start">
                     <a href="{{ url('/') }}" class="flex items-center space-x-2">
-                        <div class="w-10 h-10 bg-primary-900 rounded flex items-center justify-center">
-                            <span class="text-white font-bold text-xl">N</span>
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 bg-primary-900 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-lg sm:text-xl">N</span>
                         </div>
-                        <span class="text-2xl font-bold text-primary-900 dark:text-white">
+                        <span class="text-xl sm:text-2xl font-bold text-primary-900 dark:text-white">
                             Neonman
                         </span>
                     </a>
@@ -78,7 +78,7 @@
                 </div>
 
                 <!-- Right Side Icons -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 sm:space-x-4">
                     
                     <!-- Search Icon (Desktop) -->
                     <button type="button" class="hidden md:block p-2 text-gray-700 dark:text-gray-300 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
@@ -88,7 +88,7 @@
                     </button>
 
                     <!-- Dark Mode Toggle -->
-                    <button id="darkModeToggle" type="button" class="p-2 text-gray-700 dark:text-gray-300 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
+                    <button id="darkModeToggle" type="button" class="hidden sm:block p-2 text-gray-700 dark:text-gray-300 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
                         <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
@@ -99,7 +99,7 @@
 
                     <!-- Wishlist -->
                     @auth
-                    <a href="{{ url('/wishlist') }}" class="relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
+                    <a href="{{ url('/wishlist') }}" class="hidden sm:block relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                         </svg>
@@ -131,7 +131,7 @@
 
                     <!-- User Menu -->
                     @auth
-                    <div class="relative group">
+                    <div class="hidden lg:block relative group">
                         <button type="button" class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                             <div class="w-8 h-8 bg-primary-900 rounded-full flex items-center justify-center">
                                 <span class="text-white font-bold text-sm">{{ substr(auth()->user()->name, 0, 1) }}</span>

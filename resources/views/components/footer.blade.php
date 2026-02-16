@@ -1,22 +1,22 @@
 <footer class="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 transition-colors duration-200">
     <!-- Main Footer -->
-    <div class="container mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="container mx-auto px-4 py-8 sm:py-10 lg:py-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             
             <!-- Company Info -->
             <div>
-                <div class="flex items-center space-x-2 mb-4">
-                    <div class="w-10 h-10 bg-primary-900 rounded flex items-center justify-center">
-                        <span class="text-white font-bold text-xl">N</span>
+                <div class="flex items-center space-x-2 mb-3 sm:mb-4">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-primary-900 rounded flex items-center justify-center">
+                        <span class="text-white font-bold text-lg sm:text-xl">N</span>
                     </div>
-                    <span class="text-2xl font-bold text-primary-900 dark:text-white">
+                    <span class="text-xl sm:text-2xl font-bold text-primary-900 dark:text-white">
                         Neonman
                     </span>
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+                <p class="text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 text-sm">
                     Bangladesh's funniest streetwear brand. Where fashion meets humor and comfort meets chaos.
                 </p>
-                <div class="space-y-2 text-sm">
+                <div class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     <p class="flex items-center text-gray-700 dark:text-gray-300">
                         <svg class="w-5 h-5 mr-2 text-primary-900 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
@@ -41,8 +41,8 @@
 
             <!-- Quick Links -->
             <div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Quick Links</h3>
-                <ul class="space-y-2 text-sm">
+                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Quick Links</h3>
+                <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     <li>
                         <a href="{{ url('/') }}" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                             Home
@@ -83,8 +83,8 @@
 
             <!-- Categories -->
             <div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Categories</h3>
-                <ul class="space-y-2 text-sm">
+                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Categories</h3>
+                <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     @php
                         $footerCategories = \App\Models\Category::where('is_active', true)
                             ->whereNull('parent_id')
@@ -104,8 +104,8 @@
 
             <!-- Customer Service & Newsletter -->
             <div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Customer Service</h3>
-                <ul class="space-y-2 text-sm mb-6">
+                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Customer Service</h3>
+                <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm mb-4 sm:mb-6">
                     <li>
                         <a href="{{ url('/shipping-policy') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
                             Shipping Policy

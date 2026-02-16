@@ -6,28 +6,28 @@
 
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">About Us</h1>
+    <div class="container mx-auto px-4 py-4 sm:py-6">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">About Us</h1>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-8 sm:py-10 lg:py-12">
     
     <!-- Hero Section -->
-    <div class="max-w-4xl mx-auto text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+    <div class="max-w-4xl mx-auto text-center mb-10 sm:mb-12 lg:mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
             Redefining Bangladeshi Streetwear
         </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+        <p class="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
             Neonman is Bangladesh's premier destination for authentic streetwear fashion. We bring you the latest trends, premium quality, and unbeatable style at prices that won't break the bank.
         </p>
     </div>
 
     <!-- Story Section -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center mb-10 sm:mb-12 lg:mb-16">
         <div>
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Our Story</h3>
-            <div class="space-y-4 text-gray-600 dark:text-gray-400">
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Our Story</h3>
+            <div class="space-y-3 sm:space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 <p>
                     Founded in 2025, Neonman started with a simple vision: to make quality streetwear accessible to everyone in Bangladesh. What began as a small online store has grown into one of the most trusted fashion brands in the country.
                 </p>
@@ -45,17 +45,17 @@
     </div>
 
     <!-- Values Section -->
-    <div class="mb-16">
-        <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center mb-10">Our Values</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="mb-10 sm:mb-12 lg:mb-16">
+        <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 text-center mb-6 sm:mb-8 lg:mb-10">Our Values</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div class="text-center">
                 <div class="w-16 h-16 rounded-full bg-primary-100 dark:bg-primary-900/20 flex items-center justify-center mx-auto mb-4">
                     <svg class="w-8 h-8 text-primary-900 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                 </div>
-                <h4 class="font-bold text-lg text-gray-900 dark:text-gray-100 mb-2">Quality Guaranteed</h4>
-                <p class="text-gray-600 dark:text-gray-400">
+                <h4 class="font-bold text-base sm:text-lg text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">Quality Guaranteed</h4>
+                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                     Every product is carefully selected and inspected to ensure you receive only the best quality.
                 </p>
             </div>

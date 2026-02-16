@@ -8,25 +8,25 @@
 <!-- Breadcrumb -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
     <div class="container mx-auto px-4 py-3">
-        <nav class="flex items-center space-x-2 text-sm">
-            <a href="{{ url('/') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900">Home</a>
+        <nav class="flex items-center space-x-2 text-xs sm:text-sm overflow-x-auto">
+            <a href="{{ url('/') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900 whitespace-nowrap">Home</a>
             <span class="text-gray-400">/</span>
-            <a href="{{ url('/shop') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900">Shop</a>
+            <a href="{{ url('/shop') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900 whitespace-nowrap">Shop</a>
             <span class="text-gray-400">/</span>
-            <a href="{{ url('/shop?category=' . $product->category->slug) }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900">
+            <a href="{{ url('/shop?category=' . $product->category->slug) }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900 whitespace-nowrap">
                 {{ $product->category->name }}
             </a>
             <span class="text-gray-400">/</span>
-            <span class="text-gray-900 dark:text-gray-100">{{ $product->name }}</span>
+            <span class="text-gray-900 dark:text-gray-100 truncate">{{ $product->name }}</span>
         </nav>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+<div class="container mx-auto px-4 py-6 sm:py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
         
         <!-- Product Images -->
-        <div class="space-y-4">
+        <div class="space-y-3 sm:space-y-4">
             <!-- Main Image -->
             <div class="aspect-square bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
                 @if($product->hasMedia('images'))
@@ -47,7 +47,7 @@
             @if($product->hasMedia('images') && $product->getMedia('images')->count() > 1)
             <div class="grid grid-cols-4 gap-2">
                 @foreach($product->getMedia('images') as $media)
-                <button onclick="document.getElementById('mainImage').src='{{ $media->getUrl() }}'" class="aspect-square bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden border-2 border-transparent hover:border-primary-900 transition-colors">
+                <button onclick="document.getElementById('mainImage').src='{{ $media->getUrl() }}'" class="aspect-square bg-gray-100 dark:bg-gray-800 rounded overflow-hidden border-2 border-transparent hover:border-primary-900 transition-colors">
                     <img src="{{ $media->getUrl() }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                 </button>
                 @endforeach
@@ -75,18 +75,18 @@
             </div>
             
             <!-- Product Name -->
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {{ $product->name }}
             </h1>
 
             <!-- Price -->
             <div class="mb-6">
                 @if($product->has_discount)
-                <div class="flex items-center gap-3">
-                    <span class="text-3xl font-bold text-primary-900 dark:text-primary-400">
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <span class="text-2xl sm:text-3xl font-bold text-primary-900 dark:text-primary-400">
                         ৳{{ number_format($product->effective_price, 0) }}
                     </span>
-                    <span class="text-xl text-gray-500 line-through">
+                    <span class="text-lg sm:text-xl text-gray-500 line-through">
                         ৳{{ number_format($product->price, 0) }}
                     </span>
                     <span class="px-2 py-1 bg-red-600 text-white text-sm font-bold tracking-wide">
@@ -94,7 +94,7 @@
                     </span>
                 </div>
                 @else
-                <span class="text-3xl font-bold text-primary-900 dark:text-primary-400">
+                <span class="text-2xl sm:text-3xl font-bold text-primary-900 dark:text-primary-400">
                     ৳{{ number_format($product->effective_price, 0) }}
                 </span>
                 @endif
@@ -187,22 +187,22 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-3 mb-8">
+            <div class="flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
                 @if($product->in_stock)
-                <button onclick="addToCartFromProductPage()" class="flex-1 px-6 py-4 bg-primary-900 hover:bg-primary-950 text-white font-bold text-lg rounded transition-colors flex items-center justify-center gap-2">
+                <button onclick="addToCartFromProductPage()" class="flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-primary-900 hover:bg-primary-950 text-white font-bold text-base sm:text-lg rounded transition-colors flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
                     ADD TO CART
                 </button>
                 @else
-                <button disabled class="flex-1 px-6 py-4 bg-gray-400 text-white font-bold text-lg rounded cursor-not-allowed">
+                <button disabled class="flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-gray-400 text-white font-bold text-base sm:text-lg rounded cursor-not-allowed">
                     OUT OF STOCK
                 </button>
                 @endif
 
                 <button onclick="toggleWishlist({{ $product->id }}, this)" 
-                    class="wishlist-btn px-6 py-4 border-2 border-primary-900 {{ in_array($product->id, session('wishlist', [])) ? 'text-red-600 border-red-600' : 'text-primary-900 dark:text-primary-400' }} font-bold rounded hover:bg-primary-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
+                    class="wishlist-btn px-4 sm:px-6 py-3 sm:py-4 border-2 border-primary-900 {{ in_array($product->id, session('wishlist', [])) ? 'text-red-600 border-red-600' : 'text-primary-900 dark:text-primary-400' }} font-bold rounded hover:bg-primary-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="{{ in_array($product->id, session('wishlist', [])) ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                     </svg>
@@ -241,9 +241,9 @@
     </div>
 
     <!-- Product Details Tabs -->
-    <div class="mt-12">
-        <div class="border-b border-gray-200 dark:border-gray-700">
-            <nav class="flex gap-8">
+    <div class="mt-8 sm:mt-12">
+        <div class="border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
+            <nav class="flex gap-4 sm:gap-8 min-w-max">
                 <button onclick="switchTab('description')" id="tab-description" class="tab-btn px-1 pb-4 border-b-2 border-primary-900 text-primary-900 dark:text-primary-400 font-semibold">
                     Description
                 </button>
@@ -289,8 +289,8 @@
 
     <!-- Related Products -->
     @if($relatedProducts->isNotEmpty())
-    <div class="mt-16">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">You May Also Like</h2>
+    <div class="mt-12 sm:mt-16">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">You May Also Like</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6">
             @foreach($relatedProducts as $related)
                 <x-product-card :product="$related" />

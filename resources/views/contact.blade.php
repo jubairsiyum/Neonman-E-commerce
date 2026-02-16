@@ -6,32 +6,32 @@
 
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Contact Us</h1>
+    <div class="container mx-auto px-4 py-4 sm:py-6">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Contact Us</h1>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-12">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<div class="container mx-auto px-4 py-8 sm:py-10 lg:py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12">
         
         <!-- Contact Form -->
         <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Get in Touch</h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Get in Touch</h2>
+            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4 sm:mb-6">
                 Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
             </p>
 
-            <form class="space-y-5">
+            <form class="space-y-4 sm:space-y-5">
                 @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
-                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                        <label for="name" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
+                        <input type="text" id="name" name="name" required class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                     </div>
 
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address *</label>
-                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                        <label for="email" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address *</label>
+                        <input type="email" id="email" name="email" required class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                     </div>
                 </div>
 

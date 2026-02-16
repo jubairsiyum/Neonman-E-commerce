@@ -6,12 +6,12 @@
 
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Checkout</h1>
+    <div class="container mx-auto px-4 py-4 sm:py-6">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Checkout</h1>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-6 sm:py-8">
     @php
         $cartItems = \Darryldecode\Cart\Facades\CartFacade::getContent();
     @endphp
@@ -34,43 +34,43 @@
 
     <form action="{{ url('/checkout/place-order') }}" method="POST">
         @csrf
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
             
             <!-- Checkout Form -->
-            <div class="lg:col-span-2 space-y-6">
+            <div class="lg:col-span-2 space-y-4 sm:space-y-6">
                 
                 <!-- Customer Information -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Customer Information</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Customer Information</h2>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                         <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">First Name *</label>
-                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name', auth()->user()->name ?? '') }}" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                            <label for="first_name" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">First Name *</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name', auth()->user()->name ?? '') }}" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                             @error('first_name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Last Name *</label>
-                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                            <label for="last_name" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Last Name *</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                             @error('last_name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address *</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                            <label for="email" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address *</label>
+                            <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                             @error('email')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required placeholder="01XXXXXXXXX" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                            <label for="phone" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required placeholder="01XXXXXXXXX" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                             @error('phone')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -79,22 +79,22 @@
                 </div>
 
                 <!-- Shipping Address -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Shipping Address</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Shipping Address</h2>
                     
-                    <div class="space-y-4">
+                    <div class="space-y-3 sm:space-y-4">
                         <div>
-                            <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Street Address *</label>
-                            <input type="text" id="address" name="address" value="{{ old('address') }}" required placeholder="House/Flat no., Street, Area" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                            <label for="address" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Street Address *</label>
+                            <input type="text" id="address" name="address" value="{{ old('address') }}" required placeholder="House/Flat no., Street, Area" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                             @error('address')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                             <div>
-                                <label for="division" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Division *</label>
-                                <select id="division" name="division" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                                <label for="division" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Division *</label>
+                                <select id="division" name="division" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                                     <option value="">Select Division</option>
                                     <option value="Dhaka" {{ old('division') == 'Dhaka' ? 'selected' : '' }}>Dhaka</option>
                                     <option value="Chittagong" {{ old('division') == 'Chittagong' ? 'selected' : '' }}>Chittagong</option>
@@ -111,64 +111,64 @@
                             </div>
 
                             <div>
-                                <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City/District *</label>
-                                <input type="text" id="city" name="city" value="{{ old('city') }}" required placeholder="e.g., Dhaka, Chittagong" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                                <label for="city" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City/District *</label>
+                                <input type="text" id="city" name="city" value="{{ old('city') }}" required placeholder="e.g., Dhaka, Chittagong" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                                 @error('city')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                             <div>
-                                <label for="area" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Area/Thana *</label>
-                                <input type="text" id="area" name="area" value="{{ old('area') }}" required placeholder="e.g., Mirpur, Dhanmondi" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                                <label for="area" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Area/Thana *</label>
+                                <input type="text" id="area" name="area" value="{{ old('area') }}" required placeholder="e.g., Mirpur, Dhanmondi" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                                 @error('area')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <div>
-                                <label for="postcode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Postcode</label>
-                                <input type="text" id="postcode" name="postcode" value="{{ old('postcode') }}" placeholder="1200" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                                <label for="postcode" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Postcode</label>
+                                <input type="text" id="postcode" name="postcode" value="{{ old('postcode') }}" placeholder="1200" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                             </div>
                         </div>
 
                         <div>
-                            <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Order Notes (Optional)</label>
-                            <textarea id="notes" name="notes" rows="3" placeholder="Additional instructions for delivery..." class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">{{ old('notes') }}</textarea>
+                            <label for="notes" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Order Notes (Optional)</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Additional instructions for delivery..." class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">{{ old('notes') }}</textarea>
                         </div>
                     </div>
                 </div>
 
                 <!-- Payment Method -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Payment Method</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Payment Method</h2>
                     
-                    <div class="space-y-3">
-                        <label class="flex items-start gap-3 p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-900 transition-colors">
+                    <div class="space-y-2 sm:space-y-3">
+                        <label class="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-900 transition-colors">
                             <input type="radio" name="payment_method" value="cod" checked class="mt-1">
-                            <div class="flex-1">
+                            <div class="flex-1 min-w-0">
                                 <div class="flex items-center justify-between mb-1">
-                                    <span class="font-semibold text-gray-900 dark:text-gray-100">Cash on Delivery (COD)</span>
+                                    <span class="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">Cash on Delivery (COD)</span>
                                     <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-xs font-medium text-gray-700 dark:text-gray-300">
                                         COD
                                     </span>
                                 </div>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Pay with cash when your order is delivered</p>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Pay with cash when your order is delivered</p>
                             </div>
                         </label>
 
-                        <label class="flex items-start gap-3 p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-900 transition-colors">
+                        <label class="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-900 transition-colors">
                             <input type="radio" name="payment_method" value="bkash" class="mt-1">
-                            <div class="flex-1">
+                            <div class="flex-1 min-w-0">
                                 <div class="flex items-center justify-between mb-1">
-                                    <span class="font-semibold text-gray-900 dark:text-gray-100">bKash</span>
+                                    <span class="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">bKash</span>
                                     <span class="px-2 py-1 bg-pink-500 text-white rounded text-xs font-bold">
                                         bKash
                                     </span>
                                 </div>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Pay securely using bKash mobile banking</p>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Pay securely using bKash mobile banking</p>
                             </div>
                         </label>
                     </div>
@@ -178,13 +178,13 @@
 
             <!-- Order Summary -->
             <div>
-                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6 sticky top-4">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Order Summary</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6 lg:sticky lg:top-4">
+                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Order Summary</h2>
 
                     <!-- Cart Items -->
-                    <div class="space-y-3 mb-4 max-h-60 overflow-y-auto">
+                    <div class="space-y-2 sm:space-y-3 mb-3 sm:mb-4 max-h-60 overflow-y-auto">
                         @foreach($cartItems as $item)
-                        <div class="flex gap-3">
+                        <div class="flex gap-2 sm:gap-3">
                             <div class="w-16 h-16 flex-shrink-0 bg-gray-100 dark:bg-gray-800 rounded overflow-hidden">
                                 @php
                                     $product = \App\Models\Product::find($item->id);
@@ -216,13 +216,13 @@
                         $total = $subtotal + $shippingFee;
                     @endphp
 
-                    <div class="space-y-2 py-4 border-y border-gray-200 dark:border-gray-700">
-                        <div class="flex justify-between text-sm">
+                    <div class="space-y-1.5 sm:space-y-2 py-3 sm:py-4 border-y border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between text-xs sm:text-sm">
                             <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
                             <span class="font-medium text-gray-900 dark:text-gray-100">৳{{ number_format($subtotal, 0) }}</span>
                         </div>
 
-                        <div class="flex justify-between text-sm">
+                        <div class="flex justify-between text-xs sm:text-sm">
                             <span class="text-gray-600 dark:text-gray-400">Shipping</span>
                             <span class="font-medium text-gray-900 dark:text-gray-100">
                                 @if($shippingFee > 0)
@@ -234,15 +234,15 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-between pt-4 mb-6">
-                        <span class="font-bold text-gray-900 dark:text-gray-100">Total</span>
-                        <span class="text-2xl font-bold text-primary-900 dark:text-primary-400">
+                    <div class="flex justify-between pt-3 sm:pt-4 mb-4 sm:mb-6">
+                        <span class="text-sm sm:text-base font-bold text-gray-900 dark:text-gray-100">Total</span>
+                        <span class="text-xl sm:text-2xl font-bold text-primary-900 dark:text-primary-400">
                             ৳{{ number_format($total, 0) }}
                         </span>
                     </div>
 
                     <!-- Place Order Button -->
-                    <button type="submit" class="w-full px-6 py-3 bg-primary-900 hover:bg-primary-950 text-white font-semibold rounded-lg transition-colors">
+                    <button type="submit" class="w-full px-4 sm:px-6 py-2.5 sm:py-3 bg-primary-900 hover:bg-primary-950 text-white text-sm sm:text-base font-semibold rounded-lg transition-colors">
                         Place Order
                     </button>
 
