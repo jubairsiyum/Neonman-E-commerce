@@ -15,16 +15,21 @@
     @php
         // For now, using session-based wishlist. Replace with database query for logged-in users
         $wishlistItems = session('wishlist', []);
-        $products = !empty($wishlistItems) ? \App\Models\Product::whereIn('id', $wishlistItems)->with('category')->get() : collect([]);
+        $products = !empty($wishlistItems) ? \App\Models\Product::whereIn('id', $wishlistItems)->where('is_active', true)->with('category')->get() : collect([]);
     @endphp
 
     @if($products->isEmpty())
-        <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-12 text-center max-w-md mx-auto">
-            <div class="text-6xl mb-4">💝</div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Your wishlist is empty</h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">Start adding products you love!</p>
-            <a href="{{ url('/shop') }}" class="inline-block px-6 py-3 bg-primary-900 hover:bg-primary-950 text-white font-semibold rounded-lg transition-colors">
-                Continue Shopping
+        <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-16 text-center max-w-lg mx-auto">
+            <!-- Empty Wishlist Icon -->
+            <div class="w-24 h-24 mx-auto mb-6 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Your wishlist is empty</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">Save your favorite items for later. Start adding products you love!</p>
+            <a href="{{ url('/shop') }}" class="inline-block px-8 py-3 bg-primary-900 hover:bg-primary-950 text-white font-semibold rounded-lg transition-colors">
+                Start Shopping
             </a>
         </div>
     @else
@@ -49,22 +54,28 @@
                         @endif
 
                         <!-- Badges -->
-                        <div class="absolute top-2 left-2 flex flex-col gap-2">
-                            @if($product->is_featured)
-                            <span class="px-2 py-1 bg-primary-900 text-white text-xs font-bold rounded">FEATURED</span>
+                        <div class="absolute top-0 left-0 flex flex-col gap-0">
+                            @if($product->has_discount)
+                            <div class="px-3 py-1.5 bg-red-600 text-white text-[10px] font-bold uppercase tracking-wide">
+                                -{{ $product->discount_percentage }}%
+                            </div>
                             @endif
-                            @if($product->discount_price)
-                            @php
-                                $discountPercent = round((($product->price - $product->discount_price) / $product->price) * 100);
-                            @endphp
-                            <span class="px-2 py-1 bg-red-500 text-white text-xs font-bold rounded">-{{ $discountPercent }}%</span>
+                            @if($product->is_new_arrival)
+                            <div class="px-3 py-1.5 bg-primary-900 text-white text-[10px] font-bold uppercase tracking-wide">
+                                New
+                            </div>
+                            @endif
+                            @if($product->is_best_seller)
+                            <div class="px-3 py-1.5 bg-gray-900 text-white text-[10px] font-bold uppercase tracking-wide">
+                                Best Seller
+                            </div>
                             @endif
                         </div>
 
                         <!-- Remove from Wishlist Button -->
-                        <button onclick="removeFromWishlist({{ $product->id }})" class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white dark:bg-gray-800 text-red-500 rounded-full shadow-md hover:bg-red-500 hover:text-white transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        <button onclick="removeFromWishlist({{ $product->id }})" class="absolute top-3 right-3 w-9 h-9 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-red-500 dark:hover:bg-red-500 hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     </a>
