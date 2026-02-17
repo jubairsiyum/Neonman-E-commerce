@@ -5,13 +5,10 @@
             
             <!-- Company Info -->
             <div>
-                <div class="flex items-center space-x-2 mb-3 sm:mb-4">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-primary-900 rounded flex items-center justify-center">
-                        <span class="text-white font-bold text-lg sm:text-xl">N</span>
-                    </div>
-                    <span class="text-xl sm:text-2xl font-bold text-primary-900 dark:text-white">
-                        Neonman
-                    </span>
+                <div class="mb-3 sm:mb-4">
+                    <a href="{{ url('/') }}" class="inline-block">
+                        <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-20 h-20 sm:w-24 sm:h-24 transition-transform hover:scale-105">
+                    </a>
                 </div>
                 <p class="text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 text-sm">
                     Bangladesh's funniest streetwear brand. Where fashion meets humor and comfort meets chaos.

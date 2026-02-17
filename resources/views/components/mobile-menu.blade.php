@@ -8,14 +8,9 @@
         
         <!-- Header -->
         <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-            <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 bg-primary-900 rounded flex items-center justify-center">
-                    <span class="text-white font-bold text-xl">N</span>
-                </div>
-                <span class="text-xl font-bold text-primary-900 dark:text-white">
-                    Neonman
-                </span>
-            </div>
+            <a href="{{ url('/') }}" class="flex items-center">
+                <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-16 h-16 transition-transform hover:scale-105">
+            </a>
             <button id="closeMobileMenu" type="button" class="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

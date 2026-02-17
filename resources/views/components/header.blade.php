@@ -22,13 +22,8 @@
 
                 <!-- Logo -->
                 <div class="flex items-center flex-1 lg:flex-initial justify-center lg:justify-start">
-                    <a href="{{ url('/') }}" class="flex items-center space-x-2">
-                        <div class="w-8 h-8 sm:w-10 sm:h-10 bg-primary-900 rounded flex items-center justify-center">
-                            <span class="text-white font-bold text-lg sm:text-xl">N</span>
-                        </div>
-                        <span class="text-xl sm:text-2xl font-bold text-primary-900 dark:text-white">
-                            Neonman
-                        </span>
+                    <a href="{{ url('/') }}" class="flex items-center">
+                        <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 transition-transform hover:scale-105">
                     </a>
                 </div>
 
