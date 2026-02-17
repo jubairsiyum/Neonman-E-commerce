@@ -84,13 +84,12 @@
             });
         }
 
-        // Close mobile menu when clicking outside
-        if (mobileMenu) {
-            mobileMenu.addEventListener('click', (e) => {
-                if (e.target === mobileMenu) {
-                    mobileMenu.classList.add('translate-x-full');
-                    document.body.style.overflow = 'auto';
-                }
+        // Close mobile menu when clicking outside (on backdrop)
+        const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
+        if (mobileMenuBackdrop && mobileMenu) {
+            mobileMenuBackdrop.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
             });
         }
 

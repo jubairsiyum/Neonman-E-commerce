@@ -1,4 +1,4 @@
-<footer class="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 transition-colors duration-200">
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 transition-colors duration-200">
     <!-- Main Footer -->
     <div class="container mx-auto px-4 py-8 sm:py-10 lg:py-12">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
@@ -7,7 +7,7 @@
             <div>
                 <div class="mb-3 sm:mb-4">
                     <a href="{{ url('/') }}" class="inline-block">
-                        <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-20 h-20 sm:w-24 sm:h-24 transition-transform hover:scale-105">
+                        <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 transition-transform hover:scale-105">
                     </a>
                 </div>
                 <p class="text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 text-sm">

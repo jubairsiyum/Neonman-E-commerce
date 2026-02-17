@@ -1,7 +1,7 @@
 <!-- Mobile Menu Overlay -->
 <div id="mobileMenu" class="fixed inset-0 z-50 lg:hidden transform translate-x-full transition-transform duration-300 ease-in-out">
     <!-- Backdrop -->
-    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div id="mobileMenuBackdrop" class="absolute inset-0 bg-black bg-opacity-50"></div>
     
     <!-- Menu Panel -->
     <div class="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white dark:bg-gray-900 shadow-xl overflow-y-auto">
@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
             <a href="{{ url('/') }}" class="flex items-center">
-                <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-16 h-16 transition-transform hover:scale-105">
+                <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-20 h-20 sm:w-24 sm:h-24 transition-transform hover:scale-105">
             </a>
             <button id="closeMobileMenu" type="button" class="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
