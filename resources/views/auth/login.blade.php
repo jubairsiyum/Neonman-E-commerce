@@ -3,27 +3,27 @@
 @section('title', 'Login - ' . config('app.name'))
 
 @section('content')
-<div class="w-full max-w-md mx-auto px-4 sm:px-6">
+<div class="w-full max-w-md mx-auto">
     
     <!-- Brand Header -->
-    <div class="text-center mb-8 sm:mb-10">
-        <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary-900 to-primary-700 rounded-2xl mb-4 shadow-lg shadow-primary-900/30">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <div class="text-center mb-6">
+        <div class="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary-900 to-primary-700 rounded-xl mb-3 shadow-lg shadow-primary-900/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
         </div>
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h1>
-        <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400">Sign in to your account</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Welcome Back</h1>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Sign in to your account</p>
     </div>
 
     <!-- Login Card -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-        <div class="p-6 sm:p-8">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="p-6">
             
             <!-- Session Status -->
             @if (session('status'))
-                <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-start gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-start gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span class="text-sm text-green-800 dark:text-green-200">{{ session('status') }}</span>
@@ -31,12 +31,12 @@
             @endif
 
             <!-- Login Form -->
-            <form method="POST" action="{{ route('login') }}" class="space-y-5">
+            <form method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
 
                 <!-- Email Address -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                         Email Address
                     </label>
                     <input 
@@ -45,19 +45,19 @@
                         name="email" 
                         value="{{ old('email') }}"
                         placeholder="you@example.com" 
-                        class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 @error('email') border-red-500 focus:ring-red-500 @enderror" 
+                        class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all @error('email') border-red-500 focus:ring-red-500 @enderror" 
                         required 
                         autofocus 
                         autocomplete="username"
                     />
                     @error('email')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Password -->
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                         Password
                     </label>
                     <input 
@@ -65,12 +65,12 @@
                         type="password" 
                         name="password" 
                         placeholder="••••••••" 
-                        class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 @error('password') border-red-500 focus:ring-red-500 @enderror" 
+                        class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all @error('password') border-red-500 focus:ring-red-500 @enderror" 
                         required 
                         autocomplete="current-password"
                     />
                     @error('password')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 

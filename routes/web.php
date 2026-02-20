@@ -30,6 +30,9 @@ Route::prefix('cart')->name('cart.')->group(function () {
 
 // Wishlist Routes
 Route::get('/wishlist', function () {
+    if (auth()->check()) {
+        return view('customer.wishlist');
+    }
     return view('wishlist');
 })->name('wishlist');
 
@@ -66,6 +69,9 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::get('/track-order', function () {
+    if (auth()->check()) {
+        return view('customer.track-order');
+    }
     return view('track-order');
 })->name('track-order');
 
@@ -74,7 +80,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', function () {
+        return view('customer.profile');
+    })->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
