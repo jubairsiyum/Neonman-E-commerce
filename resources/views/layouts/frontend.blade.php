@@ -19,9 +19,21 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Facebook Pixel -->
+    @include('components.facebook-pixel')
+
     @stack('styles')
 </head>
 <body class="antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 overflow-x-hidden">
+    
+    <!-- Facebook Pixel noscript -->
+    <noscript>
+        @if(config('services.facebook.pixel_id'))
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id={{ config('services.facebook.pixel_id') }}&ev=PageView&noscript=1"/>
+        @endif
+    </noscript>
+
     <!-- Header -->
     @include('components.header')
 

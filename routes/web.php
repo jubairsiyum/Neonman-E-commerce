@@ -48,7 +48,7 @@ Route::get('/checkout', function () {
 // User Dashboard Routes
 Route::middleware('auth')->group(function () {
     Route::get('/my-orders', function () {
-        return view('orders');
+        return view('customer.orders');
     })->name('my-orders');
     
     Route::get('/order/{id}', function ($id) {
@@ -70,7 +70,7 @@ Route::get('/track-order', function () {
 })->name('track-order');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('customer.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
