@@ -3,122 +3,122 @@
 @section('title', 'Login - ' . config('app.name'))
 
 @section('content')
-<div class="max-w-md mx-auto">
-    <!-- Card -->
-    <div class="card bg-white dark:bg-gray-800 shadow-2xl">
-        <div class="card-body">
-            <!-- Logo and Title -->
-            <div class="text-center mb-6">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back!</h1>
-                <p class="text-gray-600 dark:text-gray-400">Login to your account to continue</p>
-            </div>
+<div class="w-full max-w-md mx-auto px-4 sm:px-6">
+    
+    <!-- Brand Header -->
+    <div class="text-center mb-8 sm:mb-10">
+        <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary-900 to-primary-700 rounded-2xl mb-4 shadow-lg shadow-primary-900/30">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h1>
+        <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400">Sign in to your account</p>
+    </div>
 
+    <!-- Login Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+        <div class="p-6 sm:p-8">
+            
             <!-- Session Status -->
             @if (session('status'))
-                <div class="alert alert-success mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>{{ session('status') }}</span>
+                    <span class="text-sm text-green-800 dark:text-green-200">{{ session('status') }}</span>
                 </div>
             @endif
 
             <!-- Login Form -->
-            <form method="POST" action="{{ route('login') }}" class="space-y-4">
+            <form method="POST" action="{{ route('login') }}" class="space-y-5">
                 @csrf
 
                 <!-- Email Address -->
-                <div class="form-control w-full">
-                    <label class="label" for="email">
-                        <span class="label-text font-semibold">Email Address</span>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Email Address
                     </label>
                     <input 
                         id="email" 
                         type="email" 
                         name="email" 
                         value="{{ old('email') }}"
-                        placeholder="your@email.com" 
-                        class="input input-bordered w-full @error('email') input-error @enderror" 
+                        placeholder="you@example.com" 
+                        class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 @error('email') border-red-500 focus:ring-red-500 @enderror" 
                         required 
                         autofocus 
                         autocomplete="username"
                     />
                     @error('email')
-                        <label class="label">
-                            <span class="label-text-alt text-error">{{ $message }}</span>
-                        </label>
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Password -->
-                <div class="form-control w-full">
-                    <label class="label" for="password">
-                        <span class="label-text font-semibold">Password</span>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Password
                     </label>
                     <input 
                         id="password" 
                         type="password" 
                         name="password" 
                         placeholder="••••••••" 
-                        class="input input-bordered w-full @error('password') input-error @enderror" 
+                        class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 @error('password') border-red-500 focus:ring-red-500 @enderror" 
                         required 
                         autocomplete="current-password"
                     />
                     @error('password')
-                        <label class="label">
-                            <span class="label-text-alt text-error">{{ $message }}</span>
-                        </label>
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Remember Me & Forgot Password -->
                 <div class="flex items-center justify-between">
-                    <label class="label cursor-pointer gap-2 p-0">
+                    <label class="flex items-center gap-2 cursor-pointer group">
                         <input 
                             id="remember_me" 
                             type="checkbox" 
                             name="remember" 
-                            class="checkbox checkbox-primary checkbox-sm"
+                            class="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-primary-500"
                         />
-                        <span class="label-text text-sm">Remember me</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">Remember me</span>
                     </label>
 
                     @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="link link-primary text-sm">
+                        <a href="{{ route('password.request') }}" class="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors">
                             Forgot password?
                         </a>
                     @endif
                 </div>
 
                 <!-- Submit Button -->
-                <div class="form-control mt-6">
-                    <button type="submit" class="btn btn-primary btn-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                        </svg>
-                        Login
-                    </button>
-                </div>
+                <button type="submit" class="w-full py-3.5 px-4 bg-gradient-to-r from-primary-900 to-primary-700 hover:from-primary-800 hover:to-primary-600 text-white font-medium rounded-xl shadow-lg shadow-primary-900/30 hover:shadow-xl hover:shadow-primary-900/40 transition-all duration-200 transform hover:-translate-y-0.5">
+                    Sign In
+                </button>
 
-                <!-- Divider -->
-                <div class="divider">OR</div>
-
-                <!-- Register Link -->
-                <div class="text-center">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        Don't have an account? 
-                        <a href="{{ route('register') }}" class="link link-primary font-semibold">
-                            Register now
-                        </a>
-                    </p>
-                </div>
             </form>
+        </div>
+
+        <!-- Register Link -->
+        <div class="px-6 sm:px-8 py-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-700">
+            <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+                Don't have an account? 
+                <a href="{{ route('register') }}" class="font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors">
+                    Create account
+                </a>
+            </p>
         </div>
     </div>
 
-    <!-- Extra Info -->
-    <div class="text-center mt-6 text-sm text-gray-600 dark:text-gray-400">
-        <p>By logging in, you agree to our <a href="#" class="link link-primary">Terms of Service</a> and <a href="#" class="link link-primary">Privacy Policy</a></p>
+    <!-- Footer Links -->
+    <div class="text-center mt-6 sm:mt-8">
+        <p class="text-xs text-gray-500 dark:text-gray-500">
+            By signing in, you agree to our 
+            <a href="#" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 hover:underline">Terms</a> and 
+            <a href="#" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 hover:underline">Privacy Policy</a>
+        </p>
     </div>
 </div>
 @endsection
