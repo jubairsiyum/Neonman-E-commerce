@@ -28,9 +28,9 @@
                         <img src="{{ $product->getFirstMediaUrl('images') }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                     @endif
                 </a>
-                <div class="p-4">
-                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ $product->category?->name ?? 'Uncategorized' }}</p>
-                    <h3 class="mt-1 font-semibold text-gray-900 dark:text-white">{{ $product->name }}</h3>
+                <div class="p-5">
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{{ $product->category?->name ?? 'Uncategorized' }}</p>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">{{ $product->name }}</h3>
                     <p class="mt-2 text-lg font-bold text-primary-600 dark:text-primary-400">Tk {{ number_format($product->effective_price, 2) }}</p>
 
                     <div class="mt-4 flex gap-2">

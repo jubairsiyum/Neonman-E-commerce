@@ -20,7 +20,7 @@
     </div>
 @endif
 
-<form method="GET" action="{{ route('my-orders') }}" class="mb-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+<form method="GET" action="{{ route('my-orders') }}" class="mb-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
         <div class="md:col-span-2">
             <input
@@ -55,21 +55,21 @@
 @else
     <div class="space-y-4">
         @foreach($orders as $order)
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 border-b border-gray-200 dark:border-gray-700 pb-4">
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 border-b border-gray-200 dark:border-gray-700 pb-5">
                     <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Order</p>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">Order</p>
                         <p class="font-bold text-gray-900 dark:text-white">{{ $order->order_number }}</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ $order->created_at->format('M d, Y h:i A') }}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{{ $order->created_at->format('M d, Y h:i A') }}</p>
                     </div>
-                    <div class="text-right">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Status</p>
+                    <div class="text-left md:text-right">
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">Status</p>
                         <p class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($order->status) }}</p>
                         <p class="text-lg font-bold text-primary-600 dark:text-primary-400">Tk {{ number_format($order->total, 2) }}</p>
                     </div>
                 </div>
 
-                <div class="mt-4 space-y-2">
+                <div class="mt-5 space-y-2.5">
                     @foreach($order->items->take(3) as $item)
                         <div class="flex items-center justify-between text-sm">
                             <p class="text-gray-900 dark:text-white">{{ $item->product_name }} x {{ $item->quantity }}</p>
@@ -81,7 +81,7 @@
                     @endif
                 </div>
 
-                <div class="mt-4 flex items-center gap-2">
+                <div class="mt-5 flex items-center gap-2">
                     <a href="{{ route('order.detail', $order) }}" class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium">View details</a>
                     @if($order->canBeCancelled())
                         <form method="POST" action="{{ route('order.cancel', $order) }}">

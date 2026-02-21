@@ -8,7 +8,7 @@
     <p class="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">Search by order number to get the latest shipping status.</p>
 </div>
 
-<div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 mb-6">
+<div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 mb-6">
     <form method="GET" action="{{ route('track-order') }}" class="flex flex-col sm:flex-row gap-3">
         <input
             type="text"
@@ -22,8 +22,8 @@
 </div>
 
 @if(request('order'))
-    <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 mb-6">
-        <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Search Result</h2>
+    <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 mb-6">
+        <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Search Result</h2>
         @if($matchingOrder)
             <div class="space-y-2 text-sm">
                 <p><span class="text-gray-500 dark:text-gray-400">Order:</span> <span class="font-semibold text-gray-900 dark:text-white">{{ $matchingOrder->order_number }}</span></p>
@@ -39,7 +39,7 @@
 @endif
 
 <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
-    <div class="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
         <h2 class="text-lg font-bold text-gray-900 dark:text-white">Recent Orders</h2>
     </div>
     @if($latestOrders->isEmpty())
@@ -47,7 +47,7 @@
     @else
         <div class="divide-y divide-gray-200 dark:divide-gray-700">
             @foreach($latestOrders as $order)
-                <div class="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <div class="px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div>
                         <p class="font-semibold text-gray-900 dark:text-white">{{ $order->order_number }}</p>
                         <p class="text-sm text-gray-500 dark:text-gray-400">{{ $order->created_at->format('M d, Y') }}</p>
