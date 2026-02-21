@@ -28,6 +28,15 @@
     --mouse-y: 50%;
     --bg-page: #030305; /* Deep, almost OLED black */
     
+    /* State Colors */
+    --error: #F43F5E;
+    --error-hover: #E11D48;
+    --error-bg: rgba(244, 63, 94, 0.10);
+    --error-border: rgba(244, 63, 94, 0.30);
+    --success: #34D399;
+    --success-bg: rgba(52, 211, 153, 0.08);
+    --success-border: rgba(52, 211, 153, 0.25);
+
     /* Geometry */
     --r-lg: 16px;
     --r: 10px;
@@ -262,6 +271,41 @@ html, body {
 .auth-note a { color: rgba(255,255,255,0.7); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1px; }
 .auth-note a:hover { color: #fff; border-color: #fff; }
 
+/* ── Alert Banner ─────────────────────────────── */
+.alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--r-sm);
+    border: 1px solid;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: alertIn 0.3s ease both;
+}
+@keyframes alertIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.alert-error  { background: var(--error-bg);   border-color: var(--error-border);   color: var(--error);   }
+.alert-success{ background: var(--success-bg); border-color: var(--success-border); color: var(--success); }
+.alert-icon { flex-shrink: 0; margin-top: 1px; }
+.alert-body { flex: 1; }
+.alert-title { font-weight: 600; margin-bottom: 2px; font-size: 13.5px; }
+.alert-msg   { opacity: 0.88; font-size: 13px; }
+
+/* ── Per-field Error Message ──────────────────── */
+.field-error-msg {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--error);
+    margin-top: 6px;
+    font-weight: 500;
+}
+
 @media(max-width: 640px) {
     .auth-page { padding: 20px 16px; }
     .card-body { padding: 32px 24px; }
@@ -281,7 +325,33 @@ html, body {
         <div class="card-stripe"></div>
         <div class="card-body">
             
-            
+            {{-- ── Session / Validation Alerts ── --}}
+            @if ($errors->any())
+            <div class="alert alert-error" role="alert">
+                <span class="alert-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/>
+                    </svg>
+                </span>
+                <div class="alert-body">
+                    <div class="alert-title">Sign in failed</div>
+                    <div class="alert-msg">{{ $errors->first() }}</div>
+                </div>
+            </div>
+            @endif
+
+            @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                <span class="alert-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </span>
+                <div class="alert-body">
+                    <div class="alert-msg">{{ session('status') }}</div>
+                </div>
+            </div>
+            @endif
 
             <h1 class="card-title">Welcome back</h1>
             <p class="card-sub">Sign in to your account to continue shopping.</p>
@@ -302,6 +372,12 @@ html, body {
                         </span>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" autocomplete="username" required autofocus class="field-input {{ $errors->has('email') ? 'is-error' : '' }}" />
                     </div>
+                    @error('email')
+                    <p class="field-error-msg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
 
                 <div class="field">
@@ -325,6 +401,12 @@ html, body {
                             </svg>
                         </button>
                     </div>
+                    @error('password')
+                    <p class="field-error-msg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
 
                 <label class="check-row">
