@@ -160,45 +160,89 @@ html,body{
     gap:12px;
 }
 
-.field{margin-bottom:14px}
+.field{margin-bottom:16px;position:relative}
 .field-label{
     display:block;
     font-size:12px;font-weight:600;
     letter-spacing:.04em;text-transform:uppercase;
     color:var(--ink-2);
-    margin-bottom:7px;
+    margin-bottom:8px;
+}
+
+/* Input wrapper for icon */
+.field-wrapper{
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.field-icon{
+    position:absolute;
+    left:14px;
+    color:var(--ink-4);
+    pointer-events:none;
+    transition:color .2s ease;
+    display:flex;
+    align-items:center;
 }
 
 .field-input{
     display:block;width:100%;
-    padding:11px 14px;
+    padding:12px 14px;
     font-family:var(--font);font-size:14px;
-    color:var(--ink);background:#fff;
-    border:1.5px solid var(--border);
+    color:var(--ink);background:#fafafa;
+    border:2px solid transparent;
     border-radius:var(--r-sm);
     outline:none;-webkit-appearance:none;
-    transition:border-color .15s,box-shadow .15s;
+    transition:all .25s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 1px 2px rgba(0,0,0,0.04);
 }
-.field-input::placeholder{color:var(--ink-5)}
-.field-input:hover{border-color:#c8c8c8}
+
+.field-input.has-icon{
+    padding-left:44px;
+}
+
+.field-input::placeholder{
+    color:var(--ink-5);
+    transition:color .2s;
+}
+
+.field-input:hover{
+    background:#f5f5f5;
+    box-shadow:0 2px 4px rgba(0,0,0,0.06);
+}
+
 .field-input:focus{
+    background:#fff;
     border-color:var(--brand);
-    box-shadow:0 0 0 3px rgba(106,4,4,0.10);
+    box-shadow:0 0 0 4px rgba(106,4,4,0.08), 0 4px 12px rgba(106,4,4,0.12);
+    transform:translateY(-1px);
 }
-.field-input.is-error{border-color:var(--error);background:var(--error-bg)}
-.field-input.is-error:focus{box-shadow:0 0 0 3px rgba(192,57,43,0.10)}
+
+.field-input:focus::placeholder{color:var(--ink-4)}
+
+.field:focus-within .field-icon{color:var(--brand)}
+
+.field-input.is-error{
+    border-color:var(--error);
+    background:#fff5f5;
+}
+.field-input.is-error:focus{
+    box-shadow:0 0 0 4px rgba(192,57,43,0.10), 0 4px 12px rgba(192,57,43,0.12);
+}
 
 .field-input:-webkit-autofill,
 .field-input:-webkit-autofill:hover,
 .field-input:-webkit-autofill:focus{
-    -webkit-box-shadow:0 0 0 40px #fff inset!important;
+    -webkit-box-shadow:0 0 0 40px #fafafa inset!important;
     -webkit-text-fill-color:var(--ink)!important;
     transition:background-color 9999s ease 0s;
 }
 
 .field-error{
-    margin-top:5px;font-size:12px;color:var(--error);
+    margin-top:6px;font-size:12px;color:var(--error);
     display:flex;align-items:center;gap:5px;
+    font-weight:500;
 }
 
 /* Password hint */
@@ -231,21 +275,56 @@ html,body{
 .btn-submit{
     display:flex;align-items:center;justify-content:center;gap:8px;
     width:100%;
-    padding:13px 20px;
+    padding:14px 20px;
+    margin-top:24px;
     font-family:var(--font-head);
     font-size:14px;font-weight:700;letter-spacing:-0.01em;
-    color:#fff;background:var(--ink);
+    color:#fff;
+    background:linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
     border:none;border-radius:var(--r-sm);
     cursor:pointer;outline:none;
-    transition:background .15s,transform .12s,box-shadow .15s;
+    position:relative;
+    overflow:hidden;
+    transition:all .25s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.1);
 }
+
+.btn-submit::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    background:linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    opacity:0;
+    transition:opacity .25s ease;
+}
+
 .btn-submit:hover{
-    background:#222;
-    transform:translateY(-1px);
-    box-shadow:0 6px 20px rgba(0,0,0,0.25);
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.25), 0 4px 8px rgba(0,0,0,0.15);
 }
-.btn-submit:active{transform:translateY(0);box-shadow:none}
-.btn-submit svg{flex-shrink:0;opacity:.7}
+
+.btn-submit:hover::before{opacity:1}
+
+.btn-submit:active{
+    transform:translateY(0);
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+.btn-submit span,
+.btn-submit svg{
+    position:relative;
+    z-index:1;
+}
+
+.btn-submit svg{
+    flex-shrink:0;
+    opacity:.85;
+    transition:transform .3s ease;
+}
+
+.btn-submit:hover svg{
+    transform:translateX(3px);
+}
 
 .card-switch{
     margin-top:18px;
@@ -316,49 +395,104 @@ html,body{
                 <div class="field-row">
                     <div class="field">
                         <label class="field-label" for="name">Full Name</label>
-                        <input id="name" type="text" name="name"
-                               value="{{ old('name') }}"
-                               placeholder="e.g. Rahim Uddin"
-                               autocomplete="name" required autofocus
-                               class="field-input {{ $errors->has('name') ? 'is-error' : '' }}" />
-                        @error('name')<p class="field-error">{{ $message }}</p>@enderror
+                        <div class="field-wrapper">
+                            <span class="field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </span>
+                            <input id="name" type="text" name="name"
+                                   value="{{ old('name') }}"
+                                   placeholder="e.g. Rahim Uddin"
+                                   autocomplete="name" required autofocus
+                                   class="field-input has-icon {{ $errors->has('name') ? 'is-error' : '' }}" />
+                        </div>
+                        @error('name')<p class="field-error">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            {{ $message }}
+                        </p>@enderror
                     </div>
                     <div class="field">
                         <label class="field-label" for="phone">Phone <span style="font-size:10px;font-weight:400;color:#b0b0b0;text-transform:none">(optional)</span></label>
-                        <input id="phone" type="tel" name="phone"
-                               value="{{ old('phone') }}"
-                               placeholder="01XXXXXXXXX"
-                               autocomplete="tel"
-                               class="field-input" />
+                        <div class="field-wrapper">
+                            <span class="field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                            </span>
+                            <input id="phone" type="tel" name="phone"
+                                   value="{{ old('phone') }}"
+                                   placeholder="01XXXXXXXXX"
+                                   autocomplete="tel"
+                                   class="field-input has-icon" />
+                        </div>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="field-label" for="email">Email Address</label>
-                    <input id="email" type="email" name="email"
-                           value="{{ old('email') }}"
-                           placeholder="you@example.com"
-                           autocomplete="username" required
-                           class="field-input {{ $errors->has('email') ? 'is-error' : '' }}" />
-                    @error('email')<p class="field-error">{{ $message }}</p>@enderror
+                    <div class="field-wrapper">
+                        <span class="field-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </span>
+                        <input id="email" type="email" name="email"
+                               value="{{ old('email') }}"
+                               placeholder="you@example.com"
+                               autocomplete="username" required
+                               class="field-input has-icon {{ $errors->has('email') ? 'is-error' : '' }}" />
+                    </div>
+                    @error('email')<p class="field-error">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        {{ $message }}
+                    </p>@enderror
                 </div>
 
                 <div class="field">
                     <label class="field-label" for="password">Password</label>
-                    <input id="password" type="password" name="password"
-                           placeholder="At least 8 characters"
-                           autocomplete="new-password" required
-                           class="field-input {{ $errors->has('password') ? 'is-error' : '' }}" />
-                    @error('password')<p class="field-error">{{ $message }}</p>@enderror
+                    <div class="field-wrapper">
+                        <span class="field-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </span>
+                        <input id="password" type="password" name="password"
+                               placeholder="At least 8 characters"
+                               autocomplete="new-password" required
+                               class="field-input has-icon {{ $errors->has('password') ? 'is-error' : '' }}" />
+                    </div>
+                    @error('password')<p class="field-error">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        {{ $message }}
+                    </p>@enderror
                 </div>
 
                 <div class="field">
                     <label class="field-label" for="password_confirmation">Confirm Password</label>
-                    <input id="password_confirmation" type="password" name="password_confirmation"
-                           placeholder="Repeat your password"
-                           autocomplete="new-password" required
-                           class="field-input {{ $errors->has('password_confirmation') ? 'is-error' : '' }}" />
-                    @error('password_confirmation')<p class="field-error">{{ $message }}</p>@enderror
+                    <div class="field-wrapper">
+                        <span class="field-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </span>
+                        <input id="password_confirmation" type="password" name="password_confirmation"
+                               placeholder="Repeat your password"
+                               autocomplete="new-password" required
+                               class="field-input has-icon {{ $errors->has('password_confirmation') ? 'is-error' : '' }}" />
+                    </div>
+                    @error('password_confirmation')<p class="field-error">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        {{ $message }}
+                    </p>@enderror
                 </div>
 
                 <label class="terms-row">
@@ -367,7 +501,7 @@ html,body{
                 </label>
 
                 <button type="submit" class="btn-submit">
-                    Create my account
+                    <span>Create my account</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </button>
             </form>

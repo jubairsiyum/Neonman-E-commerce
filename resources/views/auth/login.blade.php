@@ -289,26 +289,60 @@ html,body{
 .btn-submit{
     display:flex;align-items:center;justify-content:center;gap:8px;
     width:100%;
-    padding:13px 20px;
+    padding:14px 20px;
+    margin-top:24px;
     font-family:var(--font-head);
     font-size:14px;
     font-weight:700;
     letter-spacing:-0.01em;
     color:#fff;
-    background:var(--ink);
+    background:linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
     border:none;
     border-radius:var(--r-sm);
     cursor:pointer;
     outline:none;
-    transition:background .15s,transform .12s,box-shadow .15s;
+    position:relative;
+    overflow:hidden;
+    transition:all .25s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.1);
 }
+
+.btn-submit::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    background:linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    opacity:0;
+    transition:opacity .25s ease;
+}
+
 .btn-submit:hover{
-    background:#222;
-    transform:translateY(-1px);
-    box-shadow:0 6px 20px rgba(0,0,0,0.25);
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.25), 0 4px 8px rgba(0,0,0,0.15);
 }
-.btn-submit:active{transform:translateY(0);box-shadow:none}
-.btn-submit svg{flex-shrink:0;opacity:.7}
+
+.btn-submit:hover::before{opacity:1}
+
+.btn-submit:active{
+    transform:translateY(0);
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+.btn-submit span,
+.btn-submit svg{
+    position:relative;
+    z-index:1;
+}
+
+.btn-submit svg{
+    flex-shrink:0;
+    opacity:.85;
+    transition:transform .3s ease;
+}
+
+.btn-submit:hover svg{
+    transform:translateX(3px);
+}
 
 /* ── Divider ──────────────────────────────────── */
 .divider{
@@ -461,7 +495,7 @@ html,body{
                 </label>
 
                 <button type="submit" class="btn-submit">
-                    Sign in to my account
+                    <span>Sign in to my account</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </button>
             </form>
