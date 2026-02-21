@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\CustomerPortalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,12 +30,7 @@ Route::prefix('cart')->name('cart.')->group(function () {
 });
 
 // Wishlist Routes
-Route::get('/wishlist', function () {
-    if (auth()->check()) {
-        return view('customer.wishlist');
-    }
-    return view('wishlist');
-})->name('wishlist');
+Route::get('/wishlist', [CustomerPortalController::class, 'wishlist'])->name('wishlist');
 
 Route::prefix('wishlist')->name('wishlist.')->group(function () {
     Route::post('/toggle', [WishlistController::class, 'toggle'])->name('toggle');
@@ -48,17 +44,6 @@ Route::get('/checkout', function () {
     return view('checkout');
 })->name('checkout');
 
-// User Dashboard Routes
-Route::middleware('auth')->group(function () {
-    Route::get('/my-orders', function () {
-        return view('customer.orders');
-    })->name('my-orders');
-    
-    Route::get('/order/{id}', function ($id) {
-        return view('order-detail', ['orderId' => $id]);
-    })->name('order.detail');
-});
-
 // Static Pages
 Route::get('/about', function () {
     return view('about');
@@ -68,21 +53,14 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::get('/track-order', function () {
-    if (auth()->check()) {
-        return view('customer.track-order');
-    }
-    return view('track-order');
-})->name('track-order');
+Route::get('/track-order', [CustomerPortalController::class, 'trackOrder'])->name('track-order');
 
-Route::get('/dashboard', function () {
-    return view('customer.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', function () {
-        return view('customer.profile');
-    })->name('profile.edit');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [CustomerPortalController::class, 'dashboard'])->name('dashboard');
+    Route::get('/my-orders', [CustomerPortalController::class, 'orders'])->name('my-orders');
+    Route::get('/my-orders/{order}', [CustomerPortalController::class, 'showOrder'])->name('order.detail');
+    Route::post('/my-orders/{order}/cancel', [CustomerPortalController::class, 'cancelOrder'])->name('order.cancel');
+    Route::get('/profile', [CustomerPortalController::class, 'profile'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

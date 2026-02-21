@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
 class WishlistController extends Controller
@@ -17,6 +18,19 @@ class WishlistController extends Controller
         ]);
 
         $productId = $request->product_id;
+
+        if (auth()->check()) {
+            $inWishlist = Wishlist::toggle(auth()->id(), $productId);
+            $wishlistCount = Wishlist::where('user_id', auth()->id())->count();
+
+            return response()->json([
+                'success' => true,
+                'message' => $inWishlist ? 'Added to wishlist!' : 'Removed from wishlist',
+                'in_wishlist' => $inWishlist,
+                'wishlist_count' => $wishlistCount,
+            ]);
+        }
+
         $wishlist = session('wishlist', []);
 
         if (in_array($productId, $wishlist)) {
@@ -46,6 +60,18 @@ class WishlistController extends Controller
      */
     public function remove($productId)
     {
+        if (auth()->check()) {
+            Wishlist::where('user_id', auth()->id())
+                ->where('product_id', $productId)
+                ->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Item removed from wishlist.',
+                'wishlist_count' => Wishlist::where('user_id', auth()->id())->count(),
+            ]);
+        }
+
         $wishlist = session('wishlist', []);
         $wishlist = array_diff($wishlist, [$productId]);
         session(['wishlist' => array_values($wishlist)]);
@@ -62,6 +88,16 @@ class WishlistController extends Controller
      */
     public function clear()
     {
+        if (auth()->check()) {
+            Wishlist::where('user_id', auth()->id())->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Wishlist cleared successfully.',
+                'wishlist_count' => 0
+            ]);
+        }
+
         session()->forget('wishlist');
 
         return response()->json([
@@ -99,14 +135,22 @@ class WishlistController extends Controller
 
         if ($cartResponse->getData()->success) {
             // Remove from wishlist
-            $wishlist = session('wishlist', []);
-            $wishlist = array_diff($wishlist, [$productId]);
-            session(['wishlist' => array_values($wishlist)]);
+            if (auth()->check()) {
+                Wishlist::where('user_id', auth()->id())
+                    ->where('product_id', $productId)
+                    ->delete();
+                $wishlistCount = Wishlist::where('user_id', auth()->id())->count();
+            } else {
+                $wishlist = session('wishlist', []);
+                $wishlist = array_diff($wishlist, [$productId]);
+                session(['wishlist' => array_values($wishlist)]);
+                $wishlistCount = count($wishlist);
+            }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Product moved to cart successfully!',
-                'wishlist_count' => count($wishlist),
+                'wishlist_count' => $wishlistCount,
                 'cart_count' => $cartResponse->getData()->cart_count
             ]);
         }
