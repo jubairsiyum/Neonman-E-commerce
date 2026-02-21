@@ -303,36 +303,12 @@ html,body{
     <div class="auth-card">
         <div class="card-stripe"></div>
 
-        <div class="card-body">
-
-            {{-- Brand --}}
-            <div class="card-brand">
-                <a href="{{ url('/') }}">
-                    <div class="brand-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/></svg>
-                    </div>
-                    <span class="brand-name">Neo<span>n</span>man</span>
-                </a>
-            </div>
+        <div class="card-body">            
 
             <h1 class="card-title">Create your account</h1>
             <p class="card-sub">Join thousands of shoppers across Bangladesh</p>
 
-            {{-- Perks --}}
-            <div class="reg-perks">
-                <div class="reg-perk">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                    10% off first order
-                </div>
-                <div class="reg-perk">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                    Early drop access
-                </div>
-                <div class="reg-perk">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                    Free returns
-                </div>
-            </div>
+           
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
@@ -402,7 +378,7 @@ html,body{
 
         </div>
 
-        <div class="card-footer">
+        {{-- <div class="card-footer">
             <div class="trust-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 SSL Secured
@@ -415,7 +391,7 @@ html,body{
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                 Cash on Delivery
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <p class="auth-note">

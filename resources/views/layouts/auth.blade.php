@@ -54,9 +54,6 @@
     <!-- Footer -->
     @include('components.footer')
 
-    <!-- Mobile Menu -->
-    @include('components.mobile-menu')
-
     @stack('scripts')
 </body>
 </html>

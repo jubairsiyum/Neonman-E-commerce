@@ -165,7 +165,7 @@ html,body{
 }
 
 /* ── Form fields ──────────────────────────────── */
-.field{margin-bottom:16px}
+.field{margin-bottom:18px;position:relative}
 
 .field-label{
     display:flex;justify-content:space-between;align-items:center;
@@ -174,7 +174,7 @@ html,body{
     letter-spacing:0.04em;
     text-transform:uppercase;
     color:var(--ink-2);
-    margin-bottom:7px;
+    margin-bottom:8px;
 }
 
 .field-label a{
@@ -188,43 +188,83 @@ html,body{
 }
 .field-label a:hover{color:var(--brand)}
 
+/* Input wrapper for icon */
+.field-wrapper{
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.field-icon{
+    position:absolute;
+    left:14px;
+    color:var(--ink-4);
+    pointer-events:none;
+    transition:color .2s ease;
+    display:flex;
+    align-items:center;
+}
+
 .field-input{
     display:block;
     width:100%;
-    padding:11px 14px;
+    padding:12px 14px 12px 44px;
     font-family:var(--font);
     font-size:14px;
     color:var(--ink);
-    background:#fff;
-    border:1.5px solid var(--border);
+    background:#fafafa;
+    border:2px solid transparent;
     border-radius:var(--r-sm);
     outline:none;
     -webkit-appearance:none;
-    transition:border-color .15s,box-shadow .15s;
+    transition:all .25s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 1px 2px rgba(0,0,0,0.04);
 }
-.field-input::placeholder{color:var(--ink-5)}
-.field-input:hover{border-color:#c8c8c8}
+
+.field-input::placeholder{
+    color:var(--ink-5);
+    transition:color .2s;
+}
+
+.field-input:hover{
+    background:#f5f5f5;
+    box-shadow:0 2px 4px rgba(0,0,0,0.06);
+}
+
 .field-input:focus{
+    background:#fff;
     border-color:var(--brand);
-    box-shadow:0 0 0 3px rgba(106,4,4,0.10);
+    box-shadow:0 0 0 4px rgba(106,4,4,0.08), 0 4px 12px rgba(106,4,4,0.12);
+    transform:translateY(-1px);
 }
-.field-input.is-error{border-color:var(--error);background:var(--error-bg)}
-.field-input.is-error:focus{box-shadow:0 0 0 3px rgba(192,57,43,0.10)}
+
+.field-input:focus::placeholder{color:var(--ink-4)}
+
+.field:focus-within .field-icon{color:var(--brand)}
+
+.field-input.is-error{
+    border-color:var(--error);
+    background:#fff5f5;
+}
+.field-input.is-error:focus{
+    box-shadow:0 0 0 4px rgba(192,57,43,0.10), 0 4px 12px rgba(192,57,43,0.12);
+}
 
 /* Autofill override */
 .field-input:-webkit-autofill,
 .field-input:-webkit-autofill:hover,
 .field-input:-webkit-autofill:focus{
-    -webkit-box-shadow:0 0 0 40px #fff inset!important;
+    -webkit-box-shadow:0 0 0 40px #fafafa inset!important;
     -webkit-text-fill-color:var(--ink)!important;
     transition:background-color 9999s ease 0s;
 }
 
 .field-error{
-    margin-top:5px;
+    margin-top:6px;
     font-size:12px;
     color:var(--error);
     display:flex;align-items:center;gap:5px;
+    font-weight:500;
 }
 
 /* ── Remember row ─────────────────────────────── */
@@ -353,17 +393,7 @@ html,body{
         <div class="card-stripe"></div>
 
         <div class="card-body">
-
-            {{-- Brand --}}
-            <div class="card-brand">
-                <a href="{{ url('/') }}" style="display:flex;align-items:center;gap:11px;text-decoration:none">
-                    <div class="brand-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/></svg>
-                    </div>
-                    <span class="brand-name">Neo<span>n</span>man</span>
-                </a>
-            </div>
-
+           
             <h1 class="card-title">Welcome back</h1>
             <p class="card-sub">Sign in to your account to continue shopping</p>
 
@@ -384,21 +414,45 @@ html,body{
                             <a href="{{ route('password.request') }}">Forgot password?</a>
                         @endif
                     </label>
-                    <input id="email" type="email" name="email"
-                           value="{{ old('email') }}"
-                           placeholder="you@example.com"
-                           autocomplete="username" required autofocus
-                           class="field-input {{ $errors->has('email') ? 'is-error' : '' }}" />
-                    @error('email')<p class="field-error">{{ $message }}</p>@enderror
+                    <div class="field-wrapper">
+                        <span class="field-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </span>
+                        <input id="email" type="email" name="email"
+                               value="{{ old('email') }}"
+                               placeholder="you@example.com"
+                               autocomplete="username" required autofocus
+                               class="field-input {{ $errors->has('email') ? 'is-error' : '' }}" />
+                    </div>
+                    @error('email')<p class="field-error">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        {{ $message }}
+                    </p>@enderror
                 </div>
 
                 <div class="field">
                     <label class="field-label" for="password">Password</label>
-                    <input id="password" type="password" name="password"
-                           placeholder="Enter your password"
-                           autocomplete="current-password" required
-                           class="field-input {{ $errors->has('password') ? 'is-error' : '' }}" />
-                    @error('password')<p class="field-error">{{ $message }}</p>@enderror
+                    <div class="field-wrapper">
+                        <span class="field-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </span>
+                        <input id="password" type="password" name="password"
+                               placeholder="Enter your password"
+                               autocomplete="current-password" required
+                               class="field-input {{ $errors->has('password') ? 'is-error' : '' }}" />
+                    </div>
+                    @error('password')<p class="field-error">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        {{ $message }}
+                    </p>@enderror
                 </div>
 
                 <label class="check-row">
@@ -420,20 +474,7 @@ html,body{
 
         </div>
 
-        <div class="card-footer">
-            <div class="trust-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                SSL Secured
-            </div>
-            <div class="trust-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                Trusted by 10,000+ shoppers
-            </div>
-            <div class="trust-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Free returns
-            </div>
-        </div>
+        
     </div>
 
     <p class="auth-note">
