@@ -9,6 +9,7 @@ use App\Filament\Resources\Coupons\Schemas\CouponForm;
 use App\Filament\Resources\Coupons\Tables\CouponsTable;
 use App\Models\Coupon;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,17 @@ class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTicket;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Marketing';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Coupons';
+
+    protected static ?string $modelLabel = 'Coupon';
+
+    protected static ?string $pluralModelLabel = 'Coupons';
 
     public static function form(Schema $schema): Schema
     {

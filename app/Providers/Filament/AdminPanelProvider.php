@@ -2,6 +2,10 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\RecentOrdersWidget;
+use App\Filament\Widgets\RevenueChartWidget;
+use App\Filament\Widgets\StatsOverviewWidget;
+use App\Filament\Widgets\TopProductsWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -11,7 +15,6 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -28,21 +31,21 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('Neonman Admin')
+            ->brandName('Neonman')
             ->favicon(asset('images/favicon.png'))
             ->colors([
                 'primary' => [
-                    50 => '#fef2f2',
-                    100 => '#fee2e2',
-                    200 => '#fecaca',
-                    300 => '#fca5a5',
-                    400 => '#f87171',
-                    500 => '#ef4444',
-                    600 => '#dc2626',
-                    700 => '#b91c1c',
-                    800 => '#991b1b',
-                    900 => '#6A0404',
-                    950 => '#4A0303',
+                    50  => '#fff1f2',
+                    100 => '#ffe4e6',
+                    200 => '#fecdd3',
+                    300 => '#fda4af',
+                    400 => '#fb7185',
+                    500 => '#f43f5e',
+                    600 => '#e11d48',
+                    700 => '#be123c',
+                    800 => '#9f1239',
+                    900 => '#881337',
+                    950 => '#4c0519',
                 ],
                 'gray' => Color::Slate,
             ])
@@ -50,8 +53,8 @@ class AdminPanelProvider extends PanelProvider
             ->darkMode(false)
             ->sidebarCollapsibleOnDesktop()
             ->navigationGroups([
-                'Shop Management',
                 'Sales',
+                'Shop Management',
                 'Marketing',
                 'Content',
                 'Settings',
@@ -63,7 +66,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                AccountWidget::class,
+                StatsOverviewWidget::class,
+                RevenueChartWidget::class,
+                RecentOrdersWidget::class,
+                TopProductsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -81,3 +87,4 @@ class AdminPanelProvider extends PanelProvider
             ]);
     }
 }
+
