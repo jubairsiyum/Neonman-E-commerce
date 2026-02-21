@@ -1,486 +1,374 @@
-@extends('layouts.auth')
+﻿@extends('layouts.auth')
 
-@section('title', 'Login - ' . config('app.name'))
+@section('title', 'Sign In - ' . config('app.name'))
 
 @section('content')
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap');
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-    :root {
-        --brand:        #6A0404;
-        --brand-hover:  #820505;
-        --brand-dark:   #450303;
-        --ink:          #0f0f0f;
-        --ink-sub:      #3d3d3d;
-        --ink-muted:    #6b6b6b;
-        --ink-faint:    #9e9e9e;
-        --border:       #e8e8e8;
-        --border-hover: #c0c0c0;
-        --surface:      #ffffff;
-        --error:        #b91c1c;
-        --error-bg:     #fef2f2;
-        --success:      #15803d;
-        --success-bg:   #f0fdf4;
-        --radius:       6px;
-    }
+:root{
+    --brand:#6A0404;
+    --brand-hover:#820505;
+    --brand-dark:#450303;
+    --ink:#111111;
+    --ink-2:#3a3a3a;
+    --ink-3:#6b6b6b;
+    --ink-4:#a0a0a0;
+    --ink-5:#d0d0d0;
+    --border:#ebebeb;
+    --border-focus:#6A0404;
+    --bg-page:#0c0c0c;
+    --bg-card:#ffffff;
+    --error:#c0392b;
+    --error-bg:#fff5f5;
+    --success:#16a34a;
+    --r:10px;
+    --r-sm:6px;
+    --font:'Inter',system-ui,sans-serif;
+    --font-head:'Sora',system-ui,sans-serif;
+}
 
-    /* Full-width two-column grid */
-    .auth-wrap {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        width: 100%;
-        font-family: 'Inter', system-ui, sans-serif;
-    }
+html,body{
+    min-height:100%;
+    font-family:var(--font);
+    background:var(--bg-page);
+}
 
-    /* ── Left: Hero Panel ─────────────────────── */
-    .hero {
-        background: #141414;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        padding: 44px 52px;        min-height: 80vh;        overflow: hidden;
-        color: #fff;
-    }
+/* ── Page wrapper ─────────────────────────────── */
+.auth-page{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:40px 16px 60px;
+    position:relative;
+    overflow:hidden;
+}
 
-    /* Dot grid texture */
-    .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
-        background-size: 28px 28px;
-        pointer-events: none;
-    }
+/* Radial glow */
+.auth-page::before{
+    content:'';
+    position:absolute;
+    top:-120px;left:50%;
+    transform:translateX(-50%);
+    width:700px;height:500px;
+    background:radial-gradient(ellipse at center,rgba(106,4,4,0.18) 0%,transparent 65%);
+    pointer-events:none;
+}
 
-    /* Brand accent line — right edge */
-    .hero::after {
-        content: '';
-        position: absolute;
-        top: 0; right: 0;
-        width: 2px; height: 100%;
-        background: linear-gradient(to bottom,
-            transparent 0%,
-            rgba(106,4,4,0.6) 25%,
-            var(--brand) 50%,
-            rgba(106,4,4,0.6) 75%,
-            transparent 100%);
-    }
+/* Dot grid */
+.auth-page::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image:radial-gradient(circle,rgba(255,255,255,0.04) 1px,transparent 1px);
+    background-size:32px 32px;
+    pointer-events:none;
+}
 
-    /* Faint watermark letter */
-    .hero-watermark {
-        position: absolute;
-        bottom: -80px; right: -30px;
-        font-family: 'Playfair Display', Georgia, serif;
-        font-size: clamp(240px, 30vw, 380px);
-        font-weight: 700;
-        line-height: 1;
-        color: rgba(255,255,255,0.028);
-        pointer-events: none;
-        user-select: none;
-        letter-spacing: -0.04em;
-    }
+/* ── Card ─────────────────────────────────────── */
+.auth-card{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:460px;
+    background:#fff;
+    border-radius:var(--r);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.04),
+               0 8px 24px rgba(0,0,0,0.45),
+               0 32px 80px rgba(0,0,0,0.35);
+    overflow:hidden;
+    animation:cardIn .4s cubic-bezier(.22,.68,0,1.2) both;
+}
 
-    /* Top logo area */
-    .hero-header {
-        position: relative;
-        z-index: 1;
-        margin-bottom: auto;
-    }
+@keyframes cardIn{
+    from{opacity:0;transform:translateY(20px) scale(.98)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
 
-    .site-wordmark {
-        display: inline-flex;
-        align-items: center;
-        gap: 0;
-        text-decoration: none;
-    }
+/* Top brand stripe */
+.card-stripe{
+    height:3px;
+    background:linear-gradient(90deg,var(--brand-dark),var(--brand),#c0392b,var(--brand));
+    background-size:200% 100%;
+    animation:stripeShift 4s linear infinite;
+}
 
-    /* Text-based wordmark — looks intentional, not placeholder */
-    .site-wordmark-text {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: -0.01em;
-        color: #fff;
-    }
+@keyframes stripeShift{
+    0%{background-position:0 0}
+    100%{background-position:200% 0}
+}
 
-    .site-wordmark-text span {
-        color: var(--brand);
-    }
+/* Card body */
+.card-body{
+    padding:36px 40px 32px;
+}
 
-    /* Middle: main hero copy */
-    .hero-body {
-        position: relative;
-        z-index: 1;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 48px 0;
-    }
+/* ── Logo area ────────────────────────────────── */
+.card-brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    margin-bottom:28px;
+}
 
-    .hero-rule {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
+.brand-icon{
+    width:38px;height:38px;
+    background:var(--ink);
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+}
 
-    .hero-rule-line {
-        width: 24px;
-        height: 1px;
-        background: var(--brand);
-        flex-shrink: 0;
-    }
+.brand-icon svg{fill:#fff}
 
-    .hero-eyebrow {
-        font-size: 10.5px;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--brand);
-    }
+.brand-name{
+    font-family:var(--font-head);
+    font-size:18px;
+    font-weight:700;
+    color:var(--ink);
+    letter-spacing:-0.02em;
+}
 
-    .hero-heading {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-size: clamp(36px, 3.8vw, 56px);
-        font-weight: 400;
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-        color: #fff;
-        margin-bottom: 20px;
-    }
+.brand-name span{color:var(--brand)}
 
-    .hero-heading em {
-        font-style: italic;
-        color: rgba(255,255,255,0.45);
-    }
+/* ── Heading ──────────────────────────────────── */
+.card-title{
+    font-family:var(--font-head);
+    font-size:26px;
+    font-weight:700;
+    color:var(--ink);
+    letter-spacing:-0.03em;
+    line-height:1.15;
+    margin-bottom:6px;
+}
 
-    .hero-desc {
-        font-size: 14.5px;
-        line-height: 1.8;
-        color: rgba(255,255,255,0.40);
-        max-width: 340px;
-    }
+.card-sub{
+    font-size:13.5px;
+    color:var(--ink-3);
+    line-height:1.5;
+    margin-bottom:28px;
+}
 
-    /* Bottom: perks list integrated as footer of the panel */
-    .hero-footer {
-        position: relative;
-        z-index: 1;
-        padding-top: 28px;
-        border-top: 1px solid rgba(255,255,255,0.07);
-    }
+/* ── Status alert ─────────────────────────────── */
+.alert-success{
+    display:flex;align-items:center;gap:10px;
+    padding:11px 14px;
+    background:#f0fdf4;
+    border:1px solid #bbf7d0;
+    border-radius:var(--r-sm);
+    font-size:13px;color:var(--success);
+    margin-bottom:20px;
+}
 
-    .hero-perks {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
+/* ── Form fields ──────────────────────────────── */
+.field{margin-bottom:16px}
 
-    .hero-perk {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 12.5px;
-        color: rgba(255,255,255,0.38);
-        letter-spacing: 0.01em;
-    }
+.field-label{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--ink-2);
+    margin-bottom:7px;
+}
 
-    .hero-perk::before {
-        content: '';
-        width: 3px; height: 3px;
-        border-radius: 50%;
-        background: var(--brand);
-        flex-shrink: 0;
-    }
+.field-label a{
+    font-size:11.5px;
+    font-weight:500;
+    text-transform:none;
+    letter-spacing:0;
+    color:var(--ink-3);
+    text-decoration:none;
+    transition:color .15s;
+}
+.field-label a:hover{color:var(--brand)}
 
-    /* ── Right: Form Panel ────────────────────── */
-    .form-panel {
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 44px 52px;
-        min-height: 80vh;
-    }
+.field-input{
+    display:block;
+    width:100%;
+    padding:11px 14px;
+    font-family:var(--font);
+    font-size:14px;
+    color:var(--ink);
+    background:#fff;
+    border:1.5px solid var(--border);
+    border-radius:var(--r-sm);
+    outline:none;
+    -webkit-appearance:none;
+    transition:border-color .15s,box-shadow .15s;
+}
+.field-input::placeholder{color:var(--ink-5)}
+.field-input:hover{border-color:#c8c8c8}
+.field-input:focus{
+    border-color:var(--brand);
+    box-shadow:0 0 0 3px rgba(106,4,4,0.10);
+}
+.field-input.is-error{border-color:var(--error);background:var(--error-bg)}
+.field-input.is-error:focus{box-shadow:0 0 0 3px rgba(192,57,43,0.10)}
 
-    .form-inner {
-        width: 100%;
-        max-width: 380px;
-    }
+/* Autofill override */
+.field-input:-webkit-autofill,
+.field-input:-webkit-autofill:hover,
+.field-input:-webkit-autofill:focus{
+    -webkit-box-shadow:0 0 0 40px #fff inset!important;
+    -webkit-text-fill-color:var(--ink)!important;
+    transition:background-color 9999s ease 0s;
+}
 
-    .form-title {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-size: 30px;
-        font-weight: 400;
-        letter-spacing: -0.02em;
-        color: var(--ink);
-        margin-bottom: 5px;
-    }
+.field-error{
+    margin-top:5px;
+    font-size:12px;
+    color:var(--error);
+    display:flex;align-items:center;gap:5px;
+}
 
-    .form-subtitle {
-        font-size: 13.5px;
-        color: var(--ink-muted);
-        margin-bottom: 32px;
-    }
+/* ── Remember row ─────────────────────────────── */
+.check-row{
+    display:flex;align-items:center;gap:8px;
+    margin-bottom:22px;
+    cursor:pointer;
+}
+.check-row input[type="checkbox"]{
+    width:15px;height:15px;
+    accent-color:var(--brand);
+    cursor:pointer;
+    flex-shrink:0;
+}
+.check-row span{
+    font-size:13px;
+    color:var(--ink-3);
+    user-select:none;
+}
 
-    /* Status */
-    .status-msg {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 11px 14px;
-        margin-bottom: 20px;
-        background: var(--success-bg);
-        border: 1px solid #bbf7d0;
-        border-radius: var(--radius);
-        font-size: 13px;
-        color: var(--success);
-    }
+/* ── Submit button ────────────────────────────── */
+.btn-submit{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;
+    padding:13px 20px;
+    font-family:var(--font-head);
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:#fff;
+    background:var(--ink);
+    border:none;
+    border-radius:var(--r-sm);
+    cursor:pointer;
+    outline:none;
+    transition:background .15s,transform .12s,box-shadow .15s;
+}
+.btn-submit:hover{
+    background:#222;
+    transform:translateY(-1px);
+    box-shadow:0 6px 20px rgba(0,0,0,0.25);
+}
+.btn-submit:active{transform:translateY(0);box-shadow:none}
+.btn-submit svg{flex-shrink:0;opacity:.7}
 
-    /* Fields */
-    .field { margin-bottom: 18px; }
+/* ── Divider ──────────────────────────────────── */
+.divider{
+    display:flex;align-items:center;gap:10px;
+    margin:22px 0 18px;
+    font-size:11.5px;
+    color:var(--ink-4);
+    letter-spacing:.04em;
+}
+.divider::before,.divider::after{
+    content:'';flex:1;height:1px;background:var(--border);
+}
 
-    .field-label {
-        display: block;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--ink-sub);
-        margin-bottom: 7px;
-    }
+/* ── Register link ────────────────────────────── */
+.card-switch{
+    text-align:center;
+    font-size:13.5px;
+    color:var(--ink-3);
+}
+.card-switch a{
+    color:var(--brand);
+    font-weight:600;
+    text-decoration:none;
+    transition:color .15s;
+}
+.card-switch a:hover{color:var(--brand-dark)}
 
-    .field-input {
-        display: block;
-        width: 100%;
-        padding: 11px 13px;
-        font-family: 'Inter', sans-serif;
-        font-size: 14px;
-        color: var(--ink);
-        background: #fff;
-        border: 1.5px solid var(--border);
-        border-radius: var(--radius);
-        transition: border-color 140ms, box-shadow 140ms;
-        -webkit-appearance: none;
-        appearance: none;
-        outline: none;
-    }
+/* ── Card footer: trust strip ─────────────────── */
+.card-footer{
+    padding:16px 40px;
+    border-top:1px solid #f4f4f4;
+    background:#fafafa;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:24px;
+    flex-wrap:wrap;
+}
 
-    /* Override browser autofill background */
-    .field-input:-webkit-autofill,
-    .field-input:-webkit-autofill:hover,
-    .field-input:-webkit-autofill:focus,
-    .field-input:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0 40px #fff inset !important;
-        -webkit-text-fill-color: var(--ink) !important;
-        transition: background-color 9999s ease-in-out 0s;
-    }
+.trust-item{
+    display:flex;align-items:center;gap:6px;
+    font-size:11px;
+    color:var(--ink-4);
+    font-weight:500;
+    letter-spacing:.02em;
+    white-space:nowrap;
+}
+.trust-item svg{color:var(--ink-5)}
 
-    .field-input::placeholder { color: var(--ink-faint); }
-    .field-input:hover { border-color: var(--border-hover); }
-    .field-input:focus {
-        border-color: var(--brand);
-        box-shadow: 0 0 0 3px rgba(106,4,4,0.09);
-    }
+/* ── Below-card note ──────────────────────────── */
+.auth-note{
+    position:relative;z-index:1;
+    margin-top:20px;
+    text-align:center;
+    font-size:11.5px;
+    color:rgba(255,255,255,0.3);
+    line-height:1.6;
+}
+.auth-note a{
+    color:rgba(255,255,255,0.45);
+    text-decoration:underline;
+    text-underline-offset:2px;
+    transition:color .15s;
+}
+.auth-note a:hover{color:rgba(255,255,255,0.7)}
 
-    .field-input.is-error { border-color: var(--error); background: var(--error-bg); }
-    .field-input.is-error:focus { box-shadow: 0 0 0 3px rgba(185,28,28,0.09); }
-
-    .field-error {
-        margin-top: 5px;
-        font-size: 12px;
-        color: var(--error);
-    }
-
-    /* Remember / Forgot row */
-    .field-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin-bottom: 22px;
-    }
-
-    .check-label {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        font-size: 13px;
-        color: var(--ink-muted);
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .check-label input[type="checkbox"] {
-        width: 15px; height: 15px;
-        accent-color: var(--brand);
-        cursor: pointer;
-    }
-
-    .link-subtle {
-        font-size: 13px;
-        color: var(--ink-muted);
-        text-decoration: none;
-        transition: color 140ms;
-    }
-
-    .link-subtle:hover { color: var(--brand); }
-
-    /* Primary button — dark, not brand red, cohesive with left panel */
-    .btn-primary {
-        display: block;
-        width: 100%;
-        padding: 12px 20px;
-        font-family: 'Inter', sans-serif;
-        font-size: 12.5px;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: #fff;
-        background: var(--ink);
-        border: none;
-        border-radius: var(--radius);
-        cursor: pointer;
-        transition: background 140ms, transform 120ms, box-shadow 140ms;
-        outline: none;
-    }
-
-    .btn-primary:hover {
-        background: #1e1e1e;
-        transform: translateY(-1px);
-        box-shadow: 0 5px 18px rgba(0,0,0,0.18);
-    }
-
-    .btn-primary:active  { transform: translateY(0); box-shadow: none; }
-    .btn-primary:focus-visible { box-shadow: 0 0 0 3px rgba(0,0,0,0.15); }
-
-    /* Divider */
-    .divider {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin: 22px 0;
-        font-size: 11.5px;
-        color: var(--ink-faint);
-        letter-spacing: 0.04em;
-    }
-
-    .divider::before, .divider::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-    }
-
-    /* Footer */
-    .form-footer {
-        text-align: center;
-        font-size: 13px;
-        color: var(--ink-muted);
-    }
-
-    .form-footer a {
-        color: var(--brand);
-        font-weight: 600;
-        text-decoration: none;
-        transition: color 140ms;
-    }
-
-    .form-footer a:hover { color: var(--brand-dark); }
-
-    .legal {
-        margin-top: 28px;
-        text-align: center;
-        font-size: 11px;
-        color: var(--ink-faint);
-        line-height: 1.7;
-    }
-
-    .legal a {
-        color: var(--ink-faint);
-        text-decoration: underline;
-        text-underline-offset: 2px;
-        transition: color 140ms;
-    }
-
-    .legal a:hover { color: var(--ink-muted); }
-
-    /* ── Responsive ────────────────────────────── */
-    @media (max-width: 1024px) {
-        .auth-wrap {
-            grid-template-columns: 1fr;
-        }
-        .hero {
-            min-height: 48vh;
-            padding: 36px 32px;
-        }
-        .hero-footer { display: none; }
-        .form-panel {
-            min-height: auto;
-            padding: 48px 32px;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .hero { padding: 28px 20px; min-height: 40vh; }
-        .hero-body { padding: 32px 0; }
-        .form-panel { padding: 36px 20px; }
-        .form-inner { max-width: 100%; }
-        .field-row { flex-direction: column; align-items: flex-start; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after { transition-duration: 0.01ms !important; }
-    }
+/* ── Responsive ───────────────────────────────── */
+@media(max-width:520px){
+    .card-body{padding:28px 24px 24px}
+    .card-footer{padding:14px 24px;gap:16px}
+    .card-title{font-size:22px}
+    .trust-item:last-child{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
 </style>
 
-<div class="auth-wrap">
+<div class="auth-page">
 
-    {{-- ── Left: Hero Panel ──────────────────── --}}
-    <div class="hero">
-        <div class="hero-watermark">N</div>
+    <div class="auth-card">
+        <div class="card-stripe"></div>
 
-        <div class="hero-header">
-            <a href="{{ url('/') }}" class="site-wordmark">
-                <span class="site-wordmark-text">Neo<span>n</span>man</span>
-            </a>
-        </div>
+        <div class="card-body">
 
-        <div class="hero-body">
-            <div class="hero-rule">
-                <div class="hero-rule-line"></div>
-                <span class="hero-eyebrow">Member Access</span>
+            {{-- Brand --}}
+            <div class="card-brand">
+                <a href="{{ url('/') }}" style="display:flex;align-items:center;gap:11px;text-decoration:none">
+                    <div class="brand-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/></svg>
+                    </div>
+                    <span class="brand-name">Neo<span>n</span>man</span>
+                </a>
             </div>
-            <h1 class="hero-heading">
-                Welcome<br>back to<br>
-                <em>Neonman.</em>
-            </h1>
-            <p class="hero-desc">
-                Sign in to access your orders, wishlist, and exclusive drops from Bangladesh's funniest streetwear brand.
-            </p>
-        </div>
 
-        <div class="hero-footer">
-            <div class="hero-perks">
-                <div class="hero-perk">Exclusive drops &amp; early member access</div>
-                <div class="hero-perk">Full order history &amp; live tracking</div>
-                <div class="hero-perk">Wishlist &amp; personalised recommendations</div>
-            </div>
-        </div>
-    </div>
-
-    {{-- ── Right: Form Panel ─────────────────── --}}
-    <div class="form-panel">
-        <div class="form-inner">
-
-            <h2 class="form-title">Sign in</h2>
-            <p class="form-subtitle">Enter your credentials to continue</p>
+            <h1 class="card-title">Welcome back</h1>
+            <p class="card-sub">Sign in to your account to continue shopping</p>
 
             @if (session('status'))
-                <div class="status-msg">
+                <div class="alert-success">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                     {{ session('status') }}
                 </div>
@@ -490,47 +378,67 @@
                 @csrf
 
                 <div class="field">
-                    <label for="email" class="field-label">Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}"
-                           placeholder="you@example.com" autocomplete="username" required autofocus
+                    <label class="field-label" for="email">
+                        Email address
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}">Forgot password?</a>
+                        @endif
+                    </label>
+                    <input id="email" type="email" name="email"
+                           value="{{ old('email') }}"
+                           placeholder="you@example.com"
+                           autocomplete="username" required autofocus
                            class="field-input {{ $errors->has('email') ? 'is-error' : '' }}" />
-                    @error('email') <p class="field-error">{{ $message }}</p> @enderror
+                    @error('email')<p class="field-error">{{ $message }}</p>@enderror
                 </div>
 
                 <div class="field">
-                    <label for="password" class="field-label">Password</label>
+                    <label class="field-label" for="password">Password</label>
                     <input id="password" type="password" name="password"
-                           placeholder="••••••••" autocomplete="current-password" required
+                           placeholder="Enter your password"
+                           autocomplete="current-password" required
                            class="field-input {{ $errors->has('password') ? 'is-error' : '' }}" />
-                    @error('password') <p class="field-error">{{ $message }}</p> @enderror
+                    @error('password')<p class="field-error">{{ $message }}</p>@enderror
                 </div>
 
-                <div class="field-row">
-                    <label class="check-label">
-                        <input type="checkbox" name="remember" id="remember_me" />
-                        Remember me
-                    </label>
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="link-subtle">Forgot password?</a>
-                    @endif
-                </div>
+                <label class="check-row">
+                    <input type="checkbox" name="remember" id="remember_me" />
+                    <span>Keep me signed in</span>
+                </label>
 
-                <button type="submit" class="btn-primary">Sign in</button>
+                <button type="submit" class="btn-submit">
+                    Sign in to my account
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </button>
             </form>
 
             <div class="divider">or</div>
 
-            <div class="form-footer">
-                Don't have an account? <a href="{{ route('register') }}">Create one</a>
+            <div class="card-switch">
+                New to Neonman? <a href="{{ route('register') }}">Create a free account</a>
             </div>
 
-            <p class="legal">
-                By continuing, you agree to our
-                <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
-            </p>
+        </div>
 
+        <div class="card-footer">
+            <div class="trust-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                SSL Secured
+            </div>
+            <div class="trust-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                Trusted by 10,000+ shoppers
+            </div>
+            <div class="trust-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Free returns
+            </div>
         </div>
     </div>
+
+    <p class="auth-note">
+        By signing in you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>
+    </p>
 
 </div>
 @endsection
