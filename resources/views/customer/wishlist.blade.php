@@ -17,7 +17,7 @@
     <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-10 text-center">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white">Wishlist is empty</h2>
         <p class="mt-2 text-gray-600 dark:text-gray-400">Save products to quickly find them later.</p>
-        <a href="{{ route('shop') }}" class="inline-flex mt-4 px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium">Browse products</a>
+        <a href="{{ route('shop') }}" class="inline-flex mt-4 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium transition-colors duration-150">Browse products</a>
     </div>
 @else
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
@@ -31,10 +31,10 @@
                 <div class="p-5">
                     <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{{ $product->category?->name ?? 'Uncategorized' }}</p>
                     <h3 class="font-semibold text-gray-900 dark:text-white">{{ $product->name }}</h3>
-                    <p class="mt-2 text-lg font-bold text-primary-600 dark:text-primary-400">Tk {{ number_format($product->effective_price, 2) }}</p>
+                    <p class="mt-2 text-lg font-bold text-rose-600 dark:text-rose-400">Tk {{ number_format($product->effective_price, 2) }}</p>
 
                     <div class="mt-4 flex gap-2">
-                        <button type="button" onclick="moveToCart({{ $product->id }})" class="flex-1 px-3 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium">Move to cart</button>
+                        <button type="button" onclick="moveToCart({{ $product->id }})" class="flex-1 px-3 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium transition-colors duration-150">Move to cart</button>
                         <button type="button" onclick="removeFromWishlist({{ $product->id }})" class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200">Remove</button>
                     </div>
                 </div>

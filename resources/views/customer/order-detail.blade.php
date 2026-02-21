@@ -47,7 +47,7 @@
                 </div>
                 <div class="flex justify-between border-t border-gray-200 dark:border-gray-700 pt-2.5 mt-1">
                     <span class="font-semibold text-gray-900 dark:text-white">Total</span>
-                    <span class="font-bold text-primary-600 dark:text-primary-400">Tk {{ number_format($order->total, 2) }}</span>
+                    <span class="font-bold text-rose-600 dark:text-rose-400">Tk {{ number_format($order->total, 2) }}</span>
                 </div>
             </div>
         </section>

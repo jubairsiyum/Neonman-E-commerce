@@ -17,7 +17,7 @@
             placeholder="Example: ORD-123ABC or id"
             class="flex-1 px-3.5 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 text-gray-900 dark:text-white"
         >
-        <button type="submit" class="px-4 py-2.5 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium">Track</button>
+        <button type="submit" class="px-4 py-2.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium transition-colors duration-150">Track</button>
     </form>
 </div>
 
@@ -31,7 +31,7 @@
                 <p><span class="text-gray-500 dark:text-gray-400">Status:</span> <span class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($matchingOrder->status) }}</span></p>
                 <p><span class="text-gray-500 dark:text-gray-400">Total:</span> <span class="font-semibold text-gray-900 dark:text-white">Tk {{ number_format($matchingOrder->total, 2) }}</span></p>
             </div>
-            <a href="{{ route('order.detail', $matchingOrder) }}" class="inline-flex mt-4 px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium">Open order details</a>
+            <a href="{{ route('order.detail', $matchingOrder) }}" class="inline-flex mt-4 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium transition-colors duration-150">Open order details</a>
         @else
             <p class="text-sm text-gray-600 dark:text-gray-400">No order found for "{{ request('order') }}".</p>
         @endif
@@ -54,7 +54,7 @@
                     </div>
                     <div class="flex items-center gap-4">
                         <p class="text-sm font-medium text-gray-900 dark:text-white">{{ ucfirst($order->status) }}</p>
-                        <a href="{{ route('order.detail', $order) }}" class="text-sm font-semibold text-primary-600 dark:text-primary-400 hover:underline">Details</a>
+                        <a href="{{ route('order.detail', $order) }}" class="text-sm font-semibold text-rose-600 dark:text-rose-400 hover:underline">Details</a>
                     </div>
                 </div>
             @endforeach

@@ -40,7 +40,7 @@
             </select>
         </div>
         <div class="flex gap-2">
-            <button class="flex-1 px-4 py-2.5 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium">Apply</button>
+            <button class="flex-1 px-4 py-2.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium transition-colors duration-150">Apply</button>
             <a href="{{ route('my-orders') }}" class="px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200">Reset</a>
         </div>
     </div>
@@ -50,7 +50,7 @@
     <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-10 text-center">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white">No orders found</h2>
         <p class="mt-2 text-gray-600 dark:text-gray-400">Try a different filter or place your first order.</p>
-        <a href="{{ route('shop') }}" class="inline-flex mt-4 px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium">Browse products</a>
+        <a href="{{ route('shop') }}" class="inline-flex mt-4 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium transition-colors duration-150">Browse products</a>
     </div>
 @else
     <div class="space-y-4">
@@ -65,7 +65,7 @@
                     <div class="text-left md:text-right">
                         <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">Status</p>
                         <p class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($order->status) }}</p>
-                        <p class="text-lg font-bold text-primary-600 dark:text-primary-400">Tk {{ number_format($order->total, 2) }}</p>
+                        <p class="text-lg font-bold text-rose-600 dark:text-rose-400">Tk {{ number_format($order->total, 2) }}</p>
                     </div>
                 </div>
 
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="mt-5 flex items-center gap-2">
-                    <a href="{{ route('order.detail', $order) }}" class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium">View details</a>
+                    <a href="{{ route('order.detail', $order) }}" class="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium transition-colors duration-150">View details</a>
                     @if($order->canBeCancelled())
                         <form method="POST" action="{{ route('order.cancel', $order) }}">
                             @csrf
