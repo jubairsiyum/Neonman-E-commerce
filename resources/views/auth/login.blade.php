@@ -58,11 +58,10 @@ html, body {
     background-color: var(--bg-page);
 }
 
-/* The ambient cursor glow */
 .auth-page::before {
     content: '';
     position: absolute;
-    inset: -100px; /* Bleed past edges */
+    inset: -100px; 
     background: radial-gradient(
         800px circle at var(--mouse-x) var(--mouse-y), 
         rgba(225, 29, 72, 0.18), 
@@ -73,14 +72,12 @@ html, body {
     transition: background 0.1s ease;
 }
 
-/* The interactive illuminated grid */
 .auth-page::after {
     content: '';
     position: absolute;
     inset: 0;
     background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
     background-size: 32px 32px;
-    /* Masking makes the grid only visible near the cursor */
     mask-image: radial-gradient(
         400px circle at var(--mouse-x) var(--mouse-y), 
         black 10%, 
@@ -101,7 +98,6 @@ html, body {
     z-index: 10;
     width: 100%;
     max-width: 440px;
-    /* Translucent white for glass effect */
     background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -184,9 +180,23 @@ html, body {
     pointer-events: none; transition: color 0.3s ease; display: flex;
 }
 
+/* Eye Toggle Button */
+.btn-reveal {
+    position: absolute; right: 10px;
+    background: none; border: none;
+    color: var(--ink-4); cursor: pointer;
+    padding: 6px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; transition: all 0.2s ease;
+}
+.btn-reveal:hover, .btn-reveal:focus {
+    color: var(--brand); background: rgba(225, 29, 72, 0.08); outline: none;
+}
+.d-none { display: none !important; }
+
 .field-input {
     display: block; width: 100%;
-    padding: 12px 14px 12px 42px;
+    /* Added 44px right padding so text doesn't overlap the eye icon */
+    padding: 12px 44px 12px 42px;
     font-family: var(--font); font-size: 14px; color: var(--ink);
     background: rgba(248, 250, 252, 0.8);
     border: 1px solid var(--border);
@@ -292,7 +302,18 @@ html, body {
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                             </svg>
                         </span>
+                        
                         <input id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required class="field-input {{ $errors->has('password') ? 'is-error' : '' }}" />
+                        
+                        <button type="button" class="btn-reveal" id="toggle-password" aria-label="Toggle password visibility">
+                            <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <svg id="eye-slash-icon" class="d-none" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
@@ -321,17 +342,31 @@ html, body {
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // 1. Interactive Cursor Glow Background
         const page = document.getElementById('auth-page');
-        
         page.addEventListener('mousemove', (e) => {
-            // Get precise mouse coordinates relative to the page container
             const rect = page.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width) * 100;
             const y = ((e.clientY - rect.top) / rect.height) * 100;
             
-            // Update CSS variables smoothly
             page.style.setProperty('--mouse-x', `${x}%`);
             page.style.setProperty('--mouse-y', `${y}%`);
+        });
+
+        // 2. Reveal Password Toggle
+        const toggleBtn = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye-icon');
+        const eyeSlashIcon = document.getElementById('eye-slash-icon');
+
+        toggleBtn.addEventListener('click', () => {
+            // Toggle type attribute
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle icons
+            eyeIcon.classList.toggle('d-none');
+            eyeSlashIcon.classList.toggle('d-none');
         });
     });
 </script>
