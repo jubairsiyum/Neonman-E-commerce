@@ -142,21 +142,30 @@ html, body {
 .d-none { display: none !important; }
 
 .field-input {
-    display: block; width: 100%; padding: 12px 14px 12px 42px;
+    display: block; width: 100%; padding: 13px 14px 13px 42px;
     font-family: var(--font); font-size: 14px; color: var(--ink);
-    background: rgba(248, 250, 252, 0.8); border: 1px solid var(--border);
+    background: #FFFFFF; border: 1.5px solid #CBD5E1;
     border-radius: var(--r-sm); outline: none; transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .field-input.has-eye { padding-right: 44px; }
-.field-input:focus { background: #fff; border-color: var(--brand); box-shadow: 0 0 0 4px var(--brand-alpha); }
+.field-input:hover { border-color: #94A3B8; }
+.field-input:focus { 
+    background: #fff; 
+    border-color: var(--brand); 
+    box-shadow: 0 0 0 4px var(--brand-alpha), 0 1px 3px rgba(0, 0, 0, 0.1); 
+}
 .field:focus-within .field-icon { color: var(--brand); }
 
-.field-input.is-error { border-color: var(--error-border); background: var(--error-bg); color: var(--error); }
+.field-input.is-error { border-color: var(--error); background: var(--error-bg); color: var(--error); }
 .field-error { margin-top: 6px; font-size: 12px; color: var(--error); display: flex; align-items: center; gap: 6px; font-weight: 500; }
 
 /* ── Terms & Buttons ──────────────────────────── */
 .terms-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; cursor: pointer; }
-.terms-row input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--brand); cursor: pointer; flex-shrink: 0; border: 1px solid var(--border); border-radius: 4px; }
+.terms-row input[type="checkbox"] { 
+    width: 18px; height: 18px; margin-top: 2px; accent-color: var(--brand); 
+    cursor: pointer; flex-shrink: 0; border: 1.5px solid #CBD5E1; border-radius: 4px; 
+}
 .terms-row span { font-size: 13.5px; color: var(--ink-3); line-height: 1.5; font-weight: 500; }
 .terms-row a { color: var(--brand); font-weight: 600; text-decoration: none; transition: color 0.2s ease; }
 .terms-row a:hover { color: var(--brand-hover); text-decoration: underline; }
@@ -166,10 +175,13 @@ html, body {
     font-family: var(--font-head); font-size: 15px; font-weight: 600; color: #fff;
     background: linear-gradient(135deg, var(--brand) 0%, #FF416C 100%);
     border: none; border-radius: var(--r-sm); cursor: pointer; transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3), 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(225, 29, 72, 0.4); }
-.btn-submit:active { transform: translateY(1px); }
+.btn-submit:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4), 0 2px 4px rgba(0, 0, 0, 0.15); 
+}
+.btn-submit:active { transform: translateY(0px); box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35); }
 .btn-submit svg { transition: transform 0.3s ease; }
 .btn-submit:hover svg { transform: translateX(4px); }
 
@@ -182,10 +194,18 @@ html, body {
 .auth-note a { color: rgba(255,255,255,0.7); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1px; transition: all 0.2s ease; }
 .auth-note a:hover { color: #fff; border-color: #fff; }
 
-@media(max-width: 520px) {
+@media(max-width: 640px) {
     .auth-page { padding: 20px 16px; }
     .card-body { padding: 32px 24px; }
     .field-row { grid-template-columns: 1fr; gap: 0; }
+    .card-title { font-size: 24px; }
+    .field-input { font-size: 16px; } /* Prevents zoom on iOS */
+}
+
+@media(max-width: 480px) {
+    .card-body { padding: 28px 20px; }
+    .brand-icon { width: 36px; height: 36px; }
+    .brand-name { font-size: 18px; }
 }
 </style>
 
@@ -194,46 +214,38 @@ html, body {
         <div class="card-stripe"></div>
         <div class="card-body"> 
             
-            <div class="card-brand">
-                <div class="brand-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                </div>
-                <div class="brand-name">Neonman</div>
-            </div>
-
+            
             <h1 class="card-title">Create your account</h1>
             <p class="card-sub">Join thousands of shoppers across Bangladesh</p>
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
-                <div class="field-row">
-                    <div class="field">
-                        <label class="field-label" for="name">Full Name</label>
-                        <div class="field-wrapper">
-                            <span class="field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                </svg>
-                            </span>
-                            <input id="name" type="text" name="name" value="{{ old('name') }}" placeholder="e.g. Rahim Uddin" autocomplete="name" required autofocus class="field-input {{ $errors->has('name') ? 'is-error' : '' }}" />
-                        </div>
-                        @error('name')<p class="field-error">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            {{ $message }}
-                        </p>@enderror
+                <div class="field">
+                    <label class="field-label" for="name">Full Name</label>
+                    <div class="field-wrapper">
+                        <span class="field-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </span>
+                        <input id="name" type="text" name="name" value="{{ old('name') }}" placeholder="e.g. Rahim Uddin" autocomplete="name" required autofocus class="field-input {{ $errors->has('name') ? 'is-error' : '' }}" />
                     </div>
+                    @error('name')<p class="field-error">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        {{ $message }}
+                    </p>@enderror
+                </div>
 
-                    <div class="field">
-                        <label class="field-label" for="phone">Phone <span>(optional)</span></label>
-                        <div class="field-wrapper">
-                            <span class="field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                                </svg>
-                            </span>
-                            <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" placeholder="01XXXXXXXXX" autocomplete="tel" class="field-input {{ $errors->has('phone') ? 'is-error' : '' }}" />
-                        </div>
+                <div class="field">
+                    <label class="field-label" for="phone">Phone <span>(optional)</span></label>
+                    <div class="field-wrapper">
+                        <span class="field-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                        </span>
+                        <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" placeholder="01XXXXXXXXX" autocomplete="tel" class="field-input {{ $errors->has('phone') ? 'is-error' : '' }}" />
                     </div>
                 </div>
 

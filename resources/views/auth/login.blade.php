@@ -195,27 +195,34 @@ html, body {
 
 .field-input {
     display: block; width: 100%;
-    /* Added 44px right padding so text doesn't overlap the eye icon */
-    padding: 12px 44px 12px 42px;
+    padding: 13px 14px 13px 42px;
     font-family: var(--font); font-size: 14px; color: var(--ink);
-    background: rgba(248, 250, 252, 0.8);
-    border: 1px solid var(--border);
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
     border-radius: var(--r-sm);
     outline: none; transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+.field-input.has-eye { padding-right: 44px; }
 
+.field-input:hover { border-color: #94A3B8; }
 .field-input:focus {
     background: #fff; border-color: var(--brand);
-    box-shadow: 0 0 0 4px var(--brand-alpha);
+    box-shadow: 0 0 0 4px var(--brand-alpha), 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 .field:focus-within .field-icon { color: var(--brand); }
+
+.field-input.is-error { border-color: var(--error); background: var(--error-bg); color: var(--error); }
 
 /* ── Checkbox & Buttons ───────────────────────── */
 .check-row {
     display: inline-flex; align-items: center; gap: 8px;
     margin-bottom: 24px; cursor: pointer;
 }
-.check-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--brand); cursor: pointer; }
+.check-row input[type="checkbox"] { 
+    width: 18px; height: 18px; accent-color: var(--brand); 
+    cursor: pointer; border: 1.5px solid #CBD5E1; border-radius: 4px;
+}
 .check-row span { font-size: 13.5px; color: var(--ink-3); font-weight: 500; }
 
 .btn-submit {
@@ -226,14 +233,14 @@ html, body {
     background: linear-gradient(135deg, var(--brand) 0%, #FF416C 100%);
     border: none; border-radius: var(--r-sm);
     cursor: pointer; transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3), 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .btn-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(225, 29, 72, 0.4);
+    box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4), 0 2px 4px rgba(0, 0, 0, 0.15);
 }
-.btn-submit:active { transform: translateY(1px); }
+.btn-submit:active { transform: translateY(0px); box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35); }
 .btn-submit svg { transition: transform 0.3s ease; }
 .btn-submit:hover svg { transform: translateX(4px); }
 
@@ -255,9 +262,17 @@ html, body {
 .auth-note a { color: rgba(255,255,255,0.7); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1px; }
 .auth-note a:hover { color: #fff; border-color: #fff; }
 
-@media(max-width: 520px) {
+@media(max-width: 640px) {
     .auth-page { padding: 20px 16px; }
     .card-body { padding: 32px 24px; }
+    .card-title { font-size: 24px; }
+    .field-input { font-size: 16px; } /* Prevents zoom on iOS */
+}
+
+@media(max-width: 480px) {
+    .card-body { padding: 28px 20px; }
+    .brand-icon { width: 36px; height: 36px; }
+    .brand-name { font-size: 18px; }
 }
 </style>
 
@@ -266,12 +281,7 @@ html, body {
         <div class="card-stripe"></div>
         <div class="card-body">
             
-            <div class="card-brand">
-                <div class="brand-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                </div>
-                <div class="brand-name">Neonman</div>
-            </div>
+            
 
             <h1 class="card-title">Welcome back</h1>
             <p class="card-sub">Sign in to your account to continue shopping.</p>
@@ -303,7 +313,7 @@ html, body {
                             </svg>
                         </span>
                         
-                        <input id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required class="field-input {{ $errors->has('password') ? 'is-error' : '' }}" />
+                        <input id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required class="field-input has-eye {{ $errors->has('password') ? 'is-error' : '' }}" />
                         
                         <button type="button" class="btn-reveal" id="toggle-password" aria-label="Toggle password visibility">
                             <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
