@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CustomerPortalController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,9 @@ Route::get('/checkout', function () {
     return view('checkout');
 })->name('checkout');
 
+Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.place-order');
+Route::get('/checkout/success/{orderNumber}', [CheckoutController::class, 'success'])->name('checkout.success');
+
 // Static Pages
 Route::get('/about', function () {
     return view('about');
@@ -52,6 +56,9 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('/new-arrivals', [FrontendController::class, 'newArrivals'])->name('new-arrivals');
+Route::get('/best-sellers', [FrontendController::class, 'bestSellers'])->name('best-sellers');
 
 Route::get('/track-order', [CustomerPortalController::class, 'trackOrder'])->name('track-order');
 

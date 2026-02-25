@@ -41,7 +41,7 @@
                 <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Quick Links</h3>
                 <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     <li>
-                        <a href="{{ url('/') }}" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                        <a href="{{ url('/') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
                             Home
                         </a>
                     </li>

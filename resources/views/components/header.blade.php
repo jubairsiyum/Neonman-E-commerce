@@ -101,11 +101,9 @@
                         @php
                             $wishlistCount = \App\Models\Wishlist::where('user_id', auth()->id())->count();
                         @endphp
-                        @if($wishlistCount > 0)
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        <span class="wishlist-count-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center {{ $wishlistCount > 0 ? '' : 'hidden' }}">
                             {{ $wishlistCount }}
                         </span>
-                        @endif
                     </a>
                     @endauth
 
@@ -117,11 +115,9 @@
                         @php
                             $cartCount = \Darryldecode\Cart\Facades\CartFacade::getContent()->count();
                         @endphp
-                        @if($cartCount > 0)
-                        <span class="absolute -top-1 -right-1 bg-primary-900 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        <span class="cart-count-badge absolute -top-1 -right-1 bg-primary-900 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center {{ $cartCount > 0 ? '' : 'hidden' }}">
                             {{ $cartCount }}
                         </span>
-                        @endif
                     </a>
 
                     <!-- User Menu -->

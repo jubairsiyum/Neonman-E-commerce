@@ -191,29 +191,71 @@
 </div>
 
 <script>
-function updateQuantity(productId, quantity) {
-    if (quantity < 1) return;
-    
-    // AJAX call to update cart quantity
-    console.log('Update quantity:', productId, quantity);
-    // TODO: Implement cart update AJAX
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+async function apiCall(url, method = 'POST', body = null) {
+    const opts = {
+        method,
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+    };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(url, opts);
+    return res.json();
 }
 
-function removeFromCart(productId) {
-    if (confirm('Remove this item from cart?')) {
-        // AJAX call to remove from cart
-        console.log('Remove from cart:', productId);
-        // TODO: Implement cart removal AJAX
+async function updateQuantity(itemId, quantity) {
+    if (quantity < 1) return;
+
+    const data = await apiCall(`/cart/update/${itemId}`, 'PATCH', { quantity });
+
+    if (data.success) {
+        window.location.reload();
+    } else {
+        alert(data.message || 'Could not update quantity.');
     }
 }
 
-function applyCoupon() {
-    const code = document.getElementById('couponCode').value;
+async function removeFromCart(itemId) {
+    if (!confirm('Remove this item from your cart?')) return;
+
+    const data = await apiCall(`/cart/remove/${itemId}`, 'DELETE');
+
+    if (data.success) {
+        window.location.reload();
+    } else {
+        alert(data.message || 'Could not remove item.');
+    }
+}
+
+async function applyCoupon() {
+    const code = document.getElementById('couponCode').value.trim();
     if (!code) return;
-    
-    // AJAX call to apply coupon
-    console.log('Apply coupon:', code);
-    // TODO: Implement coupon validation AJAX
+
+    const feedbackEl = document.getElementById('couponFeedback');
+    if (feedbackEl) feedbackEl.remove();
+
+    const data = await apiCall('/cart/coupon/apply', 'POST', { code });
+
+    const feedback = document.createElement('p');
+    feedback.id = 'couponFeedback';
+    feedback.className = `text-xs mt-1.5 ${data.success ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`;
+    feedback.textContent = data.message;
+
+    const couponInput = document.getElementById('couponCode');
+    couponInput.parentElement.insertAdjacentElement('afterend', feedback);
+
+    if (data.success) {
+        setTimeout(() => window.location.reload(), 800);
+    }
+}
+
+async function removeCoupon() {
+    const data = await apiCall('/cart/coupon/remove', 'DELETE');
+    if (data.success) window.location.reload();
 }
 </script>
 

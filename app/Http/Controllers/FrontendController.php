@@ -85,4 +85,26 @@ class FrontendController extends Controller
 
         return view('product', compact('product', 'relatedProducts'));
     }
+
+    public function newArrivals()
+    {
+        $products = Product::with('category')
+            ->where('is_active', true)
+            ->where('is_new_arrival', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('new-arrivals', compact('products'));
+    }
+
+    public function bestSellers()
+    {
+        $products = Product::with('category')
+            ->where('is_active', true)
+            ->where('is_best_seller', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('best-sellers', compact('products'));
+    }
 }
