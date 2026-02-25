@@ -27,9 +27,11 @@ class BannerForm
                             ->placeholder('e.g. New Collection — Summer 2026'),
                         Textarea::make('description')
                             ->columnSpanFull()
-                            ->rows(2)
-                            ->maxLength(300)
-                            ->placeholder('A short line shown below the title on the banner.'),
+                            ->rows(1)
+                            ->maxLength(80)
+                            ->label('Collection Label (optional)')
+                            ->placeholder('e.g. New Collection — SS 2026')
+                            ->helperText('Shown as a small eyebrow label above the headline on the banner.'),
                         FileUpload::make('image')
                             ->image()
                             ->required()
