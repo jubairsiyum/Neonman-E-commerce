@@ -15,17 +15,29 @@ class BannersTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->reorderable('sort_order')
+            ->defaultSort('sort_order')
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
-                ImageColumn::make('image'),
-                TextColumn::make('link')
-                    ->searchable(),
-                TextColumn::make('button_text')
-                    ->searchable(),
+                ImageColumn::make('image')
+                    ->disk('public')
+                    ->height(60)
+                    ->width(160)
+                    ->extraImgAttributes(['style' => 'object-fit:cover;border-radius:4px;']),
+                TextColumn::make('description')
+                    ->limit(60)
+                    ->toggleable(),
                 TextColumn::make('sort_order')
+                    ->label('Order')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('link')
+                    ->searchable()
+                    ->toggleable(),
+                TextColumn::make('button_text')
+                    ->searchable()
+                    ->toggleable(),
                 IconColumn::make('is_active')
                     ->boolean(),
                 TextColumn::make('starts_at')

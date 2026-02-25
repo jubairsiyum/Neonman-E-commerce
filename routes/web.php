@@ -8,9 +8,7 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CustomerPortalController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [FrontendController::class, 'index'])->name('home');
 
 // Shop & Product Routes
 Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');

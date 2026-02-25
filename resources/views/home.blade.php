@@ -6,12 +6,151 @@
 
 @section('content')
 
-<!-- HERO BANNER -->
-<section class="relative bg-gray-900 overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-primary-950 pointer-events-none"></div>
-    <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);background-size:28px 28px;"></div>
-    <div class="relative container mx-auto px-4 py-16 sm:py-24 md:py-32">
-        <div class="max-w-3xl mx-auto text-center">
+<!-- HERO BANNER CAROUSEL -->
+<section class="relative w-full overflow-hidden bg-gray-900" style="min-height:420px;height:clamp(420px,60vh,680px);">
+
+    @if(isset($banners) && $banners->isNotEmpty())
+
+    {{-- ===================== DYNAMIC CAROUSEL ===================== --}}
+    <div
+        x-data="{
+            current: 0,
+            total: {{ $banners->count() }},
+            timer: null,
+            init() { this.startAuto(); },
+            startAuto() {
+                if (this.total > 1) {
+                    this.timer = setInterval(() => { this.next(); }, 5000);
+                }
+            },
+            stopAuto() { clearInterval(this.timer); this.timer = null; },
+            next() { this.current = (this.current + 1) % this.total; },
+            prev() { this.current = (this.current - 1 + this.total) % this.total; },
+            goTo(i) { this.current = i; }
+        }"
+        @mouseenter="stopAuto()"
+        @mouseleave="startAuto()"
+        class="relative w-full h-full"
+        style="min-height:inherit;height:inherit;"
+    >
+        {{-- ── SLIDES ─────────────────────────────────────────────── --}}
+        @foreach($banners as $index => $banner)
+        <div
+            x-show="current === {{ $index }}"
+            x-transition:enter="transition-opacity ease-in-out duration-700"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity ease-in-out duration-500"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="absolute inset-0 w-full h-full"
+            style="display:none;"
+        >
+            {{-- Background image --}}
+            @if($banner->image)
+            <img
+                src="{{ asset('storage/' . $banner->image) }}"
+                alt="{{ $banner->title }}"
+                class="absolute inset-0 w-full h-full object-cover object-center"
+                loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+            >
+            <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10"></div>
+            @else
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-primary-950"></div>
+            <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(rgba(255,255,255,0.6) 1px,transparent 1px);background-size:28px 28px;"></div>
+            @endif
+
+            {{-- Slide text content --}}
+            <div class="relative h-full flex items-center" style="min-height:inherit;">
+                <div class="container mx-auto px-6 sm:px-10 md:px-16" style="max-width:760px;margin-left:0;padding-left:clamp(1.5rem,6vw,5rem);">
+
+                    @if($banner->title)
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black text-white leading-tight mb-4 drop-shadow-lg"
+                        style="text-shadow:0 2px 20px rgba(0,0,0,0.5);">
+                        {!! nl2br(e($banner->title)) !!}
+                    </h1>
+                    @endif
+
+                    @if($banner->description)
+                    <p class="text-sm sm:text-base md:text-lg text-white/80 mb-7 max-w-lg leading-relaxed drop-shadow">
+                        {{ $banner->description }}
+                    </p>
+                    @endif
+
+                    @if($banner->link || $banner->button_text)
+                    <a
+                        href="{{ $banner->link ?: url('/shop') }}"
+                        class="inline-flex items-center gap-2 px-7 py-3.5 bg-primary-900 hover:bg-primary-800 text-white font-bold text-base rounded-lg transition-all duration-200 hover:shadow-2xl hover:shadow-primary-900/40 hover:-translate-y-0.5 active:translate-y-0"
+                    >
+                        {{ $banner->button_text ?: 'Shop Now' }}
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+        @endforeach
+
+        {{-- ── PREV / NEXT ARROWS ─────────────────────────────────── --}}
+        @if($banners->count() > 1)
+        <button
+            @click="prev(); stopAuto(); startAuto();"
+            class="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm border border-white/15 transition-all duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label="Previous banner"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </button>
+        <button
+            @click="next(); stopAuto(); startAuto();"
+            class="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm border border-white/15 transition-all duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label="Next banner"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+
+        {{-- ── DOT INDICATORS ─────────────────────────────────────── --}}
+        <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+            @foreach($banners as $index => $banner)
+            <button
+                @click="goTo({{ $index }}); stopAuto(); startAuto();"
+                :class="current === {{ $index }} ? 'w-7 bg-white' : 'w-2.5 bg-white/40 hover:bg-white/70'"
+                class="h-2.5 rounded-full transition-all duration-300 focus:outline-none"
+                aria-label="Go to slide {{ $index + 1 }}"
+            ></button>
+            @endforeach
+        </div>
+
+        {{-- ── SLIDE COUNTER ───────────────────────────────────────── --}}
+        <div class="absolute bottom-5 right-5 z-20 px-2.5 py-1 bg-black/30 backdrop-blur-sm rounded-full text-white/70 text-xs font-medium tabular-nums">
+            <span x-text="current + 1"></span>&thinsp;/&thinsp;{{ $banners->count() }}
+        </div>
+
+        {{-- ── AUTO-PLAY PROGRESS BAR ──────────────────────────────── --}}
+        <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10 z-20 overflow-hidden">
+            <div
+                x-show="timer !== null"
+                class="h-full bg-primary-500/80"
+                style="animation: carousel-progress 5s linear infinite;"
+            ></div>
+        </div>
+        @endif
+
+    </div>
+
+    @else
+
+    {{-- ===================== FALLBACK (no banners) ================ --}}
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-primary-950"></div>
+    <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(rgba(255,255,255,0.6) 1px,transparent 1px);background-size:28px 28px;"></div>
+    <div class="relative h-full flex items-center justify-center" style="min-height:inherit;">
+        <div class="container mx-auto px-4 text-center">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-900/30 border border-primary-900/50 rounded-full mb-5">
                 <span class="w-2 h-2 rounded-full bg-primary-500 animate-pulse"></span>
                 <span class="text-primary-400 text-xs font-semibold tracking-widest uppercase">New Arrivals Just Dropped</span>
@@ -19,20 +158,30 @@
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-5">
                 Wear Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600">Personality</span>
             </h1>
-            <p class="text-base sm:text-lg text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
+            <p class="text-base sm:text-lg text-white/70 mb-8 max-w-xl mx-auto leading-relaxed">
                 Bangladesh's funniest streetwear brand — premium quality graphics, unbeatable comfort.
             </p>
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="{{ url('/shop') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary-900 hover:bg-primary-800 text-white font-bold text-base rounded-lg transition-all hover:shadow-lg hover:shadow-primary-900/30">
+                <a href="{{ url('/shop') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary-900 hover:bg-primary-800 text-white font-bold rounded-lg transition-all hover:shadow-lg hover:shadow-primary-900/30">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                     Shop Now
                 </a>
-                <a href="{{ url('/new-arrivals') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-base rounded-lg border border-white/20 transition-all backdrop-blur-sm">
+                <a href="{{ url('/new-arrivals') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg border border-white/20 transition-all">
                     New Arrivals →
                 </a>
             </div>
         </div>
     </div>
+
+    @endif
+
+    {{-- Progress bar keyframe --}}
+    <style>
+        @keyframes carousel-progress {
+            from { width: 0%; }
+            to   { width: 100%; }
+        }
+    </style>
 </section>
 
 <!-- QUICK STATS BAR -->

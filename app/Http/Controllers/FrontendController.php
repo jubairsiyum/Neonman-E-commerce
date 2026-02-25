@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
+    public function index()
+    {
+        $banners = Banner::active()->get();
+
+        return view('home', compact('banners'));
+    }
+
     public function shop(Request $request)
     {
         $query = Product::with('category')
