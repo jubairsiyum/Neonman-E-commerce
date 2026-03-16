@@ -10,7 +10,7 @@
 
     <aside class="mobile-flyout-surface absolute right-0 top-0 bottom-0 w-[88%] max-w-sm sm:max-w-md overflow-y-auto border-l border-gray-200 dark:border-gray-700 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.55)]">
         <div class="mobile-flyout-surface sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between px-4 py-3.5">
+            <div class="flex h-20 sm:h-24 items-center justify-between px-4">
                 <a href="{{ url('/') }}" class="flex items-center">
                     <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-32 h-32 sm:w-36 sm:h-36 object-contain transition-transform duration-200 hover:scale-[1.03]">
                 </a>
