@@ -1,9 +1,19 @@
+<style>
+    .mobile-flyout-surface {
+        background-color: #f5f5f5;
+    }
+
+    .dark .mobile-flyout-surface {
+        background-color: #0f172a;
+    }
+</style>
+
 <!-- Mobile Menu Overlay -->
 <div id="mobileMenu" class="fixed inset-0 z-50 lg:hidden translate-x-full transform transition-transform duration-300 ease-out">
     <div id="mobileMenuBackdrop" class="absolute inset-0 bg-zinc-950/55 backdrop-blur-[1px]"></div>
 
-    <aside class="absolute right-0 top-0 bottom-0 w-[88%] max-w-sm sm:max-w-md overflow-y-auto bg-zinc-50/95 dark:bg-slate-900/95 backdrop-blur-xl border-l border-gray-200/80 dark:border-gray-700/80 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.55)]">
-        <div class="sticky top-0 z-10 border-b border-gray-200/80 dark:border-gray-700/80 bg-zinc-50/95 dark:bg-slate-900/95 backdrop-blur-xl">
+    <aside class="mobile-flyout-surface absolute right-0 top-0 bottom-0 w-[88%] max-w-sm sm:max-w-md overflow-y-auto border-l border-gray-200 dark:border-gray-700 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.55)]">
+        <div class="mobile-flyout-surface sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
             <div class="flex items-center justify-between px-4 py-3.5">
                 <a href="{{ url('/') }}" class="flex items-center">
                     <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="h-20 w-20 sm:h-24 sm:w-24 object-contain transition-transform duration-200 hover:scale-[1.03]">
@@ -41,7 +51,7 @@
 
         <section class="px-4 pt-4">
             <form action="{{ url('/shop') }}" method="GET" class="relative">
-                <input type="text" name="search" placeholder="Search products" class="w-full rounded-xl border border-gray-300/90 dark:border-gray-700/90 bg-white/90 dark:bg-slate-800 py-2.5 pl-10 pr-3 text-sm text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-900/70">
+                <input type="text" name="search" placeholder="Search products" class="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-slate-800 py-2.5 pl-10 pr-3 text-sm text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-900/70">
                 <svg class="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
