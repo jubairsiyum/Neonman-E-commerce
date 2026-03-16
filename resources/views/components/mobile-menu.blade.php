@@ -12,7 +12,7 @@
         <div class="mobile-flyout-surface sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
             <div class="flex items-center justify-between px-4 py-3.5">
                 <a href="{{ url('/') }}" class="flex items-center">
-                    <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="h-20 w-20 sm:h-24 sm:w-24 object-contain transition-transform duration-200 hover:scale-[1.03]">
+                    <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-32 h-32 sm:w-36 sm:h-36 object-contain transition-transform duration-200 hover:scale-[1.03]">
                 </a>
                 <button id="closeMobileMenu" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Close mobile menu">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
