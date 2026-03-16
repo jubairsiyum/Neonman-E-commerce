@@ -2,10 +2,6 @@
     .mobile-flyout-surface {
         background-color: #f5f5f5;
     }
-
-    .dark .mobile-flyout-surface {
-        background-color: #0f172a;
-    }
 </style>
 
 <!-- Mobile Menu Overlay -->
@@ -27,14 +23,14 @@
         </div>
 
         @auth
-        <section class="mx-4 mt-4 rounded-2xl bg-gradient-to-r from-primary-900 to-primary-800 px-4 py-4 text-white shadow-lg">
+        <section class="mx-4 mt-4 rounded-2xl border border-gray-200 bg-white px-4 py-4 text-gray-800 shadow-sm">
             <div class="flex items-center gap-3">
-                <div class="flex h-11 w-11 items-center justify-center rounded-full bg-white/25 text-base font-bold uppercase">
+                <div class="flex h-11 w-11 items-center justify-center rounded-full bg-primary-900 text-base font-bold text-white uppercase">
                     {{ substr(auth()->user()->name, 0, 1) }}
                 </div>
                 <div class="min-w-0">
                     <p class="truncate text-sm font-semibold">{{ auth()->user()->name }}</p>
-                    <p class="truncate text-xs text-white/85">{{ auth()->user()->email }}</p>
+                    <p class="truncate text-xs text-gray-500">{{ auth()->user()->email }}</p>
                 </div>
             </div>
         </section>
@@ -43,7 +39,7 @@
             <a href="{{ route('login') }}" class="inline-flex items-center justify-center rounded-xl bg-primary-900 px-3 py-2.5 text-sm font-semibold text-white hover:bg-primary-950 transition-colors">
                 Login
             </a>
-            <a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-xl border border-primary-900 px-3 py-2.5 text-sm font-semibold text-primary-900 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-gray-800 transition-colors">
+            <a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-xl border border-primary-900 px-3 py-2.5 text-sm font-semibold text-primary-900 hover:bg-primary-50 transition-colors">
                 Sign Up
             </a>
         </section>
@@ -51,7 +47,7 @@
 
         <section class="px-4 pt-4">
             <form action="{{ url('/shop') }}" method="GET" class="relative">
-                <input type="text" name="search" placeholder="Search products" class="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-slate-800 py-2.5 pl-10 pr-3 text-sm text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-900/70">
+                <input type="text" name="search" placeholder="Search products" class="w-full rounded-xl border border-gray-300 bg-white py-2.5 pl-10 pr-3 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-900/70">
                 <svg class="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
@@ -190,24 +186,6 @@
             </a>
             @endauth
         </nav>
-
-        <div class="mx-4 mb-4 mt-2 border-t border-gray-200/80 pt-4 dark:border-gray-700/80">
-            <button id="mobileDarkModeToggle" type="button" class="flex w-full items-center justify-between rounded-xl px-3.5 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                <span class="flex items-center gap-3">
-                    <svg class="h-5 w-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                    <svg class="h-5 w-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                    </svg>
-                    <span class="dark:hidden">Dark Mode</span>
-                    <span class="hidden dark:block">Light Mode</span>
-                </span>
-                <span class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-300 dark:bg-primary-900 transition-colors">
-                    <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-all duration-200 translate-x-1 dark:translate-x-6"></span>
-                </span>
-            </button>
-        </div>
 
         @auth
         <div class="px-4 pb-4">

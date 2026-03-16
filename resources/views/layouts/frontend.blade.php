@@ -24,7 +24,7 @@
 
     @stack('styles')
 </head>
-<body class="antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 overflow-x-hidden">
+<body class="antialiased bg-white text-gray-900 transition-colors duration-200 overflow-x-hidden">
     
     <!-- Facebook Pixel noscript -->
     <noscript>
@@ -48,35 +48,8 @@
     <!-- Mobile Menu (Hidden by default) -->
     @include('components.mobile-menu')
 
-    <!-- Dark Mode Script -->
+    <!-- Frontend Script -->
     <script>
-        // Dark mode toggle functionality
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const mobileDarkModeToggle = document.getElementById('mobileDarkModeToggle');
-        const html = document.documentElement;
-
-        // Check for saved theme preference or default to 'light'
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        if (currentTheme === 'dark') {
-            html.classList.add('dark');
-        } else {
-            html.classList.remove('dark');
-        }
-
-        // Toggle dark mode
-        function toggleDarkMode() {
-            html.classList.toggle('dark');
-            const isDark = html.classList.contains('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        }
-
-        if (darkModeToggle) {
-            darkModeToggle.addEventListener('click', toggleDarkMode);
-        }
-        if (mobileDarkModeToggle) {
-            mobileDarkModeToggle.addEventListener('click', toggleDarkMode);
-        }
-
         // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
