@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
     public function index()
     {
-        $banners = Banner::active()->get();
+        $banners = Banner::query()
+            ->orderBy('sort_order')
+            ->orderByDesc('created_at')
+            ->get();
 
         return view('home', compact('banners'));
     }

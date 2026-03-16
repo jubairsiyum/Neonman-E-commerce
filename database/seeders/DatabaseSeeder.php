@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
+            PanjabiProductSeeder::class,
             BannerSeeder::class,
             CouponSeeder::class,
         ]);

@@ -11,7 +11,7 @@
     <!-- Main Navbar -->
     <nav class="border-b border-gray-200 dark:border-gray-700">
         <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center justify-between h-20 lg:h-24">
                 
                 <!-- Mobile Menu Button -->
                 <button id="mobileMenuBtn" type="button" class="lg:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -23,7 +23,7 @@
                 <!-- Logo -->
                 <div class="flex items-center flex-1 lg:flex-initial justify-center lg:justify-start">
                     <a href="{{ url('/') }}" class="flex items-center">
-                        <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 transition-transform hover:scale-105">
+                        <img src="{{ asset('logo.svg') }}" alt="Neonman Logo" class="w-32 h-32 sm:w-36 sm:h-36 lg:w-40 lg:h-40 transition-transform hover:scale-105">
                     </a>
                 </div>
 

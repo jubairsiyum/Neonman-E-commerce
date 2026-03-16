@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Banners\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
@@ -19,7 +19,7 @@ class BannerForm
             ->components([
                 Section::make('Banner Content')
                     ->description('This content will be displayed on the homepage carousel.')
-                    ->schema([
+                    ->components([
                         TextInput::make('title')
                             ->required()
                             ->maxLength(120)
@@ -42,7 +42,7 @@ class BannerForm
                             ->maxSize(3072)
                             ->helperText('Recommended size: 1600 × 600 px. Max 3 MB. JPEG / PNG / WebP.')
                             ->columnSpanFull(),
-                        Grid::make(2)->schema([
+                        Grid::make(2)->components([
                             TextInput::make('link')
                                 ->label('Button URL')
                                 ->url()
@@ -55,8 +55,8 @@ class BannerForm
                     ]),
 
                 Section::make('Scheduling & Visibility')
-                    ->schema([
-                        Grid::make(3)->schema([
+                    ->components([
+                        Grid::make(3)->components([
                             TextInput::make('sort_order')
                                 ->required()
                                 ->numeric()
