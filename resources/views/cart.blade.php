@@ -7,7 +7,7 @@
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
     <div class="container mx-auto px-4 py-4 sm:py-6">
-        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Shopping Cart</h1>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold font-display text-gray-900 dark:text-gray-100">Shopping Cart</h1>
     </div>
 </div>
 
@@ -118,7 +118,7 @@
         @if(!$cartItems->isEmpty())
         <div>
             <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6 lg:sticky lg:top-4">
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Order Summary</h2>
+                <h2 class="text-base sm:text-lg font-bold font-display text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Order Summary</h2>
 
                 <div class="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
                     <div class="flex justify-between text-xs sm:text-sm">

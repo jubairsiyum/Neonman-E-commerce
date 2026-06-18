@@ -11,7 +11,7 @@
         <div class="flex items-center gap-3 mb-2">
             <span class="px-3 py-1 bg-primary-900 text-white text-xs font-bold tracking-widest uppercase rounded">New</span>
         </div>
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">New Arrivals</h1>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold font-display text-gray-900 dark:text-gray-100">New Arrivals</h1>
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Fresh drops — {{ $products->total() }} products just arrived</p>
     </div>
 </div>

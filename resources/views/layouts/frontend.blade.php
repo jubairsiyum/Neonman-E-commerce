@@ -14,7 +14,7 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&family=space-grotesk:500,600,700&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -47,6 +47,9 @@
 
     <!-- Mobile Menu (Hidden by default) -->
     @include('components.mobile-menu')
+
+    <!-- Cart Sidebar -->
+    @include('components.cart-sidebar')
 
     <!-- Frontend Script -->
     <script>
@@ -161,6 +164,7 @@
                     showToast(data.message, 'success');
                     updateCartBadge(data.cart_count);
                     animateCartIcon();
+                    window.dispatchEvent(new Event('cart-updated'));
                 } else {
                     showToast(data.message, 'error');
                 }

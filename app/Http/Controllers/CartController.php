@@ -9,6 +9,43 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 class CartController extends Controller
 {
     /**
+     * Get cart data as JSON (for sidebar/AJAX)
+     */
+    public function data()
+    {
+        $items = Cart::getContent()->map(function ($item) {
+            $product = \App\Models\Product::find($item->id);
+            return [
+                'id' => $item->id,
+                'name' => $item->name,
+                'price' => (float) $item->price,
+                'quantity' => (int) $item->quantity,
+                'attributes' => [
+                    'slug' => $item->attributes->get('slug') ?? $product?->slug ?? '#',
+                    'image' => $item->attributes->get('image') ?? ($product && $product->hasMedia('images') ? $product->getFirstMediaUrl('images') : asset('images/placeholder-product.jpg')),
+                    'size' => $item->attributes->get('size'),
+                    'color' => $item->attributes->get('color'),
+                ],
+            ];
+        });
+
+        $subTotal = (float) Cart::getSubTotal();
+        $shippingFee = $subTotal >= 2000 ? 0 : 100;
+        $discount = session('coupon.discount', 0);
+        $total = $subTotal + $shippingFee - $discount;
+
+        return response()->json([
+            'items' => $items->values(),
+            'item_count' => $items->sum('quantity'),
+            'sub_total' => $subTotal,
+            'shipping_fee' => $shippingFee,
+            'discount' => $discount,
+            'total' => $total,
+            'coupon_code' => session('coupon.code'),
+        ]);
+    }
+
+    /**
      * Add product to cart
      */
     public function add(Request $request)

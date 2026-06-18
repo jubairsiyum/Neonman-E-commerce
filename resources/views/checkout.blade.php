@@ -7,7 +7,7 @@
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
     <div class="container mx-auto px-4 py-4 sm:py-6">
-        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Checkout</h1>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold font-display text-gray-900 dark:text-gray-100">Checkout</h1>
     </div>
 </div>
 
@@ -41,7 +41,7 @@
                 
                 <!-- Customer Information -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Customer Information</h2>
+                    <h2 class="text-base sm:text-lg font-bold font-display text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Customer Information</h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                         <div>
@@ -80,7 +80,7 @@
 
                 <!-- Shipping Address -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Shipping Address</h2>
+                    <h2 class="text-base sm:text-lg font-bold font-display text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Shipping Address</h2>
                     
                     <div class="space-y-3 sm:space-y-4">
                         <div>
@@ -143,7 +143,7 @@
 
                 <!-- Payment Method -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Payment Method</h2>
+                    <h2 class="text-base sm:text-lg font-bold font-display text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Payment Method</h2>
                     
                     <div class="space-y-2 sm:space-y-3">
                         <label class="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-900 transition-colors">
@@ -179,7 +179,7 @@
             <!-- Order Summary -->
             <div>
                 <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6 lg:sticky lg:top-4">
-                    <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Order Summary</h2>
+                    <h2 class="text-base sm:text-lg font-bold font-display text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Order Summary</h2>
 
                     <!-- Cart Items -->
                     <div class="space-y-2 sm:space-y-3 mb-3 sm:mb-4 max-h-60 overflow-y-auto">

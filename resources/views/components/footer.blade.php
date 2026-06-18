@@ -38,7 +38,7 @@
 
             <!-- Quick Links -->
             <div>
-                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Quick Links</h3>
+                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 font-display">Quick Links</h3>
                 <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     <li>
                         <a href="{{ url('/') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">
@@ -80,7 +80,7 @@
 
             <!-- Categories -->
             <div>
-                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Categories</h3>
+                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 font-display">Categories</h3>
                 <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     @php
                         $footerCategories = \App\Models\Category::where('is_active', true)
@@ -101,7 +101,7 @@
 
             <!-- Customer Service & Newsletter -->
             <div>
-                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Customer Service</h3>
+                <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 font-display">Customer Service</h3>
                 <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm mb-4 sm:mb-6">
                     <li>
                         <a href="{{ url('/shipping-policy') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-900 dark:hover:text-primary-400 transition-colors">

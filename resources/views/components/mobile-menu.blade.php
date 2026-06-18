@@ -112,7 +112,7 @@
             @php
                 $cartCount = \Darryldecode\Cart\Facades\CartFacade::getContent()->count();
             @endphp
-            <a href="{{ url('/cart') }}" class="flex items-center justify-between rounded-xl px-3.5 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <button type="button" onclick="closeMenu(); setTimeout(() => window.dispatchEvent(new Event('open-cart')), 100)" class="flex items-center justify-between rounded-xl px-3.5 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors w-full text-left">
                 <span class="flex items-center gap-3">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 2h12"></path>
@@ -122,7 +122,7 @@
                 @if($cartCount > 0)
                 <span class="inline-flex min-w-[1.5rem] items-center justify-center rounded-full bg-primary-900 px-1.5 py-0.5 text-xs font-semibold text-white">{{ $cartCount }}</span>
                 @endif
-            </a>
+            </button>
 
             @auth
             @php

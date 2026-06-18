@@ -75,7 +75,7 @@
             </div>
             
             <!-- Product Name -->
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 font-display">
                 {{ $product->name }}
             </h1>
 
@@ -137,10 +137,12 @@
 
             <!-- Size Selector -->
             @if($product->sizes && is_array($product->sizes) && count($product->sizes) > 0)
+            @php $flatSizes = collect($product->sizes)->flatten()->filter(fn ($s) => is_string($s))->values(); @endphp
+            @if($flatSizes->isNotEmpty())
             <div class="mb-6">
                 <label class="block text-sm font-bold text-gray-900 dark:text-gray-100 mb-3">Select Size</label>
                 <div class="flex flex-wrap gap-2">
-                    @foreach($product->sizes as $size)
+                    @foreach($flatSizes as $size)
                     <button type="button" 
                         onclick="selectSize(this, '{{ $size }}')" 
                         class="size-option px-5 py-2.5 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 font-semibold rounded hover:border-primary-900 hover:bg-primary-50 dark:hover:bg-gray-800 transition-all">
@@ -150,13 +152,16 @@
                 </div>
             </div>
             @endif
+            @endif
 
             <!-- Color Selector -->
             @if($product->colors && is_array($product->colors) && count($product->colors) > 0)
+            @php $flatColors = collect($product->colors)->flatten()->filter(fn ($c) => is_string($c))->values(); @endphp
+            @if($flatColors->isNotEmpty())
             <div class="mb-6">
                 <label class="block text-sm font-bold text-gray-900 dark:text-gray-100 mb-3">Select Color</label>
                 <div class="flex flex-wrap gap-2">
-                    @foreach($product->colors as $color)
+                    @foreach($flatColors as $color)
                     <button type="button" 
                         onclick="selectColor(this, '{{ $color }}')" 
                         class="color-option px-5 py-2.5 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 font-semibold rounded hover:border-primary-900 hover:bg-primary-50 dark:hover:bg-gray-800 transition-all">
@@ -165,6 +170,7 @@
                     @endforeach
                 </div>
             </div>
+            @endif
             @endif
 
             <!-- Quantity Selector -->
@@ -290,7 +296,7 @@
     <!-- Related Products -->
     @if($relatedProducts->isNotEmpty())
     <div class="mt-12 sm:mt-16">
-        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">You May Also Like</h2>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 font-display">You May Also Like</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6">
             @foreach($relatedProducts as $related)
                 <x-product-card :product="$related" />

@@ -8,7 +8,7 @@
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
     <div class="container mx-auto px-4 py-4 sm:py-6">
-        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Shop All Products</h1>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 font-display">Shop All Products</h1>
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ $products->total() }} products found</p>
     </div>
 </div>
@@ -27,7 +27,7 @@
             </button>
             
             <div id="filtersSidebar" class="hidden lg:block bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6 lg:sticky lg:top-4">
-                <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Filters</h2>
+                <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 font-display">Filters</h2>
                 
                 <form method="GET" action="{{ url('/shop') }}" id="filterForm">
                     
@@ -143,7 +143,7 @@
             @if($products->isEmpty())
                 <div class="text-center py-16">
                     <div class="text-6xl mb-4">🔍</div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">No products found</h3>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 font-display">No products found</h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-4">Try adjusting your filters</p>
                     <a href="{{ url('/shop') }}" class="inline-block px-6 py-2 bg-primary-900 hover:bg-primary-950 text-white font-medium rounded-lg transition-colors">
                         Clear All Filters

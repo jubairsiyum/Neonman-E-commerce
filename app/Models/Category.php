@@ -78,4 +78,29 @@ class Category extends Model
     {
         return $query->whereNull('parent_id');
     }
+
+    /**
+     * Get the category image URL
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+
+        $firstProduct = $this->products()->where('is_active', true)->first();
+        if ($firstProduct && $firstProduct->hasMedia('images')) {
+            return $firstProduct->getFirstMediaUrl('images');
+        }
+
+        return null;
+    }
+
+    /**
+     * Get product count for this category
+     */
+    public function getActiveProductCountAttribute(): int
+    {
+        return $this->products()->where('is_active', true)->count();
+    }
 }

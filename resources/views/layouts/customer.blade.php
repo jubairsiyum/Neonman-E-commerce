@@ -11,7 +11,7 @@
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&family=sora:400,600,700,800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&family=space-grotesk:500,600,700&family=sora:400,600,700,800&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
@@ -222,6 +222,9 @@
     @include('components.footer')
 
     @include('components.mobile-menu')
+
+    <!-- Cart Sidebar -->
+    @include('components.cart-sidebar')
 
     <script>
         // Dark mode toggle functionality

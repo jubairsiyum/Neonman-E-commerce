@@ -20,6 +20,7 @@ Route::get('/cart', function () {
 })->name('cart');
 
 Route::prefix('cart')->name('cart.')->group(function () {
+    Route::get('/data', [CartController::class, 'data'])->name('data');
     Route::post('/add', [CartController::class, 'add'])->name('add');
     Route::patch('/update/{id}', [CartController::class, 'update'])->name('update');
     Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove');

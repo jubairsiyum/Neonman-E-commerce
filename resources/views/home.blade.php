@@ -176,72 +176,35 @@
 </section>
 
 <!-- SHOP BY CATEGORY -->
+@php
+    $homeCategories = \App\Models\Category::where('is_active', true)
+        ->whereNull('parent_id')
+        ->orderBy('sort_order')
+        ->get();
+@endphp
 <section class="py-10 sm:py-14 bg-white dark:bg-gray-900">
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between mb-6 sm:mb-8">
-            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Shop by Category</h2>
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 font-display">Shop by Category</h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-            <a href="{{ url('/shop?gender=men') }}" class="group">
+            @foreach($homeCategories as $category)
+            <a href="{{ url('/shop?category=' . $category->slug) }}" class="group">
                 <div class="relative aspect-[3/4] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-900 transition-all duration-300 hover:shadow-lg">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
-                    <div class="w-full h-full flex items-center justify-center text-7xl">👔</div>
+                    @if($category->image_url)
+                        <img src="{{ $category->image_url }}" alt="{{ $category->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
+                    @else
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-950 z-0"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
+                    @endif
                     <div class="absolute bottom-0 left-0 right-0 p-3 z-20">
-                        <h3 class="text-white font-bold text-sm sm:text-base group-hover:text-primary-400 transition-colors">Men</h3>
-                        <p class="text-white/70 text-xs">Shop Now →</p>
+                        <h3 class="text-white font-bold text-sm sm:text-base font-display group-hover:text-primary-300 transition-colors">{{ $category->name }}</h3>
+                        <p class="text-white/70 text-xs">Shop Now &rarr;</p>
                     </div>
                 </div>
             </a>
-            <a href="{{ url('/shop?gender=women') }}" class="group">
-                <div class="relative aspect-[3/4] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-900 transition-all duration-300 hover:shadow-lg">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
-                    <div class="w-full h-full flex items-center justify-center text-7xl">👗</div>
-                    <div class="absolute bottom-0 left-0 right-0 p-3 z-20">
-                        <h3 class="text-white font-bold text-sm sm:text-base group-hover:text-primary-400 transition-colors">Women</h3>
-                        <p class="text-white/70 text-xs">Shop Now →</p>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ url('/shop?sleeve=half') }}" class="group">
-                <div class="relative aspect-[3/4] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-900 transition-all duration-300 hover:shadow-lg">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
-                    <div class="w-full h-full flex items-center justify-center text-7xl">👕</div>
-                    <div class="absolute bottom-0 left-0 right-0 p-3 z-20">
-                        <h3 class="text-white font-bold text-sm sm:text-base group-hover:text-primary-400 transition-colors">T-Shirts</h3>
-                        <p class="text-white/70 text-xs">Shop Now →</p>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ url('/shop?sleeve=full') }}" class="group">
-                <div class="relative aspect-[3/4] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-900 transition-all duration-300 hover:shadow-lg">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
-                    <div class="w-full h-full flex items-center justify-center text-7xl">🧥</div>
-                    <div class="absolute bottom-0 left-0 right-0 p-3 z-20">
-                        <h3 class="text-white font-bold text-sm sm:text-base group-hover:text-primary-400 transition-colors">Hoodies</h3>
-                        <p class="text-white/70 text-xs">Shop Now →</p>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ url('/shop?category=polo') }}" class="group">
-                <div class="relative aspect-[3/4] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-900 transition-all duration-300 hover:shadow-lg">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
-                    <div class="w-full h-full flex items-center justify-center text-7xl">👔</div>
-                    <div class="absolute bottom-0 left-0 right-0 p-3 z-20">
-                        <h3 class="text-white font-bold text-sm sm:text-base group-hover:text-primary-400 transition-colors">Polo</h3>
-                        <p class="text-white/70 text-xs">Shop Now →</p>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ url('/shop?category=tops') }}" class="group">
-                <div class="relative aspect-[3/4] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary-900 transition-all duration-300 hover:shadow-lg">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
-                    <div class="w-full h-full flex items-center justify-center text-7xl">👚</div>
-                    <div class="absolute bottom-0 left-0 right-0 p-3 z-20">
-                        <h3 class="text-white font-bold text-sm sm:text-base group-hover:text-primary-400 transition-colors">Tops</h3>
-                        <p class="text-white/70 text-xs">Shop Now →</p>
-                    </div>
-                </div>
-            </a>
+            @endforeach
         </div>
     </div>
 </section>
@@ -251,7 +214,7 @@
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between mb-6 sm:mb-8">
             <div>
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Featured Products</h2>
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 font-display">Featured Products</h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Hand-picked by our team</p>
             </div>
             <a href="{{ url('/shop?featured=1') }}" class="text-sm font-semibold text-primary-900 dark:text-primary-400 hover:underline flex items-center gap-1">View All <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
@@ -291,7 +254,7 @@
         <div class="flex items-center justify-between mb-6 sm:mb-8">
             <div class="flex items-center gap-3">
                 <span class="inline-block px-3 py-1 bg-primary-900 text-white text-xs font-bold tracking-widest uppercase rounded-full">New</span>
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">New Arrivals</h2>
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 font-display">New Arrivals</h2>
             </div>
             <a href="{{ url('/new-arrivals') }}" class="text-sm font-semibold text-primary-900 dark:text-primary-400 hover:underline flex items-center gap-1">See All <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
@@ -309,7 +272,7 @@
     <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);background-size:24px 24px;"></div>
     <div class="relative container mx-auto px-4 text-center">
         <p class="inline-block px-4 py-1 bg-white/20 text-white/90 text-xs font-bold tracking-widest uppercase rounded-full mb-4">Limited Offer</p>
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-3">Get 10% Off Your First Order</h2>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-3 font-display">Get 10% Off Your First Order</h2>
         <p class="text-white/80 text-sm sm:text-base mb-6 max-w-lg mx-auto">
             Use code <span class="inline-block mx-1 px-3 py-0.5 bg-white text-primary-900 font-black rounded">WELCOME10</span> at checkout.
         </p>
@@ -329,7 +292,7 @@
         <div class="flex items-center justify-between mb-6 sm:mb-8">
             <div class="flex items-center gap-3">
                 <span class="text-2xl">🔥</span>
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Best Sellers</h2>
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 font-display">Best Sellers</h2>
             </div>
             <a href="{{ url('/best-sellers') }}" class="text-sm font-semibold text-primary-900 dark:text-primary-400 hover:underline flex items-center gap-1">See All <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
@@ -345,34 +308,34 @@
 <!-- WHY CHOOSE US -->
 <section class="py-10 sm:py-14 bg-white dark:bg-gray-900">
     <div class="container mx-auto px-4">
-        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-8 sm:mb-10">Why Choose Neonman?</h2>
+        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-8 sm:mb-10 font-display">Why Choose Neonman?</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             <div class="text-center group">
                 <div class="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-900 group-hover:scale-105 transition-all duration-300">
                     <svg class="w-8 h-8 text-primary-900 dark:text-primary-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2">Premium Quality</h3>
+                <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2 font-display">Premium Quality</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Every product is carefully inspected to ensure you get the best quality.</p>
             </div>
             <div class="text-center group">
                 <div class="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-900 group-hover:scale-105 transition-all duration-300">
                     <svg class="w-8 h-8 text-primary-900 dark:text-primary-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2">Affordable Prices</h3>
+                <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2 font-display">Affordable Prices</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Great style at prices that won't empty your wallet.</p>
             </div>
             <div class="text-center group">
                 <div class="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-900 group-hover:scale-105 transition-all duration-300">
                     <svg class="w-8 h-8 text-primary-900 dark:text-primary-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2">Fast Delivery</h3>
+                <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2 font-display">Fast Delivery</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Quick and reliable delivery across all of Bangladesh.</p>
             </div>
             <div class="text-center group">
                 <div class="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-900 group-hover:scale-105 transition-all duration-300">
                     <svg class="w-8 h-8 text-primary-900 dark:text-primary-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2">Hassle-Free Returns</h3>
+                <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2 font-display">Hassle-Free Returns</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Not happy? Return within 7 days, no questions asked.</p>
             </div>
         </div>

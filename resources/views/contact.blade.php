@@ -7,7 +7,7 @@
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
     <div class="container mx-auto px-4 py-4 sm:py-6">
-        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Contact Us</h1>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold font-display text-gray-900 dark:text-gray-100">Contact Us</h1>
     </div>
 </div>
 
@@ -16,7 +16,7 @@
         
         <!-- Contact Form -->
         <div>
-            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Get in Touch</h2>
+            <h2 class="text-xl sm:text-2xl font-bold font-display text-gray-900 dark:text-gray-100 mb-2">Get in Touch</h2>
             <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4 sm:mb-6">
                 Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
             </p>
@@ -66,7 +66,7 @@
 
         <!-- Contact Information -->
         <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Contact Information</h2>
+            <h2 class="text-2xl font-bold font-display text-gray-900 dark:text-gray-100 mb-6">Contact Information</h2>
 
             <div class="space-y-6 mb-8">
                 <!-- Address -->
