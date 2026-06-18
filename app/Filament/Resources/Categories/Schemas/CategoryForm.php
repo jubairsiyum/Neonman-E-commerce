@@ -26,6 +26,7 @@ class CategoryForm
                     ->columnSpanFull(),
                 FileUpload::make('image')
                     ->image()
+                    ->disk('public')
                     ->directory('categories')
                     ->imageEditor()
                     ->imageCropAspectRatio('3:4')

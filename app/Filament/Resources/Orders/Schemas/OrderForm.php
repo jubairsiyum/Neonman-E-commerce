@@ -60,7 +60,9 @@ class OrderForm
                     ->default('pending'),
                 TextInput::make('bkash_transaction_id'),
                 FileUpload::make('bkash_proof_image')
-                    ->image(),
+                    ->image()
+                    ->disk('public')
+                    ->directory('bkash-proofs'),
                 DateTimePicker::make('paid_at'),
                 TextInput::make('status')
                     ->required()
