@@ -7,9 +7,11 @@ use App\Models\Order;
 use Filament\Actions\Action;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewOrder extends ViewRecord
@@ -20,6 +22,10 @@ class ViewOrder extends ViewRecord
     {
         return $schema
             ->components([
+                View::make('filament.resources.orders.components.timeline')
+                    ->viewData(['order' => $this->record])
+                    ->columnSpanFull(),
+
                 Grid::make(2)->schema([
                     Section::make('Customer Information')
                         ->icon('heroicon-m-user')
@@ -169,7 +175,7 @@ class ViewOrder extends ViewRecord
                 ]))
                 ->action(function (array $data, Order $record): void {
                     $record->update($data);
-                    $this->notify('success', 'Order status updated.');
+                    Notification::make()->title('Order status updated.')->success()->send();
                 }),
 
             Action::make('edit')
