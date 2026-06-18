@@ -46,15 +46,6 @@
         /* Footer */
         .footer { margin-top: 12px; padding-top: 8px; border-top: 1px dashed #e5e7eb; text-align: center; font-size: 9px; color: #9ca3af; }
 
-        /* Status */
-        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; }
-        .status-pending { background: #fef3c7; color: #92400e; }
-        .status-paid { background: #d1fae5; color: #065f46; }
-        .status-processing { background: #fce7f3; color: #9d174d; }
-        .status-shipped { background: #ede9fe; color: #5b21b6; }
-        .status-delivered { background: #d1fae5; color: #065f46; }
-        .status-cancelled { background: #fee2e2; color: #991b1b; }
-
         @media print {
             body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .slip { border: 2px solid #000; }
@@ -109,16 +100,8 @@
         <!-- Payment -->
         <div class="payment-row">
             <div class="payment-box">
-                <div class="label">Payment</div>
+                <div class="label">Payment Method</div>
                 <div class="value" style="text-transform: uppercase;">{{ $order->payment_method }}</div>
-            </div>
-            <div class="payment-box">
-                <div class="label">Status</div>
-                <span class="status-badge status-{{ $order->payment_status }}">{{ ucfirst($order->payment_status) }}</span>
-            </div>
-            <div class="payment-box">
-                <div class="label">Order Status</div>
-                <span class="status-badge status-{{ $order->status }}">{{ ucfirst($order->status) }}</span>
             </div>
         </div>
 
