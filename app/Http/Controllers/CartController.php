@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeliveryZone;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
@@ -30,7 +31,17 @@ class CartController extends Controller
         });
 
         $subTotal = (float) Cart::getSubTotal();
-        $shippingFee = $subTotal >= 2000 ? 0 : 100;
+        $deliveryZones = DeliveryZone::active()->get()->map(fn ($zone) => [
+            'id' => $zone->id,
+            'name' => $zone->name,
+            'charge' => (float) $zone->charge,
+            'free_shipping_threshold' => $zone->free_shipping_threshold ? (float) $zone->free_shipping_threshold : null,
+        ]);
+        $selectedZoneId = session('delivery_zone_id', $deliveryZones->isNotEmpty() ? $deliveryZones->first()['id'] : null);
+        $selectedZone = $deliveryZones->firstWhere('id', $selectedZoneId) ?? $deliveryZones->first();
+        $shippingFee = $selectedZone
+            ? (($selectedZone['free_shipping_threshold'] && $subTotal >= $selectedZone['free_shipping_threshold']) ? 0 : $selectedZone['charge'])
+            : 0;
         $discount = session('coupon.discount', 0);
         $total = $subTotal + $shippingFee - $discount;
 
@@ -42,6 +53,8 @@ class CartController extends Controller
             'discount' => $discount,
             'total' => $total,
             'coupon_code' => session('coupon.code'),
+            'delivery_zones' => $deliveryZones,
+            'selected_zone_id' => $selectedZoneId,
         ]);
     }
 

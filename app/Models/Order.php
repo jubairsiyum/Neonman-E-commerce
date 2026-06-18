@@ -39,6 +39,7 @@ class Order extends Model
         'shipping_division',
         'shipping_postal_code',
         'shipping_phone',
+        'delivery_zone_id',
         'subtotal',
         'discount',
         'shipping_charge',
@@ -93,6 +94,14 @@ class Order extends Model
     public function coupon(): BelongsTo
     {
         return $this->belongsTo(Coupon::class);
+    }
+
+    /**
+     * Get the delivery zone for this order
+     */
+    public function deliveryZone(): BelongsTo
+    {
+        return $this->belongsTo(DeliveryZone::class);
     }
 
     /**

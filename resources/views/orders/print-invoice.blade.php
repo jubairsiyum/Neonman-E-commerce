@@ -105,6 +105,12 @@
                     <div class="field-label">Phone</div>
                     <div class="field-value">{{ $order->shipping_phone }}</div>
                 </div>
+                @if($order->deliveryZone)
+                <div class="field">
+                    <div class="field-label">Delivery Zone</div>
+                    <div class="field-value" style="color: #881337;">{{ $order->deliveryZone->name }}</div>
+                </div>
+                @endif
             </div>
         </div>
 

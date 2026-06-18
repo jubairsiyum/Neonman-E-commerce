@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coupon;
+use App\Models\DeliveryZone;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -24,22 +25,24 @@ class CheckoutController extends Controller
         }
 
         $validated = $request->validate([
-            'first_name'     => 'required|string|max:100',
-            'last_name'      => 'required|string|max:100',
-            'email'          => 'required|email|max:255',
-            'phone'          => 'required|string|max:20',
-            'address'        => 'required|string|max:500',
-            'division'       => 'required|string|max:100',
-            'city'           => 'required|string|max:100',
-            'area'           => 'required|string|max:100',
-            'postcode'       => 'nullable|string|max:20',
-            'notes'          => 'nullable|string|max:1000',
-            'payment_method' => 'required|in:cod,bkash',
+            'first_name'       => 'required|string|max:100',
+            'last_name'        => 'required|string|max:100',
+            'email'            => 'required|email|max:255',
+            'phone'            => 'required|string|max:20',
+            'address'          => 'required|string|max:500',
+            'division'         => 'required|string|max:100',
+            'city'             => 'required|string|max:100',
+            'area'             => 'required|string|max:100',
+            'postcode'         => 'nullable|string|max:20',
+            'delivery_zone_id' => 'required|exists:delivery_zones,id',
+            'notes'            => 'nullable|string|max:1000',
+            'payment_method'   => 'required|in:cod,bkash',
         ]);
 
         // Calculate totals
         $subtotal = Cart::getSubTotal();
-        $shippingCharge = $subtotal >= 2000 ? 0 : 100;
+        $deliveryZone = DeliveryZone::findOrFail($validated['delivery_zone_id']);
+        $shippingCharge = $deliveryZone->calculateShipping($subtotal);
 
         // Coupon discount
         $discount = 0;
@@ -80,6 +83,7 @@ class CheckoutController extends Controller
                 'shipping_division'    => $validated['division'],
                 'shipping_postal_code' => $validated['postcode'] ?? '',
                 'shipping_phone'       => $validated['phone'],
+                'delivery_zone_id'     => $deliveryZone->id,
                 'subtotal'             => $subtotal,
                 'discount'             => $discount,
                 'shipping_charge'      => $shippingCharge,

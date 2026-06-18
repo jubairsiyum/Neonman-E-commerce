@@ -42,6 +42,9 @@ class ViewOrder extends ViewRecord
                                     ->state(fn (Order $record): string => $record->shipping_postal_code ?: 'N/A'),
                             ]),
                             TextEntry::make('shipping_phone')->label('Shipping Phone'),
+                            TextEntry::make('deliveryZone.name')->label('Delivery Zone')
+                                ->badge()
+                                ->color('primary'),
                         ])->columnSpan(1),
                 ])->columnSpanFull(),
 

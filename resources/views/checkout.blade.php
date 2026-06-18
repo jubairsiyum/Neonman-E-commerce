@@ -134,6 +134,26 @@
                             </div>
                         </div>
 
+                        @php
+                            $deliveryZones = \App\Models\DeliveryZone::active()->get();
+                        @endphp
+
+                        <div>
+                            <label for="delivery_zone_id" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Delivery Zone *</label>
+                            <select id="delivery_zone_id" name="delivery_zone_id" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900" data-zones="{{ $deliveryZones->toJson() }}">
+                                @forelse($deliveryZones as $zone)
+                                    <option value="{{ $zone->id }}" data-charge="{{ $zone->charge }}" data-threshold="{{ $zone->free_shipping_threshold }}" {{ old('delivery_zone_id') == $zone->id ? 'selected' : '' }}>
+                                        {{ $zone->name }} — ৳{{ number_format($zone->charge, 0) }}{{ $zone->free_shipping_threshold ? ' (Free over ৳' . number_format($zone->free_shipping_threshold, 0) . ')' : '' }}
+                                    </option>
+                                @empty
+                                    <option value="">No delivery zones available</option>
+                                @endforelse
+                            </select>
+                            @error('delivery_zone_id')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div>
                             <label for="notes" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Order Notes (Optional)</label>
                             <textarea id="notes" name="notes" rows="3" placeholder="Additional instructions for delivery..." class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">{{ old('notes') }}</textarea>
@@ -212,7 +232,8 @@
                     <!-- Pricing Summary -->
                     @php
                         $subtotal = \Darryldecode\Cart\Facades\CartFacade::getSubTotal();
-                        $shippingFee = $subtotal >= 2000 ? 0 : 100;
+                        $selectedZone = \App\Models\DeliveryZone::find(old('delivery_zone_id', $deliveryZones->first()?->id));
+                        $shippingFee = $selectedZone ? $selectedZone->calculateShipping($subtotal) : 0;
                         $total = $subtotal + $shippingFee;
                     @endphp
 
@@ -222,9 +243,9 @@
                             <span class="font-medium text-gray-900 dark:text-gray-100">৳{{ number_format($subtotal, 0) }}</span>
                         </div>
 
-                        <div class="flex justify-between text-xs sm:text-sm">
-                            <span class="text-gray-600 dark:text-gray-400">Shipping</span>
-                            <span class="font-medium text-gray-900 dark:text-gray-100">
+                        <div class="flex justify-between text-xs sm:text-sm" id="shipping-row">
+                            <span class="text-gray-600 dark:text-gray-400">Shipping <span id="shipping-zone-name" class="text-[10px] opacity-70">({{ $selectedZone?->name ?? '—' }})</span></span>
+                            <span class="font-medium text-gray-900 dark:text-gray-100" id="shipping-amount">
                                 @if($shippingFee > 0)
                                     ৳{{ number_format($shippingFee, 0) }}
                                 @else
@@ -236,7 +257,7 @@
 
                     <div class="flex justify-between pt-3 sm:pt-4 mb-4 sm:mb-6">
                         <span class="text-sm sm:text-base font-bold text-gray-900 dark:text-gray-100">Total</span>
-                        <span class="text-xl sm:text-2xl font-bold text-primary-900 dark:text-primary-400">
+                        <span class="text-xl sm:text-2xl font-bold text-primary-900 dark:text-primary-400" id="total-amount">
                             ৳{{ number_format($total, 0) }}
                         </span>
                     </div>
@@ -258,3 +279,30 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const zoneSelect = document.getElementById('delivery_zone_id');
+        const subtotal = {{ $subtotal ?? 0 }};
+
+        if (zoneSelect) {
+            zoneSelect.addEventListener('change', function() {
+                const selected = this.options[this.selectedIndex];
+                const charge = parseFloat(selected.dataset.charge) || 0;
+                const threshold = parseFloat(selected.dataset.threshold) || 0;
+                const zoneName = selected.textContent.split('—')[0].trim();
+
+                const shipping = (threshold > 0 && subtotal >= threshold) ? 0 : charge;
+                const total = subtotal + shipping;
+
+                document.getElementById('shipping-zone-name').textContent = '(' + zoneName + ')';
+                document.getElementById('shipping-amount').innerHTML = shipping > 0
+                    ? '৳' + shipping.toLocaleString('en-IN')
+                    : '<span class="text-green-600">FREE</span>';
+                document.getElementById('total-amount').textContent = '৳' + total.toLocaleString('en-IN');
+            });
+        }
+    });
+</script>
+@endpush

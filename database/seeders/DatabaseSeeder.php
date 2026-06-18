@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             PanjabiProductSeeder::class,
             BannerSeeder::class,
             CouponSeeder::class,
+            DeliveryZoneSeeder::class,
         ]);
     }
 }
