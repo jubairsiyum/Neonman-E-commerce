@@ -71,4 +71,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Admin Order Print Routes
+Route::middleware(['auth', 'verified'])->prefix('admin/orders')->name('admin.orders.')->group(function () {
+    Route::get('/{order}/print', function (\App\Models\Order $order) {
+        abort_unless(auth()->user()->role === 'admin' || auth()->user()->role === 'moderator', 403);
+        return view('orders.print-invoice', ['order' => $order->load('items')]);
+    })->name('print');
+
+    Route::get('/{order}/print-slip', function (\App\Models\Order $order) {
+        abort_unless(auth()->user()->role === 'admin' || auth()->user()->role === 'moderator', 403);
+        return view('orders.print-slip', ['order' => $order->load('items')]);
+    })->name('print-slip');
+});
+
 require __DIR__.'/auth.php';

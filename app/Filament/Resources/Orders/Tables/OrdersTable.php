@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Orders\Tables;
 
+use App\Models\Order;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class OrdersTable
@@ -16,69 +18,95 @@ class OrdersTable
         return $table
             ->columns([
                 TextColumn::make('order_number')
-                    ->searchable(),
-                TextColumn::make('user.name')
-                    ->numeric()
+                    ->label('Order')
+                    ->searchable()
+                    ->weight('bold')
+                    ->copyable(),
+
+                TextColumn::make('customer_name')
+                    ->label('Customer')
+                    ->searchable()
+                    ->state(fn (Order $record) => $record->customer_name),
+
+                TextColumn::make('items_count')
+                    ->label('Items')
+                    ->counts('items')
                     ->sortable(),
-                TextColumn::make('guest_name')
-                    ->searchable(),
-                TextColumn::make('guest_email')
-                    ->searchable(),
-                TextColumn::make('guest_phone')
-                    ->searchable(),
-                TextColumn::make('shipping_district')
-                    ->searchable(),
-                TextColumn::make('shipping_division')
-                    ->searchable(),
-                TextColumn::make('shipping_postal_code')
-                    ->searchable(),
-                TextColumn::make('shipping_phone')
-                    ->searchable(),
-                TextColumn::make('subtotal')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('discount')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('shipping_charge')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('tax')
-                    ->numeric()
-                    ->sortable(),
+
                 TextColumn::make('total')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Total')
+                    ->money('BDT', 0)
+                    ->sortable()
+                    ->weight('bold'),
+
                 TextColumn::make('payment_method')
-                    ->searchable(),
+                    ->label('Payment')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'bkash' => 'info',
+                        'cod' => 'gray',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => strtoupper($state)),
+
                 TextColumn::make('payment_status')
-                    ->searchable(),
-                TextColumn::make('bkash_transaction_id')
-                    ->searchable(),
-                ImageColumn::make('bkash_proof_image'),
-                TextColumn::make('paid_at')
-                    ->dateTime()
+                    ->label('Pay Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'paid' => 'success',
+                        'pending' => 'warning',
+                        'failed' => 'danger',
+                        default => 'gray',
+                    })
                     ->sortable(),
+
                 TextColumn::make('status')
-                    ->searchable(),
-                TextColumn::make('coupon.id')
-                    ->numeric()
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'paid' => 'info',
+                        'processing' => 'primary',
+                        'shipped' => 'secondary',
+                        'delivered' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    })
                     ->sortable(),
-                TextColumn::make('coupon_code')
-                    ->searchable(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Date')
+                    ->dateTime('M d, Y')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'Paid',
+                        'processing' => 'Processing',
+                        'shipped' => 'Shipped',
+                        'delivered' => 'Delivered',
+                        'cancelled' => 'Cancelled',
+                    ])
+                    ->multiple(),
+                SelectFilter::make('payment_status')
+                    ->label('Payment Status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'Paid',
+                        'failed' => 'Failed',
+                    ]),
+                SelectFilter::make('payment_method')
+                    ->label('Payment Method')
+                    ->options([
+                        'cod' => 'Cash on Delivery',
+                        'bkash' => 'bKash',
+                    ]),
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
