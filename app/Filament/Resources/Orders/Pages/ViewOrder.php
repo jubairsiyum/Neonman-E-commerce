@@ -52,7 +52,8 @@ class ViewOrder extends ViewRecord
                             ->schema([
                                 Grid::make(5)->schema([
                                     TextEntry::make('product_name')->label('Product')->weight('bold')->columnSpan(2),
-                                    TextEntry::make('variant_details')->label('Variant')->default('Default'),
+                                    TextEntry::make('variant_details')->label('Variant')
+                                        ->state(fn ($record): string => $record->variant_details ? implode(' / ', array_values(json_decode($record->variant_details, true) ?: [])) : 'Default'),
                                     TextEntry::make('quantity')->label('Qty'),
                                     TextEntry::make('price')->label('Unit Price')
                                         ->state(fn ($record): string => '৳' . number_format($record->price, 0)),
