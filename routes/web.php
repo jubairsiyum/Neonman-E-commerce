@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CustomerPortalController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,13 @@ Route::get('/checkout', function () {
 
 Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.place-order');
 Route::get('/checkout/success/{orderNumber}', [CheckoutController::class, 'success'])->name('checkout.success');
+Route::get('/checkout/payment-pending/{orderNumber}', [CheckoutController::class, 'paymentPending'])->name('checkout.payment-pending');
+Route::get('/checkout/retry-bkash/{orderNumber}', [CheckoutController::class, 'retryBkashPayment'])->name('checkout.retry-bkash');
+
+// Payment Callback Routes
+Route::get('/payment/bkash/callback/{orderNumber}', [PaymentCallbackController::class, 'bkashCallback'])->name('bkash.callback');
+Route::get('/payment/success/{orderNumber}', [PaymentCallbackController::class, 'success'])->name('payment.success');
+Route::get('/payment/failed', [PaymentCallbackController::class, 'failed'])->name('payment.failed');
 
 // Static Pages
 Route::get('/about', function () {

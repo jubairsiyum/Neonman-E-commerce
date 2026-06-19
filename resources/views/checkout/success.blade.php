@@ -7,6 +7,17 @@
 <div class="container mx-auto px-4 py-12 sm:py-16 lg:py-20">
     <div class="max-w-2xl mx-auto">
 
+        @if(session('error'))
+        <div class="mb-4 px-4 py-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400">
+            {{ session('error') }}
+        </div>
+        @endif
+        @if(session('warning'))
+        <div class="mb-4 px-4 py-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg text-sm text-yellow-700 dark:text-yellow-400">
+            {{ session('warning') }}
+        </div>
+        @endif
+
         <!-- Success Icon -->
         <div class="text-center mb-8">
             <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full mb-5">

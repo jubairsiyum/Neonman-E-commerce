@@ -12,6 +12,17 @@
 </div>
 
 <div class="container mx-auto px-4 py-6 sm:py-8">
+    @if(session('error'))
+    <div class="mb-4 px-4 py-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400">
+        {{ session('error') }}
+    </div>
+    @endif
+    @if(session('warning'))
+    <div class="mb-4 px-4 py-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg text-sm text-yellow-700 dark:text-yellow-400">
+        {{ session('warning') }}
+    </div>
+    @endif
+
     @php
         $cartItems = \Darryldecode\Cart\Facades\CartFacade::getContent();
     @endphp

@@ -7,9 +7,11 @@ use App\Models\DeliveryZone;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Services\Payment\PaymentGatewayManager;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
@@ -56,6 +58,15 @@ class CheckoutController extends Controller
         }
 
         $total = max(0, $subtotal - $discount + $shippingCharge);
+        $isBkash = $validated['payment_method'] === 'bkash';
+
+        // For bKash: verify gateway is available BEFORE creating order
+        if ($isBkash) {
+            if (!PaymentGatewayManager::isAvailable('bkash')) {
+                return redirect()->route('checkout')
+                    ->with('error', 'bKash payment is currently unavailable. Please choose Cash on Delivery or try again later.');
+            }
+        }
 
         DB::beginTransaction();
         try {
@@ -132,11 +143,43 @@ class CheckoutController extends Controller
             Cart::clear();
             session()->forget('coupon');
 
+            // bKash — initiate payment and redirect to bKash page
+            if ($isBkash) {
+                try {
+                    $gateway = PaymentGatewayManager::resolve('bkash');
+                    $result = $gateway->createPayment($order);
+
+                    if ($result['success'] && isset($result['redirect_url'])) {
+                        return redirect()->away($result['redirect_url']);
+                    }
+
+                    // Gateway failed — order exists but unpaid, redirect to payment page
+                    Log::warning('bKash create payment failed', [
+                        'order' => $order->order_number,
+                        'result' => $result,
+                    ]);
+
+                    return redirect()->route('checkout.payment-pending', $order->order_number)
+                        ->with('error', 'Could not connect to bKash. Please try paying again or choose a different method.');
+
+                } catch (\Exception $e) {
+                    Log::error('bKash payment initiation exception', [
+                        'order' => $order->order_number,
+                        'error' => $e->getMessage(),
+                    ]);
+
+                    return redirect()->route('checkout.payment-pending', $order->order_number)
+                        ->with('error', 'bKash payment service is currently unavailable. Please try again later.');
+                }
+            }
+
+            // COD — direct success
             return redirect()->route('checkout.success', $order->order_number)
                 ->with('success', 'Your order has been placed successfully!');
 
         } catch (\Throwable $e) {
             DB::rollBack();
+            Log::error('Order placement failed', ['error' => $e->getMessage()]);
             return redirect()->route('checkout')->with('error', 'Something went wrong. Please try again.');
         }
     }
@@ -146,16 +189,62 @@ class CheckoutController extends Controller
      */
     public function success(string $orderNumber)
     {
-        // Allow guest access too – just find by order number
         $order = Order::with('items')
             ->where('order_number', $orderNumber)
             ->firstOrFail();
 
-        // If logged in, make sure the order belongs to the user OR user is guest
         if (auth()->check() && $order->user_id && $order->user_id !== auth()->id()) {
             abort(403);
         }
 
         return view('checkout.success', compact('order'));
+    }
+
+    /**
+     * Payment pending page — for bKash orders waiting for payment
+     */
+    public function paymentPending(string $orderNumber)
+    {
+        $order = Order::with('items')
+            ->where('order_number', $orderNumber)
+            ->firstOrFail();
+
+        return view('checkout.payment-pending', compact('order'));
+    }
+
+    /**
+     * Retry bKash payment for an existing unpaid order
+     */
+    public function retryBkashPayment(string $orderNumber)
+    {
+        $order = Order::where('order_number', $orderNumber)
+            ->where('payment_status', Order::PAYMENT_PENDING)
+            ->firstOrFail();
+
+        if (!PaymentGatewayManager::isAvailable('bkash')) {
+            return redirect()->route('checkout.payment-pending', $order->order_number)
+                ->with('error', 'bKash is currently unavailable.');
+        }
+
+        try {
+            $gateway = PaymentGatewayManager::resolve('bkash');
+            $result = $gateway->createPayment($order);
+
+            if ($result['success'] && isset($result['redirect_url'])) {
+                return redirect()->away($result['redirect_url']);
+            }
+
+            return redirect()->route('checkout.payment-pending', $order->order_number)
+                ->with('error', 'Could not connect to bKash. Please try again.');
+
+        } catch (\Exception $e) {
+            Log::error('bKash retry payment failed', [
+                'order' => $order->order_number,
+                'error' => $e->getMessage(),
+            ]);
+
+            return redirect()->route('checkout.payment-pending', $order->order_number)
+                ->with('error', 'bKash payment service is currently unavailable.');
+        }
     }
 }
