@@ -123,4 +123,33 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Shop Configuration
+    |--------------------------------------------------------------------------
+    */
+
+    'shop_name' => env('SHOP_NAME', 'Neonman'),
+    'shop_email' => env('SHOP_EMAIL', 'support@neonman.com'),
+    'shop_phone' => env('SHOP_PHONE', '+880 1XXX-XXXXXX'),
+    'shop_address' => env('SHOP_ADDRESS', 'Dhaka, Bangladesh'),
+
+    'currency' => env('CURRENCY', 'BDT'),
+    'currency_symbol' => env('CURRENCY_SYMBOL', '৳'),
+    'tax_rate' => env('TAX_RATE', 0),
+    'default_shipping_charge' => env('DEFAULT_SHIPPING_CHARGE', 120),
+    'free_shipping_threshold' => env('FREE_SHIPPING_THRESHOLD', 2000),
+    'cod_charge' => env('COD_CHARGE', 60),
+    'cod_enabled' => env('COD_ENABLED', true),
+
+    'bkash_personal_number' => env('BKASH_PERSONAL_NUMBER', '01XXXXXXXXX'),
+    'bkash_account_name' => env('BKASH_ACCOUNT_NAME', 'Neonman Store'),
+
+    'facebook_url' => env('FACEBOOK_URL', '#'),
+    'instagram_url' => env('INSTAGRAM_URL', '#'),
+    'twitter_url' => env('TWITTER_URL', '#'),
+
+    'site_description' => env('SITE_DESCRIPTION', "Bangladesh's funniest streetwear brand"),
+    'site_keywords' => env('SITE_KEYWORDS', 'streetwear, bangladesh, tshirts, hoodies, neonman'),
+
 ];

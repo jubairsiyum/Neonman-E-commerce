@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
 class AnnouncementsTable
@@ -38,6 +39,9 @@ class AnnouncementsTable
                     ->sortable(),
             ])
             ->defaultSort('sort_order')
+            ->filters([
+                TernaryFilter::make('is_active'),
+            ])
             ->recordActions([
                 EditAction::make(),
             ])

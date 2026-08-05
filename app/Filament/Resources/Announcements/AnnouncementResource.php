@@ -25,6 +25,8 @@ class AnnouncementResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    protected static ?string $recordTitleAttribute = 'message';
+
     protected static ?string $navigationLabel = 'Announcements';
 
     protected static ?string $modelLabel = 'Announcement';

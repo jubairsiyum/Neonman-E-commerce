@@ -50,7 +50,7 @@ class FrontendController extends Controller
 
         // Stock filter
         if ($request->has('in_stock')) {
-            $query->where('in_stock', true);
+            $query->where('stock_quantity', '>', 0);
         }
 
         // Featured filter

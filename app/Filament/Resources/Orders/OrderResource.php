@@ -26,6 +26,8 @@ class OrderResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $recordTitleAttribute = 'order_number';
+
     protected static ?string $navigationLabel = 'Orders';
 
     protected static ?string $modelLabel = 'Order';

@@ -22,6 +22,8 @@ class PaymentTransactionResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    protected static ?string $recordTitleAttribute = 'id';
+
     protected static ?string $navigationLabel = 'Transactions';
 
     protected static ?string $modelLabel = 'Transaction';

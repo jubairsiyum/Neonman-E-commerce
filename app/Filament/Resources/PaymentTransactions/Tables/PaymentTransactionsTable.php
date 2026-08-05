@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PaymentTransactions\Tables;
 
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -81,6 +82,9 @@ class PaymentTransactionsTable
                 SelectFilter::make('payment_gateway_id')
                     ->label('Gateway')
                     ->relationship('gateway', 'name'),
+            ])
+            ->actions([
+                ViewAction::make(),
             ]);
     }
 }

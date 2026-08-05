@@ -39,21 +39,21 @@ class PaymentGatewayForm
                             TextInput::make('app_key')
                                 ->label('App Key')
                                 ->required()
-                                ->default(fn ($record) => $record->credentials['app_key'] ?? ''),
+                                ->default(fn ($record) => $record?->credentials['app_key'] ?? ''),
                             TextInput::make('app_secret')
                                 ->label('App Secret')
                                 ->required()
                                 ->password()
-                                ->default(fn ($record) => $record->credentials['app_secret'] ?? ''),
+                                ->default(fn ($record) => $record?->credentials['app_secret'] ?? ''),
                             TextInput::make('username')
                                 ->label('Username')
                                 ->required()
-                                ->default(fn ($record) => $record->credentials['username'] ?? ''),
+                                ->default(fn ($record) => $record?->credentials['username'] ?? ''),
                             TextInput::make('password')
                                 ->label('Password')
                                 ->required()
                                 ->password()
-                                ->default(fn ($record) => $record->credentials['password'] ?? ''),
+                                ->default(fn ($record) => $record?->credentials['password'] ?? ''),
                         ]),
                     ])->columnSpanFull(),
 
@@ -62,12 +62,11 @@ class PaymentGatewayForm
                         Grid::make(2)->schema([
                             Toggle::make('sandbox')
                                 ->label('Sandbox Mode')
-                                ->default(true)
-                                ->default(fn ($record) => $record->settings['sandbox'] ?? true),
+                                ->default(fn ($record) => $record?->settings['sandbox'] ?? true),
                             TextInput::make('callback_url')
                                 ->label('Callback URL Override')
                                 ->placeholder('Auto-generated if empty')
-                                ->default(fn ($record) => $record->settings['callback_url'] ?? ''),
+                                ->default(fn ($record) => $record?->settings['callback_url'] ?? ''),
                         ]),
                     ])->columnSpanFull(),
             ]);

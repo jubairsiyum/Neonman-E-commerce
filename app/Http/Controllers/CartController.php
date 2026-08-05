@@ -224,11 +224,11 @@ class CartController extends Controller
             ], 400);
         }
 
-        // Check minimum amount
-        if ($coupon->minimum_amount && Cart::getSubTotal() < $coupon->minimum_amount) {
+        // Check minimum purchase
+        if ($coupon->minimum_purchase && Cart::getSubTotal() < $coupon->minimum_purchase) {
             return response()->json([
                 'success' => false,
-                'message' => "Minimum cart amount required: ৳{$coupon->minimum_amount}"
+                'message' => "Minimum cart amount required: ৳{$coupon->minimum_purchase}"
             ], 400);
         }
 
@@ -236,8 +236,8 @@ class CartController extends Controller
         $discount = 0;
         if ($coupon->type === 'percentage') {
             $discount = (Cart::getSubTotal() * $coupon->value) / 100;
-            if ($coupon->max_discount) {
-                $discount = min($discount, $coupon->max_discount);
+            if ($coupon->maximum_discount) {
+                $discount = min($discount, $coupon->maximum_discount);
             }
         } else {
             $discount = $coupon->value;

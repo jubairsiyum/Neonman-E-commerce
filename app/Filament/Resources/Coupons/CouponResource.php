@@ -25,6 +25,8 @@ class CouponResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $recordTitleAttribute = 'code';
+
     protected static ?string $navigationLabel = 'Coupons';
 
     protected static ?string $modelLabel = 'Coupon';

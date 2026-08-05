@@ -25,6 +25,8 @@ class PaymentGatewayResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?string $navigationLabel = 'Payment Gateways';
 
     protected static ?string $modelLabel = 'Payment Gateway';

@@ -10,6 +10,7 @@ export default {
         './vendor/filament/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './resources/js/**/*.js',
     ],
 
     theme: {

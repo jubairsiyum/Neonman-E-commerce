@@ -25,6 +25,8 @@ class DeliveryZoneResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?string $navigationLabel = 'Delivery Zones';
 
     protected static ?string $modelLabel = 'Delivery Zone';

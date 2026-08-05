@@ -64,6 +64,40 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
+Route::post('/contact/submit', function (\Illuminate\Http\Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'subject' => 'required|string',
+        'message' => 'required|string|min:10',
+    ]);
+
+    \Illuminate\Support\Facades\Log::info('Contact form submission', $request->only(['name', 'email', 'subject', 'message']));
+
+    return redirect()->route('contact')->with('success', 'Your message has been sent! We\'ll get back to you soon.');
+})->name('contact.submit');
+
+// Policy Pages
+Route::get('/shipping-policy', function () {
+    return view('pages.shipping-policy');
+})->name('shipping-policy');
+
+Route::get('/return-policy', function () {
+    return view('pages.return-policy');
+})->name('return-policy');
+
+Route::get('/privacy-policy', function () {
+    return view('pages.privacy-policy');
+})->name('privacy-policy');
+
+Route::get('/terms-conditions', function () {
+    return view('pages.terms-conditions');
+})->name('terms-conditions');
+
+Route::get('/faq', function () {
+    return view('pages.faq');
+})->name('faq');
+
 Route::get('/new-arrivals', [FrontendController::class, 'newArrivals'])->name('new-arrivals');
 Route::get('/best-sellers', [FrontendController::class, 'bestSellers'])->name('best-sellers');
 
@@ -80,14 +114,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Admin Order Print Routes
-Route::middleware(['auth', 'verified'])->prefix('admin/orders')->name('admin.orders.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin,moderator'])->prefix('admin/orders')->name('admin.orders.')->group(function () {
     Route::get('/{order}/print', function (\App\Models\Order $order) {
-        abort_unless(auth()->user()->role === 'admin' || auth()->user()->role === 'moderator', 403);
         return view('orders.print-invoice', ['order' => $order->load('items')]);
     })->name('print');
 
     Route::get('/{order}/print-slip', function (\App\Models\Order $order) {
-        abort_unless(auth()->user()->role === 'admin' || auth()->user()->role === 'moderator', 403);
         return view('orders.print-slip', ['order' => $order->load('items')]);
     })->name('print-slip');
 });
