@@ -59,6 +59,9 @@
                                         @if(isset($item->attributes['size']))
                                         <p class="text-sm text-gray-500 dark:text-gray-400">Size: <span class="font-medium">{{ $item->attributes['size'] }}</span></p>
                                         @endif
+                                        @if(isset($item->attributes['color']))
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Color: <span class="font-medium">{{ $item->attributes['color'] }}</span></p>
+                                        @endif
                                     </div>
                                     <button onclick="removeFromCart({{ $item->id }})" class="text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors p-1">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

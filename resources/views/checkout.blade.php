@@ -56,37 +56,33 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                         <div>
-                            <label for="first_name" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">First Name *</label>
-                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name', auth()->user()->name ?? '') }}" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
-                            @error('first_name')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="last_name" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Last Name *</label>
-                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
-                            @error('last_name')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="email" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address *</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
-                            @error('email')
+                            <label for="name" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name *</label>
+                            <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->name ?? '') }}" required class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                            @error('name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
                             <label for="phone" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required placeholder="01XXXXXXXXX" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                            <input type="tel" id="phone" name="phone" value="{{ old('phone', auth()->user()->phone ?? '') }}" required placeholder="01XXXXXXXXX" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
                             @error('phone')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
+
+                    @auth
+                    <div class="mt-3">
+                        <label for="email" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                        <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email) }}" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800/50 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900" readonly>
+                    </div>
+                    @else
+                    <div class="mt-3">
+                        <label for="email" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address <span class="text-gray-400">(Optional)</span></label>
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="For order updates" class="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-900">
+                    </div>
+                    @endauth
                 </div>
 
                 <!-- Shipping Address -->
@@ -215,30 +211,43 @@
                     <!-- Cart Items -->
                     <div class="space-y-2 sm:space-y-3 mb-3 sm:mb-4 max-h-60 overflow-y-auto">
                         @foreach($cartItems as $item)
-                        <div class="flex gap-2 sm:gap-3">
-                            <div class="w-16 h-16 flex-shrink-0 bg-gray-100 dark:bg-gray-800 rounded overflow-hidden">
+                        <div class="flex gap-2 sm:gap-3 py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-gray-100 dark:bg-gray-800 rounded overflow-hidden">
                                 @php
                                     $product = \App\Models\Product::find($item->id);
                                 @endphp
                                 @if($product && $product->hasMedia('images'))
                                     <img src="{{ $product->getFirstMediaUrl('images') }}" alt="{{ $item->name }}" class="w-full h-full object-cover">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-2xl">👕</div>
+                                    <div class="w-full h-full flex items-center justify-center text-xl">👕</div>
                                 @endif
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h4 class="font-medium text-sm text-gray-900 dark:text-gray-100 truncate">{{ $item->name }}</h4>
-                                @if(isset($item->attributes['size']))
-                                <p class="text-xs text-gray-600 dark:text-gray-400">Size: {{ $item->attributes['size'] }}</p>
-                                @endif
+                                <div class="flex items-start justify-between gap-2">
+                                    <h4 class="font-medium text-sm text-gray-900 dark:text-gray-100 truncate">{{ $item->name }}</h4>
+                                    <a href="{{ route('cart') }}" class="flex-shrink-0 text-xs text-primary-900 dark:text-primary-400 hover:underline">Edit</a>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                                    @if(isset($item->attributes['size']) && $item->attributes['size'])
+                                    <span>Size: <strong class="text-gray-700 dark:text-gray-300">{{ $item->attributes['size'] }}</strong></span>
+                                    @endif
+                                    @if(isset($item->attributes['color']) && $item->attributes['color'])
+                                    <span>Color: <strong class="text-gray-700 dark:text-gray-300">{{ $item->attributes['color'] }}</strong></span>
+                                    @endif
+                                </div>
                                 <div class="flex items-center justify-between mt-1">
-                                    <span class="text-xs text-gray-600 dark:text-gray-400">Qty: {{ $item->quantity }}</span>
-                                    <span class="text-sm font-medium text-gray-900 dark:text-gray-100">৳{{ number_format($item->price * $item->quantity, 0) }}</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Qty: <strong>{{ $item->quantity }}</strong></span>
+                                    <span class="text-sm font-semibold text-gray-900 dark:text-gray-100">৳{{ number_format($item->price * $item->quantity, 0) }}</span>
                                 </div>
                             </div>
                         </div>
                         @endforeach
                     </div>
+
+                    <a href="{{ route('cart') }}" class="flex items-center justify-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 hover:text-primary-900 dark:hover:text-primary-400 mb-3 sm:mb-4 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                        Edit Cart
+                    </a>
 
                     <!-- Pricing Summary -->
                     @php

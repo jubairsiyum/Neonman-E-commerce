@@ -27,9 +27,8 @@ class CheckoutController extends Controller
         }
 
         $validated = $request->validate([
-            'first_name'       => 'required|string|max:100',
-            'last_name'        => 'required|string|max:100',
-            'email'            => 'required|email|max:255',
+            'name'             => 'required|string|max:255',
+            'email'            => 'nullable|email|max:255',
             'phone'            => 'required|string|max:20',
             'address'          => 'required|string|max:500',
             'division'         => 'required|string|max:100',
@@ -86,8 +85,8 @@ class CheckoutController extends Controller
             // Create order
             $order = Order::create([
                 'user_id'              => auth()->id(),
-                'guest_name'           => $validated['first_name'] . ' ' . $validated['last_name'],
-                'guest_email'          => $validated['email'],
+                'guest_name'           => $validated['name'],
+                'guest_email'          => $validated['email'] ?? '',
                 'guest_phone'          => $validated['phone'],
                 'shipping_address'     => $validated['address'] . ', ' . $validated['area'],
                 'shipping_district'    => $validated['city'],

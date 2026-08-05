@@ -12,10 +12,28 @@
         'charcoal' => '#374151', 'off-white' => '#f9fafb', 'light blue' => '#93c5fd',
         'dark blue' => '#1e40af', 'light pink' => '#fda4af', 'dark green' => '#15803d',
     ];
+    $productUrl = url('/product/' . $product->slug);
+
+    $flatSizes = $product->sizes && is_array($product->sizes)
+        ? collect($product->sizes)->flatten()->filter(fn($s) => is_string($s))->values()->toArray()
+        : [];
+    $flatColors = $product->colors && is_array($product->colors)
+        ? collect($product->colors)->flatten()->filter(fn($c) => is_string($c))->values()->toArray()
+        : [];
+    $productImage = $product->hasMedia('images') ? $product->getFirstMediaUrl('images') : null;
+    $quickAddData = e(json_encode([
+        'id' => $product->id,
+        'name' => $product->name,
+        'price' => (float) $product->effective_price,
+        'maxQty' => (int) $product->stock_quantity,
+        'image' => $productImage,
+        'sizes' => $flatSizes,
+        'colors' => $flatColors,
+    ]));
 @endphp
 
-<div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700">
-    <a href="{{ url('/product/' . $product->slug) }}" class="block relative aspect-[3/4] bg-gray-100 dark:bg-gray-800 overflow-hidden">
+<div onclick="window.location.href='{{ $productUrl }}'" class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 cursor-pointer">
+    <div class="relative aspect-[3/4] bg-gray-100 dark:bg-gray-800 overflow-hidden">
         @if($product->hasMedia('images'))
             <img src="{{ $product->getFirstMediaUrl('images') }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" loading="lazy">
         @else
@@ -25,16 +43,16 @@
                 </svg>
             </div>
         @endif
-        
+
         <!-- Hover Overlay -->
-        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 z-10 flex items-center justify-center">
-            <span class="opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300 delay-100 px-5 py-2.5 bg-white text-gray-900 text-sm font-semibold rounded-full shadow-lg hover:bg-gray-900 hover:text-white">
+        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 z-10 flex items-center justify-center pointer-events-none">
+            <span class="opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300 delay-100 px-5 py-2.5 bg-white text-gray-900 text-sm font-semibold rounded-full shadow-lg">
                 Quick View
             </span>
         </div>
 
         <!-- Badges Container -->
-        <div class="absolute top-0 left-0 flex flex-col gap-0 z-20">
+        <div class="absolute top-0 left-0 flex flex-col gap-0 z-20 pointer-events-none">
             @if($product->has_discount)
             <div class="px-3 py-1.5 bg-red-600 text-white text-[10px] font-bold uppercase tracking-wide">
                 -{{ $product->discount_percentage }}%
@@ -54,24 +72,22 @@
 
         <!-- Wishlist Button -->
         @auth
-        <button onclick="event.preventDefault(); event.stopPropagation(); toggleWishlist({{ $product->id }})" class="absolute top-3 right-3 w-9 h-9 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-white dark:hover:bg-gray-800 hover:scale-110 transition-all duration-300 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0">
+        <button onclick="event.stopPropagation(); toggleWishlist({{ $product->id }})" class="absolute top-3 right-3 w-9 h-9 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-white dark:hover:bg-gray-800 hover:scale-110 transition-all duration-300 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0">
             <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
             </svg>
         </button>
         @endauth
-    </a>
+    </div>
 
     <div class="p-4">
         <div class="text-[11px] text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1.5 font-medium">
             {{ $product->category->name }}
         </div>
         <h3 class="font-semibold text-sm text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 leading-snug font-display">
-            <a href="{{ url('/product/' . $product->slug) }}" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">
-                {{ $product->name }}
-            </a>
+            {{ $product->name }}
         </h3>
-        
+
         <!-- Price -->
         <div class="mb-3">
             @if($product->has_discount)
@@ -120,12 +136,17 @@
             Only {{ $product->stock_quantity }} left
         </div>
         @endif
-        
-        <!-- Add to Cart Button -->
+
+        <!-- Action Buttons -->
         @if($product->in_stock)
-        <button onclick="quickAddToCart({{ $product->id }})" class="w-full py-2.5 px-4 bg-gray-900 hover:bg-primary-900 dark:bg-white dark:hover:bg-primary-100 dark:text-gray-900 text-white text-sm font-semibold rounded-lg transition-all duration-300 active:scale-[0.97]">
-            Add to Cart
-        </button>
+        <div class="flex gap-2">
+            <button onclick="event.stopPropagation(); addToCartAndCheckout({{ $product->id }})" class="flex-1 py-2.5 px-2 bg-primary-900 hover:bg-primary-950 text-white text-xs font-bold rounded-lg transition-all duration-300 active:scale-[0.97]">
+                Buy Now
+            </button>
+            <button onclick="event.stopPropagation(); quickAddDispatch(this.dataset.product, 'cart')" data-product="{!! $quickAddData !!}" class="flex-1 py-2.5 px-2 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 text-xs font-semibold rounded-lg transition-all duration-300 active:scale-[0.97]">
+                Add to Cart
+            </button>
+        </div>
         @else
         <button disabled class="w-full py-2.5 px-4 bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 text-sm font-medium rounded-lg cursor-not-allowed">
             Sold Out

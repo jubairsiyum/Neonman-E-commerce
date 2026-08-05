@@ -51,6 +51,9 @@
     <!-- Cart Sidebar -->
     @include('components.cart-sidebar')
 
+    <!-- Quick Add Modal -->
+    @include('components.quick-add-modal')
+
     <!-- Frontend Script -->
     <script>
         // Mobile menu toggle
@@ -142,6 +145,13 @@
             }
         };
 
+        // Quick add — open the size/color/quantity modal
+        window.quickAddDispatch = function(dataString, mode) {
+            var data = typeof dataString === 'string' ? JSON.parse(dataString) : dataString;
+            data.mode = mode || 'cart';
+            window.dispatchEvent(new CustomEvent('quick-add', { detail: data }));
+        };
+
         // Quick add to cart function
         window.quickAddToCart = function(productId, quantity = 1, size = null, color = null) {
             const formData = new FormData();
@@ -165,6 +175,36 @@
                     updateCartBadge(data.cart_count);
                     animateCartIcon();
                     window.dispatchEvent(new Event('cart-updated'));
+                } else {
+                    showToast(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('An error occurred. Please try again.', 'error');
+            });
+        };
+
+        // Buy Now — add to cart and redirect to checkout
+        window.addToCartAndCheckout = function(productId, quantity = 1, size = null, color = null) {
+            const formData = new FormData();
+            formData.append('product_id', productId);
+            formData.append('quantity', quantity);
+            if (size) formData.append('size', size);
+            if (color) formData.append('color', color);
+
+            fetch('{{ route("cart.add") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '{{ url("/checkout") }}';
                 } else {
                     showToast(data.message, 'error');
                 }

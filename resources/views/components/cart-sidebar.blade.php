@@ -31,9 +31,9 @@
     x-transition:leave-end="translate-y-full lg:translate-x-full lg:translate-y-0"
     @click.outside="$dispatch('cart-close')"
     @keydown.escape.window="$dispatch('cart-close')"
-    class="fixed right-0 bottom-0 lg:top-0 lg:bottom-auto z-[101]
+    class="fixed right-0 bottom-0 lg:top-0 lg:bottom-0 z-[101]
            w-full sm:w-[420px] lg:w-[420px]
-           max-h-[85vh] lg:max-h-screen
+           max-h-[85vh] lg:max-h-none
            bg-white dark:bg-gray-950
            lg:shadow-[-8px_0_30px_rgba(0,0,0,0.12)]
            shadow-[0_-8px_30px_rgba(0,0,0,0.15)]
