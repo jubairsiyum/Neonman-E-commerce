@@ -122,14 +122,27 @@ function quickAddModal() {
         },
         addToCart() {
             if (!this.product) return;
+            if (!this.validateSelection()) return;
             window.quickAddToCart(this.product.id, this.qty, this.selectedSize, this.selectedColor);
             window.dispatchEvent(new Event('cart-updated'));
             this.close();
         },
         buyNow() {
             if (!this.product) return;
+            if (!this.validateSelection()) return;
             window.addToCartAndCheckout(this.product.id, this.qty, this.selectedSize, this.selectedColor);
             this.close();
+        },
+        validateSelection() {
+            if (this.product.sizes && this.product.sizes.length > 0 && !this.selectedSize) {
+                window.showToast('Please select a size.', 'error');
+                return false;
+            }
+            if (this.product.colors && this.product.colors.length > 0 && !this.selectedColor) {
+                window.showToast('Please select a color.', 'error');
+                return false;
+            }
+            return true;
         },
         fmt(n) { return new Intl.NumberFormat('en-IN').format(Math.round(n)); }
     }
