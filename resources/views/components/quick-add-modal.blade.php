@@ -5,9 +5,10 @@
     x-on:quick-add.window="openModal($event.detail)"
     x-on:keydown.escape.window="close()"
     x-transition.opacity.duration.150ms
-    class="fixed inset-0 z-[999] flex items-center justify-center p-4"
+    style="z-index: 99999; isolation: isolate;"
+    class="fixed inset-0 flex items-center justify-center p-4"
 >
-    <div @click="close()" class="absolute inset-0 bg-black/40 backdrop-blur-lg"></div>
+    <div @click="close()" style="z-index: 0;" class="absolute inset-0 bg-black/50 backdrop-blur-lg"></div>
 
     <div
         x-show="open"
@@ -18,11 +19,12 @@
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
         @click.stop
-        class="relative z-10 w-[85vw] sm:w-[320px] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-h-[85vh] overflow-y-auto"
+        style="z-index: 1;"
+        class="relative w-[85vw] sm:w-[320px] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-h-[85vh] overflow-y-auto"
     >
         <template x-if="product">
             <div class="p-5">
-                <button @click="close()" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 transition-colors z-10">
+                <button @click="close()" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
 
