@@ -269,6 +269,8 @@
         if (mobileMenuBackdrop && mobileMenu) mobileMenuBackdrop.addEventListener('click', closeMenu);
     </script>
 
+    @include('components.toast')
+
     @stack('scripts')
 </body>
 </html>

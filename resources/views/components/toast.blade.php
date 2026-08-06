@@ -1,6 +1,6 @@
 <div
     x-data="toastManager()"
-    x-on:toast.window="add($event.detail.message, $event.detail.type)"
+    x-init="init()"
     class="fixed top-4 right-4 z-[99999] flex flex-col gap-2 pointer-events-none"
 >
     <template x-for="toast in toasts" :key="toast.id">
@@ -27,26 +27,47 @@
 </div>
 
 <script>
-function toastManager() {
-    return {
-        toasts: [],
-        counter: 0,
+(function() {
+    var queue = [];
 
-        add(message, type = 'success') {
-            const id = ++this.counter;
-            this.toasts.push({ id, message, type, show: true });
-            setTimeout(() => {
-                const idx = this.toasts.findIndex(t => t.id === id);
-                if (idx > -1) this.toasts[idx].show = false;
-                setTimeout(() => {
-                    this.toasts = this.toasts.filter(t => t.id !== id);
-                }, 200);
-            }, 3000);
+    window.showToast = function(message, type) {
+        type = type || 'success';
+        var el = document.querySelector('[x-data="toastManager()"]');
+        if (el && el.__x) {
+            window.dispatchEvent(new CustomEvent('toast', { detail: { message: message, type: type } }));
+        } else {
+            queue.push({ message: message, type: type });
         }
-    }
-}
+    };
 
-window.showToast = function(message, type = 'success') {
-    window.dispatchEvent(new CustomEvent('toast', { detail: { message, type } }));
-};
+    window.toastManager = function() {
+        return {
+            toasts: [],
+            counter: 0,
+
+            init() {
+                var self = this;
+                window.addEventListener('toast', function(e) {
+                    self.add(e.detail.message, e.detail.type);
+                });
+                if (queue.length) {
+                    queue.forEach(function(t) { self.add(t.message, t.type); });
+                    queue = [];
+                }
+            },
+
+            add(message, type) {
+                var id = ++this.counter;
+                this.toasts.push({ id: id, message: message, type: type, show: true });
+                setTimeout(function() {
+                    var t = this.toasts.find(function(i) { return i.id === id; });
+                    if (t) t.show = false;
+                    setTimeout(function() {
+                        this.toasts = this.toasts.filter(function(i) { return i.id !== id; });
+                    }.bind(this), 200);
+                }.bind(this), 3000);
+            }
+        };
+    };
+})();
 </script>
