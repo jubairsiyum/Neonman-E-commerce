@@ -77,6 +77,12 @@ class CustomerPortalController extends Controller
             'status' => Order::STATUS_CANCELLED,
         ]);
 
+        // Restore stock for all items
+        foreach ($order->items as $item) {
+            \App\Models\Product::where('id', $item->product_id)
+                ->increment('stock_quantity', $item->quantity);
+        }
+
         return back()->with('status', 'Order cancelled successfully.');
     }
 

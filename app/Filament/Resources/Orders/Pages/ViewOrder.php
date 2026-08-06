@@ -174,7 +174,18 @@ class ViewOrder extends ViewRecord
                         ->required(),
                 ]))
                 ->action(function (array $data, Order $record): void {
+                    $previousStatus = $record->status;
+
                     $record->update($data);
+
+                    // Restore stock if status changed to cancelled
+                    if ($data['status'] === Order::STATUS_CANCELLED && $previousStatus !== Order::STATUS_CANCELLED) {
+                        foreach ($record->items as $item) {
+                            \App\Models\Product::where('id', $item->product_id)
+                                ->increment('stock_quantity', $item->quantity);
+                        }
+                    }
+
                     Notification::make()->title('Order status updated.')->success()->send();
                 }),
 
