@@ -85,7 +85,7 @@ class RecentOrdersWidget extends BaseWidget
                 Action::make('view')
                     ->label('View')
                     ->icon(Heroicon::OutlinedEye)
-                    ->url(fn (Order $record): string => route('filament.admin.resources.orders.edit', $record))
+                    ->url(fn (Order $record): string => route('filament.admin.resources.orders.view', $record))
                     ->openUrlInNewTab(),
             ]);
     }
