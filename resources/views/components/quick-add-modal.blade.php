@@ -82,10 +82,16 @@
                     <span class="text-base font-bold text-gray-900 dark:text-white" x-text="'৳' + fmt(product.price * qty)"></span>
                 </div>
 
-                <button @click="addToCart()"
-                    class="w-full py-3 bg-primary-900 hover:bg-primary-950 text-white text-sm font-bold rounded-xl transition-colors active:scale-[0.98]">
-                    Add to Cart
-                </button>
+                <div class="flex flex-col gap-2">
+                    <button @click="buyNow()"
+                        class="w-full py-3 bg-primary-900 hover:bg-primary-950 text-white text-sm font-bold rounded-xl transition-colors active:scale-[0.98]">
+                        Buy Now
+                    </button>
+                    <button @click="addToCart()"
+                        class="w-full py-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold rounded-xl transition-colors active:scale-[0.98]">
+                        Add to Cart
+                    </button>
+                </div>
             </div>
         </template>
     </div>
@@ -99,12 +105,14 @@ function quickAddModal() {
         selectedSize: null,
         selectedColor: null,
         qty: 1,
+        mode: 'cart',
 
         openModal(data) {
             this.product = data;
             this.selectedSize = null;
             this.selectedColor = null;
             this.qty = 1;
+            this.mode = data.mode || 'cart';
             this.open = true;
             document.body.style.overflow = 'hidden';
         },
@@ -116,6 +124,11 @@ function quickAddModal() {
             if (!this.product) return;
             window.quickAddToCart(this.product.id, this.qty, this.selectedSize, this.selectedColor);
             window.dispatchEvent(new Event('cart-updated'));
+            this.close();
+        },
+        buyNow() {
+            if (!this.product) return;
+            window.addToCartAndCheckout(this.product.id, this.qty, this.selectedSize, this.selectedColor);
             this.close();
         },
         fmt(n) { return new Intl.NumberFormat('en-IN').format(Math.round(n)); }

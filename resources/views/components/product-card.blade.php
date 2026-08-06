@@ -139,11 +139,11 @@
 
         <!-- Action Buttons -->
         @if($product->in_stock)
-        <div class="flex gap-2">
-            <button onclick="event.stopPropagation(); addToCartAndCheckout({{ $product->id }})" class="flex-1 py-2.5 px-2 bg-primary-900 hover:bg-primary-950 text-white text-xs font-bold rounded-lg transition-all duration-300 active:scale-[0.97]">
+        <div class="flex flex-col sm:flex-row gap-2">
+            <button onclick="event.stopPropagation(); quickAddDispatch(this.dataset.product, 'buy')" data-product="{!! $quickAddData !!}" class="flex-1 py-2.5 px-2 bg-primary-900 hover:bg-primary-950 text-white text-xs font-bold rounded-lg transition-all duration-300 active:scale-[0.97]">
                 Buy Now
             </button>
-            <button onclick="event.stopPropagation(); quickAddDispatch(this.dataset.product, 'cart')" data-product="{!! $quickAddData !!}" class="flex-1 py-2.5 px-2 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 text-xs font-semibold rounded-lg transition-all duration-300 active:scale-[0.97]">
+            <button onclick="event.stopPropagation(); quickAddDispatch(this.dataset.product, 'cart')" data-product="{!! $quickAddData !!}" class="flex-1 py-2 px-2 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 text-xs font-semibold rounded-lg transition-all duration-300 active:scale-[0.97]">
                 Add to Cart
             </button>
         </div>
