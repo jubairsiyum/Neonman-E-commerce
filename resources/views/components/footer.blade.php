@@ -187,9 +187,11 @@
                         <div class="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded text-xs font-medium text-gray-700 dark:text-gray-300">
                             COD
                         </div>
+                        @if(\App\Services\Payment\PaymentGatewayManager::isAvailable('bkash'))
                         <div class="px-2 py-1 bg-pink-500 text-white rounded text-xs font-bold">
                             bKash
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

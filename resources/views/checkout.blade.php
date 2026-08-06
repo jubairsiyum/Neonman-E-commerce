@@ -171,10 +171,15 @@
                 <!-- Payment Method -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
                     <h2 class="text-base sm:text-lg font-bold font-display text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Payment Method</h2>
+
+                    @php
+                        $codEnabled = config('app.cod_enabled', true);
+                        $bkashEnabled = \App\Services\Payment\PaymentGatewayManager::isAvailable('bkash');
+                    @endphp
                     
                     <div class="space-y-2 sm:space-y-3">
                         <label class="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-900 transition-colors">
-                            <input type="radio" name="payment_method" value="cod" checked class="mt-1">
+                            <input type="radio" name="payment_method" value="cod" {{ $bkashEnabled ? '' : 'checked' }} class="mt-1">
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center justify-between mb-1">
                                     <span class="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">Cash on Delivery (COD)</span>
@@ -186,8 +191,9 @@
                             </div>
                         </label>
 
+                        @if($bkashEnabled)
                         <label class="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-900 transition-colors">
-                            <input type="radio" name="payment_method" value="bkash" class="mt-1">
+                            <input type="radio" name="payment_method" value="bkash" checked class="mt-1">
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center justify-between mb-1">
                                     <span class="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">bKash</span>
@@ -198,6 +204,7 @@
                                 <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Pay securely using bKash mobile banking</p>
                             </div>
                         </label>
+                        @endif
                     </div>
                 </div>
 
