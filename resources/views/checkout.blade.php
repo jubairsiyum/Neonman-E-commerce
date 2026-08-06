@@ -220,9 +220,9 @@
                         @foreach($cartItems as $item)
                         <div class="flex gap-2 sm:gap-3 py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
                             <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-gray-100 dark:bg-gray-800 rounded overflow-hidden">
-                                @php
-                                    $product = \App\Models\Product::find($item->id);
-                                @endphp
+                            @php
+                                $product = \App\Models\Product::find($item->attributes['product_id'] ?? $item->id);
+                            @endphp
                                 @if($product && $product->hasMedia('images'))
                                     <img src="{{ $product->getFirstMediaUrl('images') }}" alt="{{ $item->name }}" class="w-full h-full object-cover">
                                 @else

@@ -38,7 +38,7 @@
                 <div class="space-y-4">
                     @foreach($cartItems as $item)
                     @php
-                        $product = \App\Models\Product::find($item->id);
+                        $product = \App\Models\Product::find($item->attributes['product_id'] ?? $item->id);
                     @endphp
                     <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-5 hover:border-gray-300 dark:hover:border-gray-600 transition-colors">
                         <div class="flex gap-3 sm:gap-5">

@@ -15,7 +15,7 @@ class CartController extends Controller
     public function data()
     {
         $items = Cart::getContent()->map(function ($item) {
-            $product = \App\Models\Product::find($item->id);
+            $product = \App\Models\Product::find($item->attributes->get('product_id'));
             return [
                 'id' => $item->id,
                 'name' => $item->name,
@@ -88,8 +88,18 @@ class CartController extends Controller
             ], 400);
         }
 
+        // Build unique cart ID from product + variants to allow separate line items
+        $cartId = (string) $product->id;
+        if ($request->size) {
+            $cartId .= '-' . $request->size;
+        }
+        if ($request->color) {
+            $cartId .= '-' . $request->color;
+        }
+
         // Prepare cart item attributes
         $attributes = [
+            'product_id' => $product->id,
             'image' => $product->getFirstMediaUrl('images', 'thumb') ?: asset('images/placeholder.png'),
             'slug' => $product->slug,
         ];
@@ -102,9 +112,9 @@ class CartController extends Controller
             $attributes['color'] = $request->color;
         }
 
-        // Add to cart
+        // Add to cart with unique composite ID
         Cart::add(
-            $product->id,
+            $cartId,
             $product->name,
             $product->effective_price,
             $request->quantity,
@@ -138,7 +148,7 @@ class CartController extends Controller
         }
 
         // Check stock
-        $product = Product::find($cartItem->id);
+        $product = Product::find($cartItem->attributes->get('product_id'));
         if ($product->stock_quantity < $request->quantity) {
             return response()->json([
                 'success' => false,

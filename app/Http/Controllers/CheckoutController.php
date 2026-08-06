@@ -71,7 +71,7 @@ class CheckoutController extends Controller
         try {
             // Verify stock for all items
             foreach ($cartItems as $item) {
-                $product = Product::find($item->id);
+                $product = Product::find($item->attributes['product_id'] ?? $item->id);
                 if (!$product || !$product->is_active) {
                     DB::rollBack();
                     return redirect()->route('cart')->with('error', "Product \"{$item->name}\" is no longer available.");
@@ -119,7 +119,7 @@ class CheckoutController extends Controller
 
                 OrderItem::create([
                     'order_id'        => $order->id,
-                    'product_id'      => $item->id,
+                    'product_id'      => $item->attributes['product_id'] ?? $item->id,
                     'product_name'    => $item->name,
                     'variant_details' => !empty($variantDetails) ? json_encode($variantDetails) : null,
                     'price'           => $item->price,
@@ -128,7 +128,7 @@ class CheckoutController extends Controller
                 ]);
 
                 // Decrement stock
-                Product::where('id', $item->id)->decrement('stock_quantity', $item->quantity);
+                Product::where('id', $item->attributes['product_id'] ?? $item->id)->decrement('stock_quantity', $item->quantity);
             }
 
             // Increment coupon usage
