@@ -7,9 +7,12 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CustomerPortalController;
+use App\Http\Controllers\StorageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
+
+Route::get('/storage/{path}', [StorageController::class, 'show'])->where('path', '.*')->name('storage.serve');
 
 // Shop & Product Routes
 Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');
